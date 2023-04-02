@@ -89,6 +89,9 @@ function App() {
     <div className="top">
       <div id={'react-parent'}>
         <div className="react-box"></div>
+        <div className="react-box"></div>
+        <div className="react-box"></div>
+        <div className="react-box"></div>
       </div>
       <div id={'game-parent'} ref={gameParent} />
     </div>
