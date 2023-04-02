@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './App.css';
 import GameScene from './phaser/GameScene';
+import { projects } from './rHelpers/projectArray';
 import { Box, debugOptions, Screen } from './typescript';
 
 function App() {
@@ -92,10 +93,13 @@ function App() {
   return (
     <div className="top">
       <div id={'react-parent'} ref={reactParentRef}>
-        <div className="react-box"></div>
-        <div className="react-box"></div>
-        <div className="react-box"></div>
-        <div className="react-box"></div>
+        {projects.map((project, index) => {
+          return (
+            <div className={'react-box'} key={index}>
+              {project.title}
+            </div>
+          );
+        })}
       </div>
       <div id={'game-parent'} ref={gameParentRef} />
     </div>

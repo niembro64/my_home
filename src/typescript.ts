@@ -39,3 +39,8 @@ export interface Mouse {
   x: number;
   y: number;
 }
+
+export interface Project {
+  title: string;
+  type: string;
+}
