@@ -22,8 +22,8 @@ export default class GameScene extends Phaser.Scene {
       jumpPower: 800,
       posInitX: 400,
       posInitY: 300,
-      velX: 40,
-      velY: 80,
+      velX: 20,
+      velY: 60,
     };
 
     this.platforms = [

@@ -48,7 +48,7 @@ function App() {
           // },
         ],
       },
-      // transparent: true,
+      transparent: true,
       title: 'niembro64',
       antialias: true,
       pixelArt: false,
@@ -57,10 +57,10 @@ function App() {
       scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: 1920,
-        height: 1080,
-        // width: screen.width,
-        // height: screen.height,
+        // width: 1920,
+        // height: 1080,
+        width: screen.width,
+        height: screen.height,
       },
       type: Phaser.AUTO,
       parent: gameParent.current,
@@ -85,7 +85,10 @@ function App() {
     };
   }, [screen]);
 
-  return <div id={'gameParent'} ref={gameParent} />;
+  return (
+
+    < div id = { 'gameParent'} ref = { gameParent } />
+    )
 }
 
 export default App;
