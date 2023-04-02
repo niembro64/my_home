@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { Mouse, Platform, Player } from '../typescript';
+import { Box, Mouse, Platform, Player } from '../typescript';
 import {
   goToXY,
   updatePlayerFrictionAir,
@@ -27,26 +27,26 @@ export default class GameScene extends Phaser.Scene {
     };
 
     this.platforms = [
-      {
-        sprite: null,
-        graphic: null,
-        box: {
-          left: 100,
-          top: 200,
-          width: 200,
-          height: 100,
-        },
-      },
-      {
-        sprite: null,
-        graphic: null,
-        box: {
-          left: 400,
-          top: 400,
-          width: 200,
-          height: 100,
-        },
-      },
+      // {
+      //   sprite: null,
+      //   graphic: null,
+      //   box: {
+      //     left: 100,
+      //     top: 200,
+      //     width: 200,
+      //     height: 100,
+      //   },
+      // },
+      // {
+      //   sprite: null,
+      //   graphic: null,
+      //   box: {
+      //     left: 400,
+      //     top: 400,
+      //     width: 200,
+      //     height: 100,
+      //   },
+      // },
     ];
 
     this.mouse = {
@@ -56,6 +56,24 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload(): void {
+    let myBoxes: Box[] = this.game.registry.get('myBoxes');
+    if (myBoxes) {
+      myBoxes.forEach((box: Box) => {
+        this.platforms.push({
+          sprite: null,
+          graphic: null,
+          box: {
+            left: box.left,
+            top: box.top,
+            width: box.width,
+            height: box.height,
+          },
+        });
+      });
+    }
+
+    console.log('phaser myBoxes', myBoxes);
+
     this.load.image('k', 'k.png');
   }
 
@@ -81,7 +99,8 @@ export default class GameScene extends Phaser.Scene {
 
       // Draw the rectangle using graphics
       platform.graphic = this.add
-        .graphics({ fillStyle: { color: 0x0000ff } })
+        .graphics()
+        // .graphics({ fillStyle: { color: 0x0000ff } })
         .fillRectShape(rect);
 
       // Create a static Arcade Physics body for the rectangle

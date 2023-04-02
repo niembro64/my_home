@@ -32,6 +32,10 @@ function App() {
       return;
     }
 
+    if (myBoxes.length === 0) {
+      return;
+    }
+
     // const config: Phaser.Types.Core.GameConfig = {
     //   type: Phaser.AUTO,
     //   width: screen.width,
@@ -82,39 +86,39 @@ function App() {
     };
 
     gameRef.current = new Phaser.Game(config);
+    gameRef.current.registry.set('myBoxes', myBoxes);
     return () => {
       gameRef.current.destroy(true);
     };
-  }, [screen]);
+  }, [screen, myBoxes]);
 
   useEffect(() => {
     if (!firstBoxRef.current) {
       return;
     }
-    console.log('firstBoxRef.current: ', firstBoxRef.current);
-    const firstBox = firstBoxRef.current;
-    const firstBoxStyle = window.getComputedStyle(firstBox);
 
-    const firstBoxPositionX = firstBoxStyle.getPropertyValue('left');
-    const firstBoxPositionY = firstBoxStyle.getPropertyValue('top');
-    const firstBoxWidth = firstBoxStyle.getPropertyValue('width');
-    const firstBoxHeight = firstBoxStyle.getPropertyValue('height');
-    const rect = firstBox.getBoundingClientRect();
+    const rect = firstBoxRef.current.getBoundingClientRect();
     console.log('firstBoxPositionX: ', rect.x);
     console.log('firstBoxPositionY: ', rect.y);
-    console.log('firstBoxWidth: ', firstBoxWidth);
-    console.log('firstBoxHeight: ', firstBoxHeight);
+    console.log('firstBoxWidth: ', rect.width);
+    console.log('firstBoxHeight: ', rect.height);
+
+    let myNewBoxes: any[] = [
+      {
+        left: rect.x,
+        top: rect.y,
+        width: rect.width,
+        height: rect.height,
+      },
+    ];
+    setMyBoxes(myNewBoxes);
   }, [firstBoxRef]);
 
   return (
     <div className="top">
       <div id={'react-parent'}>
-        <div className="react-box" ref={firstBoxRef}>
-          {/* <div className="my-content-box"></div> */}
-        </div>
-        <div className="react-box">
-          {/* <div className="my-border-box"></div> */}
-        </div>
+        <div className="react-box" ref={firstBoxRef}></div>
+        <div className="react-box"></div>
         <div className="react-box"></div>
         <div className="react-box"></div>
       </div>
