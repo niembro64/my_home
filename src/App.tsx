@@ -86,9 +86,13 @@ function App() {
   }, [screen]);
 
   return (
-
-    < div id = { 'gameParent'} ref = { gameParent } />
-    )
+    <div className="top">
+      <div id={'react-parent'}>
+        <div className="react-box"></div>
+      </div>
+      <div id={'game-parent'} ref={gameParent} />
+    </div>
+  );
 }
 
 export default App;
