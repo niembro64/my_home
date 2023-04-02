@@ -5,6 +5,7 @@
 }
 
 #gameParent {
-  border: 10px dashed red;
+  /* border: 10px dashed red; */
+  background-color: red;
   overflow: hidden;
 }

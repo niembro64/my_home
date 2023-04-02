@@ -9,8 +9,11 @@ export const goToXY = (
   game: GameScene
 ): void => {
   const k = player;
-  const xChange = 100;
-  const yChange = 100;
+
+  if (!game.input.activePointer.isDown) {
+    return;
+  }
+  updatePlayerJump(k);
 
   let { x, y } = getNormalizedVector(
     k.sprite.body.x,
@@ -19,8 +22,10 @@ export const goToXY = (
     gotoY
   );
 
-  k.sprite.setVelocityX(xChange * x + k.sprite.body.velocity.x);
-  k.sprite.setVelocityY(yChange * y + k.sprite.body.velocity.y);
+  k.sprite.setVelocityX(k.velX * x + k.sprite.body.velocity.x);
+  if (game.mouse.y < k.sprite.body.y) {
+    k.sprite.setVelocityY(k.velY * y + k.sprite.body.velocity.y);
+  }
 };
 
 export const updatePlayerFrictionGround = (player: Player): void => {
@@ -31,11 +36,21 @@ export const updatePlayerFrictionGround = (player: Player): void => {
   k.sprite.setVelocityX(k.sprite.body.velocity.x * k.frictionGround);
 };
 
-export const updatePlayerFrictionAir = (player: Player): void => {
+export const updatePlayerFrictionAir = (
+  player: Player,
+  game: GameScene
+): void => {
   if (player.sprite.body.touching.down) {
     return;
   }
   const k = player;
   k.sprite.setVelocityX(k.sprite.body.velocity.x * k.frictionAir);
   k.sprite.setVelocityY(k.sprite.body.velocity.y * k.frictionAir);
+};
+
+export const updatePlayerJump = (player: Player): void => {
+  const k = player;
+  if (k.sprite.body.touching.down) {
+    k.sprite.setVelocityY(-k.jumpPower);
+  }
 };

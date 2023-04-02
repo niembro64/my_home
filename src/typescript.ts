@@ -24,8 +24,11 @@ export interface Player {
   sprite: any | null;
   frictionGround: number;
   frictionAir: number;
-  x: number;
-  y: number;
+  jumpPower: number;
+  posInitX: number;
+  posInitY: number;
+  velX: number;
+  velY: number;
 }
 
 export interface Mouse {

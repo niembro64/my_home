@@ -18,9 +18,12 @@ export default class GameScene extends Phaser.Scene {
     this.kirby = {
       sprite: null,
       frictionGround: 0.8,
-      frictionAir: 0.98,
-      x: 400,
-      y: 300,
+      frictionAir: 0.95,
+      jumpPower: 800,
+      posInitX: 400,
+      posInitY: 300,
+      velX: 40,
+      velY: 80,
     };
 
     this.platforms = [
@@ -59,7 +62,7 @@ export default class GameScene extends Phaser.Scene {
     const phy = this.physics;
 
     k.sprite = this.physics.add
-      .sprite(k.x, k.y, 'k')
+      .sprite(k.posInitX, k.posInitY, 'k')
       .setOrigin(0.5, 0.5)
       .setCollideWorldBounds(true);
 
@@ -100,20 +103,17 @@ export default class GameScene extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, this.scale.width, this.scale.height);
 
     this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-      this.mouse.x = pointer.x;
-      this.mouse.y = pointer.y;
+      this.mouse.x = pointer.x - this.kirby.sprite.body.width / 2;
+      this.mouse.y = pointer.y - this.kirby.sprite.body.height / 2;
     });
   }
 
   update(): void {
     const k = this.kirby;
 
-    if (this.input.activePointer.isDown) {
-      goToXY(k, this.mouse.x, this.mouse.y, this);
-    }
-
+    goToXY(k, this.mouse.x, this.mouse.y, this);
     updateSpriteFlip(k, this);
     updatePlayerFrictionGround(k);
-    updatePlayerFrictionAir(k);
+    updatePlayerFrictionAir(k, this);
   }
 }
