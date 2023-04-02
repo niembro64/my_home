@@ -14,6 +14,9 @@ function App() {
     height: 0,
   });
 
+  /////////////////////////////////////
+  // SET SCREEN INFO WHEN RENDERED
+  /////////////////////////////////////
   useEffect(() => {
     const newScreen: Screen = {
       width: window.innerWidth,
@@ -22,6 +25,33 @@ function App() {
     setScreen(newScreen);
   }, []);
 
+  /////////////////////////////////////
+  // SET BOXES FOR PHASER
+  /////////////////////////////////////
+  useEffect(() => {
+    if (!reactParentRef.current) {
+      return;
+    }
+
+    let myNewBoxes: Box[] = [];
+    let numChildren = reactParentRef.current.children.length;
+    for (let i = 0; i < numChildren; i++) {
+      const child = reactParentRef.current.children[i];
+      const rect = child.getBoundingClientRect();
+      const newBox: Box = {
+        left: rect.x,
+        top: rect.y,
+        width: rect.width,
+        height: rect.height,
+      };
+      myNewBoxes.push(newBox);
+    }
+    setMyBoxes(myNewBoxes);
+  }, [reactParentRef]);
+
+  /////////////////////////////////////
+  // MAKE PHASER GAME
+  /////////////////////////////////////
   useEffect(() => {
     if (
       !gameParentRef.current ||
@@ -68,27 +98,6 @@ function App() {
       gameRef.current.destroy(true);
     };
   }, [screen, myBoxes]);
-
-  useEffect(() => {
-    if (!reactParentRef.current) {
-      return;
-    }
-
-    let myNewBoxes: Box[] = [];
-    let numChildren = reactParentRef.current.children.length;
-    for (let i = 0; i < numChildren; i++) {
-      const child = reactParentRef.current.children[i];
-      const rect = child.getBoundingClientRect();
-      const newBox: Box = {
-        left: rect.x,
-        top: rect.y,
-        width: rect.width,
-        height: rect.height,
-      };
-      myNewBoxes.push(newBox);
-    }
-    setMyBoxes(myNewBoxes);
-  }, [reactParentRef]);
 
   return (
     <div className="top">
