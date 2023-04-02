@@ -14,7 +14,7 @@
 }
 
 #react-parent {
-  background-color: rgba(102, 154, 102, 0.381);
+  /* background-color: rgba(102, 154, 102, 0.381); */
   position: absolute;
   top: 0px;
   left: 0px;
@@ -26,6 +26,9 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+
+  pointer-events: none;
+  z-index: 1;
 }
 
 #game-parent {
@@ -50,9 +53,11 @@
 }
 
 .react-box {
-  background-color: rgba(0, 0, 0, 0.397);
+  background-color: red;
   width: 200px;
   height: 150px;
+
+  border-radius: 100px;
 }
 
 /* .my-content-box {
