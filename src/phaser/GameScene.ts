@@ -1,11 +1,12 @@
 import Phaser from 'phaser';
-import { Platform, Player } from '../typescript';
+import { Mouse, Platform, Player } from '../typescript';
+import { goToXY } from './helpers/movement';
+import { updateSpriteFlip } from './helpers/sprite';
 
 export default class GameScene extends Phaser.Scene {
   kirby: Player;
   platforms: Platform[];
-  mouseX: number;
-  mouseY: number;
+  mouse: Mouse;
 
   constructor() {
     super('GameScene');
@@ -35,8 +36,10 @@ export default class GameScene extends Phaser.Scene {
       },
     ];
 
-    this.mouseX = 0;
-    this.mouseY = 0;
+    this.mouse = {
+      x: 0,
+      y: 0,
+    };
   }
 
   preload(): void {
@@ -92,8 +95,8 @@ export default class GameScene extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, this.scale.width, this.scale.height);
 
     this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-      this.mouseX = pointer.x;
-      this.mouseY = pointer.y;
+      this.mouse.x = pointer.x;
+      this.mouse.y = pointer.y;
     });
   }
 
@@ -101,23 +104,21 @@ export default class GameScene extends Phaser.Scene {
     const k = this.kirby;
     const p = this.platforms;
 
-    if (this.input.activePointer.isDown) {
-      k.sprite.setVelocityX(0);
-      k.sprite.setVelocityY(0);
+    goToXY(k, this.mouse.x, this.mouse.y, this);
+    updateSpriteFlip(k, this);
 
-      if (this.mouseX < k.sprite.body.x) {
-        k.sprite.setVelocityX(-100);
-      } else if (this.mouseX > k.x) {
-        k.sprite.setVelocityX(100);
-      }
+    // if (this.input.activePointer.isDown) {
+    //   if (this.mouseX < k.sprite.body.x) {
+    //     k.sprite.setVelocityX(-100);
+    //   } else if (this.mouseX > k.x) {
+    //     k.sprite.setVelocityX(100);
+    //   }
 
-      if (this.mouseY < k.sprite.body.y) {
-        k.sprite.setVelocityY(-100);
-      } else if (this.mouseY > k.y) {
-        k.sprite.setVelocityY(100);
-      }
-    }
-
-    console.log('Mouse X:', this.mouseX, 'Mouse Y:', this.mouseY);
+    //   if (this.mouseY < k.sprite.body.y) {
+    //     k.sprite.setVelocityY(-100);
+    //   } else if (this.mouseY > k.y) {
+    //     k.sprite.setVelocityY(100);
+    //   }
+    // }
   }
 }

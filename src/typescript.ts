@@ -20,8 +20,13 @@ export interface Platform {
   height: number;
 }
 
-export interface Player  {
+export interface Player {
   sprite: any | null;
+  x: number;
+  y: number;
+}
+
+export interface Mouse {
   x: number;
   y: number;
 }
