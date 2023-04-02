@@ -22,56 +22,32 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log('gameRef.current: ', gameParentRef.current);
-    console.log('screen: ', screen);
-    if (!gameParentRef.current) {
+    if (
+      !gameParentRef.current ||
+      screen.width === 0 ||
+      screen.height === 0 ||
+      myBoxes.length === 0
+    ) {
       return;
     }
-
-    if (screen.width === 0 || screen.height === 0) {
-      return;
-    }
-
-    if (myBoxes.length === 0) {
-      return;
-    }
-
-    // const config: Phaser.Types.Core.GameConfig = {
-    //   type: Phaser.AUTO,
-    //   width: screen.width,
-    //   height: screen.height,
-    //   parent: gameRef.current,
-    //   scene: [GameScene],
-    // };
 
     let config: Phaser.Types.Core.GameConfig = {
       plugins: {
-        global: [
-          // {
-          //   key: 'rexShakePosition',
-          //   plugin: ShakePositionPlugin,
-          //   start: true,
-          // },
-        ],
+        global: [],
       },
       transparent: true,
       title: 'niembro64',
       antialias: true,
       pixelArt: false,
-      // width: 1920,
-      // height: 1080,
       scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
-        // width: 1920,
-        // height: 1080,
+
         width: screen.width,
         height: screen.height,
       },
       type: Phaser.AUTO,
       parent: gameParentRef.current,
-      // backgroundColor: '#0000ff55',
-      // backgroundColor: 'red',
       input: {
         gamepad: true,
       },
@@ -98,11 +74,11 @@ function App() {
     }
 
     let myNewBoxes: Box[] = [];
-    for (let i = 0; i < 4; i++) {
+    let numChildren = reactParentRef.current.children.length;
+    for (let i = 0; i < numChildren; i++) {
       const child = reactParentRef.current.children[i];
       const rect = child.getBoundingClientRect();
-
-      let newBox: Box = {
+      const newBox: Box = {
         left: rect.x,
         top: rect.y,
         width: rect.width,
