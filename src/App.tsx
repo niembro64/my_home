@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import './App.css';
 import GameScene from './phaser/GameScene';
-import { debugOptions, Screen } from './typescript';
+import { Box, debugOptions, Screen } from './typescript';
 
 function App() {
   const gameParent = useRef<HTMLDivElement>(null);
   const gameRef = useRef<any>(null);
-  const firstBoxRef = useRef<HTMLDivElement>(null);
+  const boxRefs = useRef<HTMLDivElement[]>([]);
   const [myBoxes, setMyBoxes] = React.useState<any[]>([]);
   const [screen, setScreen] = React.useState<Screen>({
     width: 0,
@@ -36,22 +36,10 @@ function App() {
       return;
     }
 
-    // const config: Phaser.Types.Core.GameConfig = {
-    //   type: Phaser.AUTO,
-    //   width: screen.width,
-    //   height: screen.height,
-    //   parent: gameRef.current,
-    //   scene: [GameScene],
-    // };
-
     let config: Phaser.Types.Core.GameConfig = {
       plugins: {
         global: [
-          // {
-          //   key: 'rexShakePosition',
-          //   plugin: ShakePositionPlugin,
-          //   start: true,
-          // },
+
         ],
       },
       transparent: true,
@@ -93,34 +81,47 @@ function App() {
   }, [screen, myBoxes]);
 
   useEffect(() => {
-    if (!firstBoxRef.current) {
+    if (boxRefs.current.length === 0) {
       return;
     }
+    let myNewBoxes: Box[] = [];
+    Array(5).forEach((box) => {
+      const rect = box.getBoundingClientRect();
+      console.log('firstBoxPositionX: ', rect.x);
+      console.log('firstBoxPositionY: ', rect.y);
+      console.log('firstBoxWidth: ', rect.width);
+      console.log('firstBoxHeight: ', rect.height);
 
-    const rect = firstBoxRef.current.getBoundingClientRect();
-    console.log('firstBoxPositionX: ', rect.x);
-    console.log('firstBoxPositionY: ', rect.y);
-    console.log('firstBoxWidth: ', rect.width);
-    console.log('firstBoxHeight: ', rect.height);
-
-    let myNewBoxes: any[] = [
-      {
+      let myNewBox: Box = {
         left: rect.x,
         top: rect.y,
         width: rect.width,
         height: rect.height,
-      },
-    ];
+      };
+      myNewBoxes.push(myNewBox);
+    });
     setMyBoxes(myNewBoxes);
-  }, [firstBoxRef]);
+  }, [boxRefs]);
 
   return (
     <div className="top">
       <div id={'react-parent'}>
-        <div className="react-box" ref={firstBoxRef}></div>
-        <div className="react-box"></div>
-        <div className="react-box"></div>
-        <div className="react-box"></div>
+        {/* {boxRefs.current
+          // .filter((x) => {
+          //   return x !== null;
+          // })
+          .map((box, index) => {
+            return (
+              <div
+                className="react-box"
+                ref={(el) => (boxRefs.current[index] = el)}
+              ></div>
+            );
+          })} */}
+        {/* // <div className="react-box" ref={boxRefs.current[0]}></div>
+        // <div className="react-box"></div>
+        // <div className="react-box"></div>
+        // <div className="react-box"></div> */}
       </div>
       <div id={'game-parent'} ref={gameParent} />
     </div>
