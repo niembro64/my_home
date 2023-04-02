@@ -23,11 +23,19 @@ export const goToXY = (
   k.sprite.setVelocityY(yChange * y + k.sprite.body.velocity.y);
 };
 
-export const updatePlayerFriction = (player: Player): void => {
+export const updatePlayerFrictionGround = (player: Player): void => {
   if (!player.sprite.body.touching.down) {
     return;
   }
-
   const k = player;
-  k.sprite.setVelocityX(k.sprite.body.velocity.x * k.frictionX);
+  k.sprite.setVelocityX(k.sprite.body.velocity.x * k.frictionGround);
+};
+
+export const updatePlayerFrictionAir = (player: Player): void => {
+  if (player.sprite.body.touching.down) {
+    return;
+  }
+  const k = player;
+  k.sprite.setVelocityX(k.sprite.body.velocity.x * k.frictionAir);
+  k.sprite.setVelocityY(k.sprite.body.velocity.y * k.frictionAir);
 };

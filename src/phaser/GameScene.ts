@@ -1,6 +1,10 @@
 import Phaser from 'phaser';
 import { Mouse, Platform, Player } from '../typescript';
-import { goToXY, updatePlayerFriction } from './helpers/movement';
+import {
+  goToXY,
+  updatePlayerFrictionAir,
+  updatePlayerFrictionGround,
+} from './helpers/movement';
 import { updateSpriteFlip } from './helpers/sprite';
 
 export default class GameScene extends Phaser.Scene {
@@ -13,7 +17,8 @@ export default class GameScene extends Phaser.Scene {
 
     this.kirby = {
       sprite: null,
-      frictionX: 0.8,
+      frictionGround: 0.8,
+      frictionAir: 0.98,
       x: 400,
       y: 300,
     };
@@ -56,7 +61,6 @@ export default class GameScene extends Phaser.Scene {
     k.sprite = this.physics.add
       .sprite(k.x, k.y, 'k')
       .setOrigin(0.5, 0.5)
-      .setScale(2)
       .setCollideWorldBounds(true);
 
     p.forEach((platform, pIndex) => {
@@ -109,6 +113,7 @@ export default class GameScene extends Phaser.Scene {
     }
 
     updateSpriteFlip(k, this);
-    updatePlayerFriction(k);
+    updatePlayerFrictionGround(k);
+    updatePlayerFrictionAir(k);
   }
 }
