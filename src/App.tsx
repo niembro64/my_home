@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import GameScene from './phaser/GameScene';
-import { Screen } from './typescript';
+import { debugOptions, Screen } from './typescript';
 
 function App() {
-  const gameRef = useRef<HTMLDivElement>(null);
+  const gameParent = useRef<HTMLDivElement>(null);
+  const gameRef = useRef<any>(null);
   const [screen, setScreen] = React.useState<Screen>({
     width: 0,
     height: 0,
@@ -20,9 +20,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log('gameRef.current: ', gameRef.current);
+    console.log('gameRef.current: ', gameParent.current);
     console.log('screen: ', screen);
-    if (!gameRef.current) {
+    if (!gameParent.current) {
       return;
     }
 
@@ -30,21 +30,62 @@ function App() {
       return;
     }
 
-    const config: Phaser.Types.Core.GameConfig = {
+    // const config: Phaser.Types.Core.GameConfig = {
+    //   type: Phaser.AUTO,
+    //   width: screen.width,
+    //   height: screen.height,
+    //   parent: gameRef.current,
+    //   scene: [GameScene],
+    // };
+
+    let config: Phaser.Types.Core.GameConfig = {
+      plugins: {
+        global: [
+          // {
+          //   key: 'rexShakePosition',
+          //   plugin: ShakePositionPlugin,
+          //   start: true,
+          // },
+        ],
+      },
+      // transparent: true,
+      title: 'niembro64',
+      antialias: true,
+      pixelArt: false,
+      // width: 1920,
+      // height: 1080,
+      scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: 1920,
+        height: 1080,
+        // width: screen.width,
+        // height: screen.height,
+      },
       type: Phaser.AUTO,
-      width: screen.width,
-      height: screen.height,
-      parent: gameRef.current,
+      parent: gameParent.current,
+      // backgroundColor: '#0000ff55',
+      // backgroundColor: 'red',
+      input: {
+        gamepad: true,
+      },
+      physics: {
+        default: 'arcade',
+        arcade: {
+          gravity: { y: 1000 },
+          debug: debugOptions.devMode,
+        },
+      },
       scene: [GameScene],
     };
 
-    const game = new Phaser.Game(config);
+    gameRef.current = new Phaser.Game(config);
     return () => {
-      game.destroy(true);
+      gameRef.current.destroy(true);
     };
   }, [screen]);
 
-  return <div id={'game'} ref={gameRef} />;
+  return <div id={'gameParent'} ref={gameParent} />;
 }
 
 export default App;
