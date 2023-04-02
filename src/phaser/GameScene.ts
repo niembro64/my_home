@@ -37,13 +37,13 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create(): void {
-    const p = this.platforms;
+    const plats = this.platforms;
     const k = this.kirby;
 
     const phy = this.physics;
 
     k.sprite = phy.add.sprite(k.x, k.y, 'k').setOrigin(0.5, 0.5).setScale(2);
-    p.forEach((p, pIndex) => {
+    plats.forEach((p, pIndex) => {
       p.sprite = this.add.graphics();
       p.sprite.fillStyle(0x0000ff);
       p.sprite.fillRect(p.x, p.y, p.width, p.height);
@@ -51,10 +51,7 @@ export default class GameScene extends Phaser.Scene {
       phy.add.collider(k.sprite, p.sprite);
     });
 
-    this.physics.world.setBounds(0, 0, this.scale.width, this.scale.height);
-
-    phy.world.enableBody(k.sprite, 0);
-    k.sprite.setCollideWorldBounds(true); // Add this line
+    k.sprite.setCollideWorldBounds(true);
   }
 
   update(): void {}
