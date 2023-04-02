@@ -7,18 +7,23 @@ function App() {
   const gameParent = useRef<HTMLDivElement>(null);
   const gameRef = useRef<any>(null);
   // const firstBoxRef = useRef<HTMLDivElement>(null);
-  const [myBoxRefs, setMyBoxRefs] = React.useState<HTMLDivElement[]>([]);
+  const myBoxRefs: any[] = [];
+
+  for (let i = 0; i < 3; i++) {
+    myBoxRefs.push(useRef<HTMLDivElement>(null));
+  }
+
   const [myBoxes, setMyBoxes] = React.useState<any[]>([]);
   const [screen, setScreen] = React.useState<Screen>({
     width: 0,
     height: 0,
   });
 
-  useEffect(() => {
-    setMyBoxRefs((refs) =>
-      Array(3).map((_, i) => refs[i] || React.createRef())
-    );
-  }, []);
+  // useEffect(() => {
+  //   setMyBoxRefs((refs) =>
+  //     Array(3).map((_, i) => refs[i] || React.createRef())
+  //   );
+  // }, []);
 
   useEffect(() => {
     const newScreen: Screen = {
