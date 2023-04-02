@@ -6,12 +6,19 @@ import { debugOptions, Screen } from './typescript';
 function App() {
   const gameParent = useRef<HTMLDivElement>(null);
   const gameRef = useRef<any>(null);
-  const firstBoxRef = useRef<HTMLDivElement>(null);
+  // const firstBoxRef = useRef<HTMLDivElement>(null);
+  const [myBoxRefs, setMyBoxRefs] = React.useState<HTMLDivElement[]>([]);
   const [myBoxes, setMyBoxes] = React.useState<any[]>([]);
   const [screen, setScreen] = React.useState<Screen>({
     width: 0,
     height: 0,
   });
+
+  useEffect(() => {
+    setMyBoxRefs((refs) =>
+      Array(3).map((_, i) => refs[i] || React.createRef())
+    );
+  }, []);
 
   useEffect(() => {
     const newScreen: Screen = {
@@ -93,34 +100,54 @@ function App() {
   }, [screen, myBoxes]);
 
   useEffect(() => {
-    if (!firstBoxRef.current) {
+    let allOk: boolean = true;
+    myBoxRefs.forEach((boxRef: HTMLDivElement) => {
+      if (!boxRef) {
+        allOk = false;
+      }
+    });
+    if (!allOk) {
       return;
     }
 
-    const rect = firstBoxRef.current.getBoundingClientRect();
-    console.log('firstBoxPositionX: ', rect.x);
-    console.log('firstBoxPositionY: ', rect.y);
-    console.log('firstBoxWidth: ', rect.width);
-    console.log('firstBoxHeight: ', rect.height);
-
-    let myNewBoxes: any[] = [
-      {
+    let myNewBoxes: any[] = [];
+    myBoxRefs.forEach((boxRef: HTMLDivElement) => {
+      const rect = boxRef.getBoundingClientRect();
+      myNewBoxes.push({
         left: rect.x,
         top: rect.y,
         width: rect.width,
         height: rect.height,
-      },
-    ];
+      });
+    });
     setMyBoxes(myNewBoxes);
-  }, [firstBoxRef]);
+    // const rect = firstBoxRef.current.getBoundingClientRect();
+
+    // console.log('firstBoxPositionX: ', rect.x);
+    // console.log('firstBoxPositionY: ', rect.y);
+    // console.log('firstBoxWidth: ', rect.width);
+    // console.log('firstBoxHeight: ', rect.height);
+
+    // let myNewBoxes: any[] = [
+    //   {
+    //     left: rect.x,
+    //     top: rect.y,
+    //     width: rect.width,
+    //     height: rect.height,
+    //   },
+    // ];
+    // setMyBoxes(myNewBoxes);
+  }, [myBoxRefs]);
 
   return (
     <div className="top">
       <div id={'react-parent'}>
-        <div className="react-box" ref={firstBoxRef}></div>
-        <div className="react-box"></div>
-        <div className="react-box"></div>
-        <div className="react-box"></div>
+        {myBoxRefs.map((boxRef: HTMLDivElement, index: number) => {
+          // if (myBoxRefs[index] === null) {
+          //   return <> </>;
+          // }
+          return <div className="react-box"></div>;
+        })}
       </div>
       <div id={'game-parent'} ref={gameParent} />
     </div>
