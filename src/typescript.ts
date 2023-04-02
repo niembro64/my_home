@@ -13,6 +13,7 @@ export interface Screen {
 
 export interface Platform {
   sprite: any | null;
+  graphic: any | null;
   x: number;
   y: number;
   width: number;
