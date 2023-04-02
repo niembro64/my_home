@@ -22,6 +22,7 @@ export interface Platform {
 
 export interface Player {
   sprite: any | null;
+  frictionX: number;
   x: number;
   y: number;
 }

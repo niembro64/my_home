@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { Mouse, Platform, Player } from '../typescript';
-import { goToXY } from './helpers/movement';
+import { goToXY, updatePlayerFriction } from './helpers/movement';
 import { updateSpriteFlip } from './helpers/sprite';
 
 export default class GameScene extends Phaser.Scene {
@@ -13,6 +13,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.kirby = {
       sprite: null,
+      frictionX: 0.8,
       x: 400,
       y: 300,
     };
@@ -102,23 +103,12 @@ export default class GameScene extends Phaser.Scene {
 
   update(): void {
     const k = this.kirby;
-    const p = this.platforms;
 
-    goToXY(k, this.mouse.x, this.mouse.y, this);
+    if (this.input.activePointer.isDown) {
+      goToXY(k, this.mouse.x, this.mouse.y, this);
+    }
+
     updateSpriteFlip(k, this);
-
-    // if (this.input.activePointer.isDown) {
-    //   if (this.mouseX < k.sprite.body.x) {
-    //     k.sprite.setVelocityX(-100);
-    //   } else if (this.mouseX > k.x) {
-    //     k.sprite.setVelocityX(100);
-    //   }
-
-    //   if (this.mouseY < k.sprite.body.y) {
-    //     k.sprite.setVelocityY(-100);
-    //   } else if (this.mouseY > k.y) {
-    //     k.sprite.setVelocityY(100);
-    //   }
-    // }
+    updatePlayerFriction(k);
   }
 }
