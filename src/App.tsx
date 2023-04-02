@@ -6,6 +6,8 @@ import { debugOptions, Screen } from './typescript';
 function App() {
   const gameParent = useRef<HTMLDivElement>(null);
   const gameRef = useRef<any>(null);
+  const firstBoxRef = useRef<HTMLDivElement>(null);
+  const [myBoxes, setMyBoxes] = React.useState<any[]>([]);
   const [screen, setScreen] = React.useState<Screen>({
     width: 0,
     height: 0,
@@ -85,11 +87,34 @@ function App() {
     };
   }, [screen]);
 
+  useEffect(() => {
+    if (!firstBoxRef.current) {
+      return;
+    }
+    console.log('firstBoxRef.current: ', firstBoxRef.current);
+    const firstBox = firstBoxRef.current;
+    const firstBoxStyle = window.getComputedStyle(firstBox);
+
+    const firstBoxPositionX = firstBoxStyle.getPropertyValue('left');
+    const firstBoxPositionY = firstBoxStyle.getPropertyValue('top');
+    const firstBoxWidth = firstBoxStyle.getPropertyValue('width');
+    const firstBoxHeight = firstBoxStyle.getPropertyValue('height');
+    const rect = firstBox.getBoundingClientRect();
+    console.log('firstBoxPositionX: ', rect.x);
+    console.log('firstBoxPositionY: ', rect.y);
+    console.log('firstBoxWidth: ', firstBoxWidth);
+    console.log('firstBoxHeight: ', firstBoxHeight);
+  }, [firstBoxRef]);
+
   return (
     <div className="top">
       <div id={'react-parent'}>
-        <div className="react-box"></div>
-        <div className="react-box"></div>
+        <div className="react-box" ref={firstBoxRef}>
+          {/* <div className="my-content-box"></div> */}
+        </div>
+        <div className="react-box">
+          {/* <div className="my-border-box"></div> */}
+        </div>
         <div className="react-box"></div>
         <div className="react-box"></div>
       </div>

@@ -14,8 +14,12 @@ export interface Screen {
 export interface Platform {
   sprite: any | null;
   graphic: any | null;
-  x: number;
-  y: number;
+  box: Box;
+}
+
+export interface Box {
+  left: number;
+  top: number;
   width: number;
   height: number;
 }

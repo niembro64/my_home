@@ -30,18 +30,22 @@ export default class GameScene extends Phaser.Scene {
       {
         sprite: null,
         graphic: null,
-        x: 100,
-        y: 200,
-        width: 200,
-        height: 100,
+        box: {
+          left: 100,
+          top: 200,
+          width: 200,
+          height: 100,
+        },
       },
       {
         sprite: null,
         graphic: null,
-        x: 200,
-        y: 500,
-        width: 200,
-        height: 100,
+        box: {
+          left: 400,
+          top: 400,
+          width: 200,
+          height: 100,
+        },
       },
     ];
 
@@ -69,10 +73,10 @@ export default class GameScene extends Phaser.Scene {
     p.forEach((platform, pIndex) => {
       // Create a Phaser.Geom.Rectangle
       const rect = new Phaser.Geom.Rectangle(
-        platform.x,
-        platform.y,
-        platform.width,
-        platform.height
+        platform.box.left,
+        platform.box.top,
+        platform.box.width,
+        platform.box.height
       );
 
       // Draw the rectangle using graphics
@@ -86,10 +90,10 @@ export default class GameScene extends Phaser.Scene {
         .add(
           this.add
             .rectangle(
-              platform.x,
-              platform.y,
-              platform.width,
-              platform.height,
+              platform.box.left,
+              platform.box.top,
+              platform.box.width,
+              platform.box.height,
               0x0000ff,
               0
             )
