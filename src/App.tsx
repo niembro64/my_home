@@ -93,14 +93,37 @@ function App() {
   return (
     <div className="top">
       <div id={'react-parent'} ref={reactParentRef}>
+        <div id="roby">
+          <div id="three">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+          <div id="four">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </div>
+        </div>
+      </div>
+      {/* <div id={'react-parent'} ref={reactParentRef}>
         {projects.map((project, index) => {
           return (
-            <div className={'react-box'} key={index}>
-              {project.title}
+            <div className={'project'} key={index}>
+              <div className="project-title">{project.title}</div>
+              <div className="project-type">{project.type}</div>
             </div>
           );
         })}
-      </div>
+      </div> */}
       <div id={'game-parent'} ref={gameParentRef} />
     </div>
   );
