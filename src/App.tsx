@@ -128,7 +128,7 @@ function App() {
         })}
       </div>
       <div id={'game-parent'} ref={gameParentRef} />
-
+      <div className="grass"></div>
     </div>
   );
 }
