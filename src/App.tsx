@@ -3,7 +3,6 @@ import './App.css';
 import GameScene from './phaser/GameScene';
 import { projects } from './rHelpers/projectArray';
 import { Box, debugOptions, Screen } from './typescript';
-import { LoadBar } from 'react-loadbar';
 import moment, { Moment } from 'moment';
 
 function App() {
@@ -129,14 +128,7 @@ function App() {
         })}
       </div>
       <div id={'game-parent'} ref={gameParentRef} />
-      <LoadBar
-        percent={0.5}
-        onVisibilityChange={(isVisible: any) => {
-          console.log(isVisible);
-        }}
-        barStyle={{ background: 'slateblue' }}
-        spinnerStyle={{ borderColor: 'slateblue' }}
-      />
+
     </div>
   );
 }
