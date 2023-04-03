@@ -43,4 +43,5 @@ export interface Mouse {
 export interface Project {
   title: string;
   type: string;
+  stack: string[];
 }

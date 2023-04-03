@@ -124,7 +124,7 @@ function App() {
           return (
             <div className={'project'} key={index}>
               <div className="project-title">{project.title}</div>
-              <div className="project-type">{project.type}</div>
+              <div className="project-type">{project.stack[0]}</div>
             </div>
           );
         })}
