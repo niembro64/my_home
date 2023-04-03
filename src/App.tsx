@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import GameScene from './phaser/GameScene';
 import { projects } from './rHelpers/projectArray';
@@ -9,27 +9,43 @@ function App() {
   const gameParentRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<any>(null);
   const grassRef = useRef<HTMLDivElement>(null);
+  const [customEventData, setCustomEventData] = useState<any>(null);
+
+  const handleCustomEvent = (event: any) => {
+    console.log('event', event);
+    setCustomEventData(event.detail.data);
+  };
+
+  const [gameReady, setGameReady] = useState<boolean>(false);
+  const handleGameReady = () => {
+    setGameReady(true);
+  };
+
   const reactParentRef = useRef<HTMLDivElement>(null);
-  const [myBoxes, setMyBoxes] = React.useState<Box[]>([]);
-  const [screen, setScreen] = React.useState<Screen>({
+  const [myBoxes, setMyBoxes] = useState<Box[]>([]);
+  const [screen, setScreen] = useState<Screen>({
     width: 0,
     height: 0,
   });
-  const [countState, setCountState] = React.useState<number>(0);
-  let countUp = 0;
 
-  useEffect(() => {
-    setInterval(() => {
-      countUp++;
-      setCountState((prev) => {
-        return ((prev + 0.1) % 10) / 10;
-      });
-    }, 1000);
-  }, []);
+  /////////////////
+  // COUNT UP
+  /////////////////
+  // const [countState, setCountState] = useState<number>(0);
+  // let countUp = 0;
 
-  useEffect(() => {
-    console.log('countUp', countState);
-  }, [countState]);
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     countUp++;
+  //     setCountState((prev) => {
+  //       return ((prev + 0.1) % 10) / 10;
+  //     });
+  //   }, 1000);
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log('countUp', countState);
+  // }, [countState]);
 
   /////////////////////////////////////
   // SET SCREEN INFO WHEN RENDERED
@@ -129,10 +145,30 @@ function App() {
 
     gameRef.current = new Phaser.Game(config);
     gameRef.current.registry.set('myBoxes', myBoxes);
+    gameRef.current.events.on('ready', handleGameReady);
     return () => {
       gameRef.current.destroy(true);
+      gameRef.current.events.off('ready', handleGameReady);
     };
   }, [screen, myBoxes]);
+
+  /////////////////////////////////////
+  // UPDATE PHASER GAME
+  /////////////////////////////////////
+  useEffect(() => {
+    if (!gameReady) {
+      return;
+    }
+
+    console.log('Game Ready');
+    // gameRef.current.events.on('phaserUpdate', handleCustomEvent);
+    window.addEventListener('gameState', handleCustomEvent);
+
+    return () => {
+      // gameRef.current.events.off('phaserUpdate', handleCustomEvent);
+      window.removeEventListener('gameState', handleCustomEvent);
+    };
+  }, [gameReady]);
 
   return (
     <div className="top">

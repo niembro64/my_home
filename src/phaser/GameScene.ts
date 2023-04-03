@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { Box, Mouse, Platform, Player } from '../typescript';
 import {
   goToXY,
+  updateJustTouchedGround,
   updatePlayerFrictionAir,
   updatePlayerFrictionGround,
 } from './pHelpers/movement';
@@ -24,6 +25,7 @@ export default class GameScene extends Phaser.Scene {
       posInitY: 300,
       velX: 20,
       velY: 60,
+      isTouchingPrev: false,
     };
 
     this.platforms = [
@@ -138,5 +140,6 @@ export default class GameScene extends Phaser.Scene {
     updateSpriteFlip(k, this);
     updatePlayerFrictionGround(k);
     updatePlayerFrictionAir(k, this);
+    updateJustTouchedGround(k, this);
   }
 }

@@ -33,6 +33,7 @@ export interface Player {
   posInitY: number;
   velX: number;
   velY: number;
+  isTouchingPrev: boolean;
 }
 
 export interface Mouse {
@@ -42,6 +43,7 @@ export interface Mouse {
 
 export interface Project {
   title: string;
+  url: string;
   type: string;
   stack: string[];
 }
