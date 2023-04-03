@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { Box, Mouse, Platform, Player } from '../typescript';
 import {
   goToXY,
+  updateCheckWhatTouching,
   updateJustTouchedGround,
   updatePlayerFrictionAir,
   updatePlayerFrictionGround,
@@ -12,6 +13,8 @@ export default class GameScene extends Phaser.Scene {
   kirby: Player;
   platforms: Platform[];
   mouse: Mouse;
+  // physics: Phaser.Physics.Arcade.ArcadePhysics;
+  objects: Phaser.Physics.Arcade.Sprite[] = [];
 
   constructor() {
     super('GameScene');
@@ -141,5 +144,6 @@ export default class GameScene extends Phaser.Scene {
     updatePlayerFrictionGround(k);
     updatePlayerFrictionAir(k, this);
     updateJustTouchedGround(k, this);
+    updateCheckWhatTouching(k, this);
   }
 }

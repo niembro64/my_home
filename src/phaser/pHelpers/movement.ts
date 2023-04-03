@@ -76,3 +76,22 @@ export const updateJustTouchedGround = (
 
   k.isTouchingPrev = k.sprite.body.touching.down;
 };
+
+export const updateCheckWhatTouching = (
+  player: Player,
+  game: GameScene
+): any => {
+  let platforms = game.platforms;
+  // let objects = game.objects;
+
+  const currentPlatform = platforms.find((platform) =>
+    game.physics.overlap(player.sprite, platform.sprite)
+  );
+
+  console.log('currentPlatform: ', currentPlatform);
+  return currentPlatform;
+
+  // return platforms.find(
+  //   (p) => player.sprite.body.touching.down && p.body.touching.up
+  // );
+};
