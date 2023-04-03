@@ -23,9 +23,11 @@
   z-index: 0;
 
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-around;
   align-items: center;
+
+  flex-wrap: wrap;
 
   pointer-events: none;
   z-index: 1;
@@ -52,4 +54,5 @@
   width: 200px;
   height: 150px;
   border-radius: 100px;
+  margin: 100px;
 }

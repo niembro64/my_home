@@ -118,7 +118,6 @@ function App() {
 
   return (
     <div className="top">
-      <div id={'react-parent'} ref={reactParentRef}></div>
       <div id={'react-parent'} ref={reactParentRef}>
         {projects.map((project, index) => {
           return (
