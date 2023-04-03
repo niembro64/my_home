@@ -8,6 +8,7 @@ import moment, { Moment } from 'moment';
 function App() {
   const gameParentRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<any>(null);
+  const grassRef = useRef<HTMLDivElement>(null);
   const reactParentRef = useRef<HTMLDivElement>(null);
   const [myBoxes, setMyBoxes] = React.useState<Box[]>([]);
   const [screen, setScreen] = React.useState<Screen>({
@@ -45,15 +46,19 @@ function App() {
   // SET BOXES FOR PHASER
   /////////////////////////////////////
   useEffect(() => {
-    if (!reactParentRef.current) {
+    if (!reactParentRef.current || !grassRef.current) {
       return;
     }
 
+    ///////////////////////////////
+    // ADD PROJECTS
+    ///////////////////////////////
     let myNewBoxes: Box[] = [];
     let numChildren = reactParentRef.current.children.length;
     for (let i = 0; i < numChildren; i++) {
       const child = reactParentRef.current.children[i];
       const rect = child.getBoundingClientRect();
+
       const newBox: Box = {
         left: rect.x,
         top: rect.y,
@@ -62,6 +67,20 @@ function App() {
       };
       myNewBoxes.push(newBox);
     }
+
+    ///////////////////////////////
+    // ADD GRASS
+    ///////////////////////////////
+    const rect = grassRef.current.getBoundingClientRect();
+    const percent = (15 - 3) / 15;
+    const newBox: Box = {
+      left: rect.x,
+      top: rect.y + rect.height * (1 - percent),
+      width: rect.width,
+      height: rect.height * percent,
+    };
+    myNewBoxes.push(newBox);
+
     setMyBoxes(myNewBoxes);
   }, [reactParentRef]);
 
@@ -128,7 +147,7 @@ function App() {
         })}
       </div>
       <div id={'game-parent'} ref={gameParentRef} />
-      <div className="grass"></div>
+      <div className="grass" ref={grassRef}></div>
     </div>
   );
 }

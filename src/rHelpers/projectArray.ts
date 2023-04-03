@@ -6,7 +6,7 @@ export const projects: Project[] = [
     stack: ['HTML', 'CSS', 'JavaScript'],
   },
   {
-    title: 'Web Smashed',
+    title: 'Smashed',
     type: 'Game',
     stack: [
       'Phaser',
