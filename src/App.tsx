@@ -3,6 +3,8 @@ import './App.css';
 import GameScene from './phaser/GameScene';
 import { projects } from './rHelpers/projectArray';
 import { Box, debugOptions, Screen } from './typescript';
+import { LoadBar } from 'react-loadbar';
+import moment, { Moment } from 'moment';
 
 function App() {
   const gameParentRef = useRef<HTMLDivElement>(null);
@@ -13,6 +15,21 @@ function App() {
     width: 0,
     height: 0,
   });
+  const [countState, setCountState] = React.useState<number>(0);
+  let countUp = 0;
+
+  useEffect(() => {
+    setInterval(() => {
+      countUp++;
+      setCountState((prev) => {
+        return ((prev + 0.1) % 10) / 10;
+      });
+    }, 1000);
+  }, []);
+
+  useEffect(() => {
+    console.log('countUp', countState);
+  }, [countState]);
 
   /////////////////////////////////////
   // SET SCREEN INFO WHEN RENDERED
@@ -113,6 +130,14 @@ function App() {
         })}
       </div>
       <div id={'game-parent'} ref={gameParentRef} />
+      <LoadBar
+        percent={0.5}
+        onVisibilityChange={(isVisible: any) => {
+          console.log(isVisible);
+        }}
+        barStyle={{ background: 'slateblue' }}
+        spinnerStyle={{ borderColor: 'slateblue' }}
+      />
     </div>
   );
 }
