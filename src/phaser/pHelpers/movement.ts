@@ -62,14 +62,14 @@ export const updateJustTouchedGround = (
   const k = player;
 
   if (k.sprite.body.touching.down && !k.isTouchingPrev) {
-    console.log("I'm touching the ground");
+    // console.log("I'm touching the ground");
     // game.events.emit('phaserUpdate', { data: 'TOUCHING' });
 
     window.dispatchEvent(
       new CustomEvent('gameState', { detail: 'TOUCHING 2' })
     );
   } else if (!k.sprite.body.touching.down && k.isTouchingPrev) {
-    console.log("I'm off the ground");
+    // console.log("I'm off the ground");
     // game.events.emit('phaserUpdate', { data: 'OFF' });
     window.dispatchEvent(new CustomEvent('gameState', { detail: 'OFF 2' }));
   } else {
@@ -104,6 +104,37 @@ export const getNearestPlatform = (
 
   if (platformNearest !== null && platformNearest['box'] !== null) {
     console.log('nearestPlatform.project', platformNearest['box']['project']);
+    return platformNearest;
+  }
+  return null;
+};
+
+export const getNearestPlatformUnderPlayer = (
+  player: Player,
+  game: GameScene
+): Platform | null => {
+  const k = player;
+  const p = game.platforms;
+
+  let platformNearest: Platform | null = null;
+  let distanceNearest: number = Infinity;
+
+  p.forEach((p: Platform) => {
+    const distanceNew = getDistance(
+      k.sprite.body.x,
+      k.sprite.body.y,
+      p.box.x,
+      p.box.y
+    );
+
+    if (distanceNew < distanceNearest && k.sprite.body.y < p.box.y) {
+      platformNearest = p;
+      distanceNearest = distanceNew;
+    }
+  });
+
+  if (platformNearest !== null && platformNearest['box'] !== null) {
+    console.log(platformNearest['box']['project']);
     return platformNearest;
   }
   return null;

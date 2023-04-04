@@ -6,6 +6,7 @@ import {
   updateJustTouchedGround,
   updatePlayerFrictionAir,
   updatePlayerFrictionGround,
+  getNearestPlatformUnderPlayer,
 } from './pHelpers/movement';
 import { updateSpriteFlip } from './pHelpers/sprite';
 
@@ -147,6 +148,7 @@ export default class GameScene extends Phaser.Scene {
     updatePlayerFrictionGround(k);
     updatePlayerFrictionAir(k, this);
     updateJustTouchedGround(k, this);
-    getNearestPlatform(k, this);
+    // getNearestPlatform(k, this);
+    getNearestPlatformUnderPlayer(k, this);
   }
 }
