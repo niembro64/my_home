@@ -30,6 +30,8 @@ function App() {
     if (navTouch === null) {
       clearInterval(myInterval.current);
       setCountUp(0);
+      setNavGo(null);
+      setNavWaiting(null);
       return;
     }
     setCountUp(20);
@@ -277,9 +279,17 @@ function App() {
       </div>
       <div id={'game-parent'} ref={gameParentRef} />
       <div className="grass" ref={grassRef}></div>
-      <div className="nav-notif">
-        <div className="nav-notif-text"></div>
+      <div className="states">
+        <div className="nav-touch">NAV-TOUCH {navTouch}</div>
+        <div className="nav-waiting">NAV-WAITING {navWaiting}</div>
+        <div className="nav-go">NAV-GO {navGo}</div>
       </div>
+
+      {navWaiting !== null && navTouch !== null && (
+        <div className="nav-notif">
+          <div className="nav-notif-text"></div>
+        </div>
+      )}
       {/* {navigateActual !== null && (
       )} */}
       {/* <div className="progress-bar">
