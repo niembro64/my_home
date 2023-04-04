@@ -97,10 +97,10 @@ function App() {
         left: left,
         width: width,
         height: height,
-        x: left,
-        y: top,
-        // x: x,
-        // y: y,
+        // x: left,
+        // y: top,
+        x: x,
+        y: y,
       };
       printMe('newBox', newBox);
       myNewBoxes.push(newBox);

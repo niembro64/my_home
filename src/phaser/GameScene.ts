@@ -74,8 +74,8 @@ export default class GameScene extends Phaser.Scene {
             top: box.top,
             width: box.width,
             height: box.height,
-            x: box.x + box.width / 2,
-            y: box.y + box.height / 2,
+            x: box.x,
+            y: box.y,
           },
         });
       });

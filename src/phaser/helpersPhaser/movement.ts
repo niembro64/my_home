@@ -138,8 +138,11 @@ export const getNearestPlatformUnderPlayer = (
     printMe(
       'pNearest',
       platformNearest['box']['project'] +
+        ' ' +
         JSON.parse(platformNearest['box']['x']).toFixed(0) +
+        ' ' +
         'k' +
+        ' ' +
         k.sprite.x.toFixed(0)
     );
     // console.log(platformNearest['box']['project']);
