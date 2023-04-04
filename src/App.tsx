@@ -80,9 +80,10 @@ function App() {
     for (let i = 0; i < numChildren; i++) {
       const child = reactParentRef.current.children[i];
       const rect = child.getBoundingClientRect();
+      const project: ProjectName = child.children[0].innerHTML as ProjectName;
 
       const newBox: Box = {
-        project: child.children[0].innerHTML as ProjectName,
+        project: project,
         left: rect.x,
         top: rect.y,
         width: rect.width,

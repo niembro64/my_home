@@ -85,22 +85,26 @@ export const getNearestPlatform = (
   const k = player;
   const p = game.platforms;
 
-  let nearestPlatform: Platform | null = null;
-  let nearestDistance: number = Infinity;
+  let platformNearest: Platform | null = null;
+  let distanceNearest: number = Infinity;
 
-  p.forEach((platform: Platform) => {
-    const distance = getDistance(
+  p.forEach((p: Platform) => {
+    const distanceNew = getDistance(
       k.sprite.body.x,
       k.sprite.body.y,
-      platform.box.x,
-      platform.box.y
+      p.box.x,
+      p.box.y
     );
-    // const distance = Math.abs(k.sprite.body.x - platform.sprite.body.x);
-    if (nearestPlatform === null || distance < nearestDistance) {
-      nearestPlatform = platform;
-      nearestDistance = distance;
+
+    if (distanceNew < distanceNearest) {
+      platformNearest = p;
+      distanceNearest = distanceNew;
     }
   });
 
-  return nearestPlatform;
+  if (platformNearest !== null && platformNearest['box'] !== null) {
+    console.log('nearestPlatform.project', platformNearest['box']['project']);
+    return platformNearest;
+  }
+  return null;
 };
