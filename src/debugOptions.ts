@@ -3,6 +3,6 @@ export interface DebugOptions {
   navigateActive: boolean;
 }
 export const debugOptions: DebugOptions = {
-  devMode: false,
-  navigateActive: false,
+  devMode: true,
+  navigateActive: true,
 };

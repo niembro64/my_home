@@ -8,6 +8,7 @@ import { printMe } from './helpersReact/printing';
 import { reactNavigate } from './helpersReact/helpers';
 import { ProgressBar } from 'react-progressbar-fancy';
 import { debugOptions } from './debugOptions';
+import { debug } from 'console';
 
 function App() {
   const gameParentRef = useRef<HTMLDivElement>(null);
@@ -63,7 +64,6 @@ function App() {
     setTimeout(() => {
       // console.log('TIMEOUT AFTER', navWaiting);
       setNavGo(navWaiting);
-      setNavWaiting(null);
     }, 2000);
   }, [navWaiting]);
 
@@ -279,15 +279,18 @@ function App() {
       </div>
       <div id={'game-parent'} ref={gameParentRef} />
       <div className="grass" ref={grassRef}></div>
-      <div className="states">
-        <div className="nav-touch">NAV-TOUCH {navTouch}</div>
-        <div className="nav-waiting">NAV-WAITING {navWaiting}</div>
-        <div className="nav-go">NAV-GO {navGo}</div>
-      </div>
+      {debugOptions.devMode && (
+        <div className="states">
+          <div className="nav-touch">NAV-TOUCH {navTouch}</div>
+          <div className="nav-waiting">NAV-WAITING {navWaiting}</div>
+          <div className="nav-go">NAV-GO {navGo}</div>
+        </div>
+      )}
 
       {navWaiting !== null && navTouch !== null && (
         <div className="nav-notif">
-          <div className="nav-notif-text"></div>
+          <div className="nav-notif-text-small">Navigating To</div>
+          <div className="nav-notif-text-big">{navTouch}</div>
         </div>
       )}
       {/* {navigateActual !== null && (
