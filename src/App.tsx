@@ -245,9 +245,15 @@ function App() {
             <div className={'project'} key={index}>
               <div className="project-title">{project.title}</div>
               <div className="project-type">{project.stack[0]}</div>
-              <div className="progress-bar">
-                <ProgressBar label="Loading Project" score={countUp} />
-              </div>
+
+              {project.title === navigateTo && (
+                <div className="progress-bar">
+                  <ProgressBar
+                    label={'Loading: ' + navigateTo}
+                    score={countUp}
+                  />
+                </div>
+              )}
             </div>
           );
         })}
