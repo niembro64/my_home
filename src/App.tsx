@@ -12,9 +12,13 @@ function App() {
   const grassRef = useRef<HTMLDivElement>(null);
   const [customEventData, setCustomEventData] = useState<any>(null);
 
-  const handleCustomEvent = (event: any) => {
-    const site = event.detail.data;
-    if (site satisfies ProjectName) {
+  const handleGameState = (event: any) => {
+    const site = event.detail;
+    // const site = event.detail.data;
+    // printMe('site', site);
+    console.log('event', event);
+    // console.log('site', site);
+    if (site !== null && (site satisfies ProjectName)) {
       let fullUrl = 'https://' + site.toLowerCase() + '.niembro64.com';
       window.open(fullUrl, '_blank');
     }
@@ -194,11 +198,11 @@ function App() {
 
     console.log('Game Ready');
     // gameRef.current.events.on('phaserUpdate', handleCustomEvent);
-    window.addEventListener('gameState', handleCustomEvent);
+    window.addEventListener('gameState', handleGameState);
 
     return () => {
       // gameRef.current.events.off('phaserUpdate', handleCustomEvent);
-      window.removeEventListener('gameState', handleCustomEvent);
+      window.removeEventListener('gameState', handleGameState);
     };
   }, [gameReady]);
 

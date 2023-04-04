@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { Box, Mouse, Platform, Player } from '../typescript';
+import { Box, Mouse, Platform, Player, ProjectName } from '../typescript';
 import {
   goToXY,
   getNearestPlatform,
@@ -14,8 +14,8 @@ export default class GameScene extends Phaser.Scene {
   kirby: Player;
   platforms: Platform[];
   mouse: Mouse;
-  // physics: Phaser.Physics.Arcade.ArcadePhysics;
   objects: Phaser.Physics.Arcade.Sprite[] = [];
+  nearestProject: ProjectName;
 
   constructor() {
     super('GameScene');
@@ -30,35 +30,17 @@ export default class GameScene extends Phaser.Scene {
       velX: 20,
       velY: 60,
       isTouchingPrev: false,
+      nearestProject: null,
     };
 
-    this.platforms = [
-      // {
-      //   sprite: null,
-      //   graphic: null,
-      //   box: {
-      //     left: 100,
-      //     top: 200,
-      //     width: 200,
-      //     height: 100,
-      //   },
-      // },
-      // {
-      //   sprite: null,
-      //   graphic: null,
-      //   box: {
-      //     left: 400,
-      //     top: 400,
-      //     width: 200,
-      //     height: 100,
-      //   },
-      // },
-    ];
+    this.platforms = [];
 
     this.mouse = {
       x: 0,
       y: 0,
     };
+
+    this.nearestProject = null;
   }
 
   preload(): void {
@@ -143,12 +125,13 @@ export default class GameScene extends Phaser.Scene {
   update(): void {
     const k = this.kirby;
 
+    console.log('nearestProject', this.nearestProject);
     goToXY(k, this.mouse.x, this.mouse.y, this);
     updateSpriteFlip(k, this);
     updatePlayerFrictionGround(k);
     updatePlayerFrictionAir(k, this);
-    updateJustTouchedGround(k, this);
     // getNearestPlatform(k, this);
-    getNearestPlatformUnderPlayer(k, this);
+    k.nearestProject = getNearestPlatformUnderPlayer(k, this);
+    updateJustTouchedGround(k, this);
   }
 }

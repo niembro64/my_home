@@ -37,6 +37,7 @@ export interface Player {
   velX: number;
   velY: number;
   isTouchingPrev: boolean;
+  nearestProject: ProjectName;
 }
 
 export interface Mouse {
