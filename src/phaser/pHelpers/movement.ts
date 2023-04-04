@@ -1,6 +1,6 @@
-import { Player } from '../../typescript';
+import { Platform, Player } from '../../typescript';
 import GameScene from '../GameScene';
-import { getNormalizedVector } from './math';
+import { getDistance, getNormalizedVector } from './math';
 
 export const goToXY = (
   player: Player,
@@ -78,21 +78,29 @@ export const updateJustTouchedGround = (
   k.isTouchingPrev = k.sprite.body.touching.down;
 };
 
-export const updateCheckWhatTouching = (
+export const getNearestPlatform = (
   player: Player,
   game: GameScene
-): any => {
-  let platforms = game.platforms;
-  // let objects = game.objects;
+): Platform | null => {
+  const k = player;
+  const p = game.platforms;
 
-  const currentPlatform = platforms.find((platform) =>
-    game.physics.overlap(player.sprite, platform.sprite)
-  );
+  let nearestPlatform: Platform | null = null;
+  let nearestDistance: number = Infinity;
 
-  console.log('currentPlatform: ', currentPlatform);
-  return currentPlatform;
+  p.forEach((platform: Platform) => {
+    const distance = getDistance(
+      k.sprite.body.x,
+      k.sprite.body.y,
+      platform.box.x,
+      platform.box.y
+    );
+    // const distance = Math.abs(k.sprite.body.x - platform.sprite.body.x);
+    if (nearestPlatform === null || distance < nearestDistance) {
+      nearestPlatform = platform;
+      nearestDistance = distance;
+    }
+  });
 
-  // return platforms.find(
-  //   (p) => player.sprite.body.touching.down && p.body.touching.up
-  // );
+  return nearestPlatform;
 };

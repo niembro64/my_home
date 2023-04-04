@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import GameScene from './phaser/GameScene';
 import { projects } from './rHelpers/projectArray';
-import { Box, debugOptions, Screen } from './typescript';
+import { Box, debugOptions, ProjectName, Screen } from './typescript';
 import moment, { Moment } from 'moment';
 
 function App() {
@@ -12,13 +12,14 @@ function App() {
   const [customEventData, setCustomEventData] = useState<any>(null);
 
   const handleCustomEvent = (event: any) => {
+    const site = event.detail.data;
+    if (site satisfies ProjectName) {
+      let fullUrl = 'https://' + site.toLowerCase() + '.niembro64.com';
+      window.open(fullUrl, '_blank');
+    }
 
-
-    window.open('https://niembro64.com', '_blank');
-    return;
-
-    console.log('event', event);
-    setCustomEventData(event.detail.data);
+    // console.log('event', event);
+    // setCustomEventData(event.detail.data);
   };
 
   const [gameReady, setGameReady] = useState<boolean>(false);
@@ -81,10 +82,13 @@ function App() {
       const rect = child.getBoundingClientRect();
 
       const newBox: Box = {
+        project: child.children[0].innerHTML as ProjectName,
         left: rect.x,
         top: rect.y,
         width: rect.width,
         height: rect.height,
+        x: rect.x + rect.width / 2,
+        y: rect.y + rect.height / 2,
       };
       myNewBoxes.push(newBox);
     }
@@ -95,10 +99,13 @@ function App() {
     const rect = grassRef.current.getBoundingClientRect();
     const percent = (15 - 3) / 15;
     const newBox: Box = {
+      project: null,
       left: rect.x,
       top: rect.y + rect.height * (1 - percent),
       width: rect.width,
       height: rect.height * percent,
+      x: rect.x + rect.width / 2,
+      y: rect.y + rect.height * (1 - percent) + (rect.height * percent) / 2,
     };
     myNewBoxes.push(newBox);
 

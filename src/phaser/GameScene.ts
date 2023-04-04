@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { Box, Mouse, Platform, Player } from '../typescript';
 import {
   goToXY,
-  updateCheckWhatTouching,
+  getNearestPlatform,
   updateJustTouchedGround,
   updatePlayerFrictionAir,
   updatePlayerFrictionGround,
@@ -68,10 +68,13 @@ export default class GameScene extends Phaser.Scene {
           sprite: null,
           graphic: null,
           box: {
+            project: box.project,
             left: box.left,
             top: box.top,
             width: box.width,
             height: box.height,
+            x: box.x + box.width / 2,
+            y: box.y + box.height / 2,
           },
         });
       });
@@ -144,6 +147,6 @@ export default class GameScene extends Phaser.Scene {
     updatePlayerFrictionGround(k);
     updatePlayerFrictionAir(k, this);
     updateJustTouchedGround(k, this);
-    updateCheckWhatTouching(k, this);
+    getNearestPlatform(k, this);
   }
 }

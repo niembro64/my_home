@@ -18,10 +18,13 @@ export interface Platform {
 }
 
 export interface Box {
+  project: ProjectName;
   left: number;
   top: number;
   width: number;
   height: number;
+  x: number;
+  y: number;
 }
 
 export interface Player {
@@ -42,8 +45,17 @@ export interface Mouse {
 }
 
 export interface Project {
-  title: string;
+  title: ProjectName;
   url: string;
   type: string;
   stack: string[];
 }
+
+export type ProjectName =
+  | 'Design'
+  | 'Smashed'
+  | 'Pirates'
+  | 'Events'
+  | 'Shows'
+  | 'Media'
+  | null;
