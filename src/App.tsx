@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import GameScene from './phaser/GameScene';
-import { projects } from './rHelpers/projectArray';
+import { projects } from './helpersReact/projectArray';
 import { Box, debugOptions, ProjectName, Screen } from './typescript';
 import moment, { Moment } from 'moment';
+import { printMe } from './helpersReact/printing';
 
 function App() {
   const gameParentRef = useRef<HTMLDivElement>(null);
@@ -82,15 +83,26 @@ function App() {
       const rect = child.getBoundingClientRect();
       const project: ProjectName = child.children[0].innerHTML as ProjectName;
 
+      console.log('project', project);
+      const top = rect.y;
+      const left = rect.x;
+      const width = rect.width;
+      const height = rect.height;
+      const x = left + width * 0.5;
+      const y = top + height * 0.5;
+
       const newBox: Box = {
         project: project,
-        left: rect.x,
-        top: rect.y,
-        width: rect.width,
-        height: rect.height,
-        x: rect.x + rect.width / 2,
-        y: rect.y + rect.height / 2,
+        top: top,
+        left: left,
+        width: width,
+        height: height,
+        x: left,
+        y: top,
+        // x: x,
+        // y: y,
       };
+      printMe('newBox', newBox);
       myNewBoxes.push(newBox);
     }
 
@@ -98,15 +110,22 @@ function App() {
     // ADD GRASS
     ///////////////////////////////
     const rect = grassRef.current.getBoundingClientRect();
-    const percent = (15 - 3) / 15;
+    const percentKeep = (15 - 3) / 15;
+    const top = rect.y + rect.height * (1 - percentKeep);
+    const left = rect.x;
+    const width = rect.width;
+    const height = rect.height * percentKeep;
+    const x = rect.x + width * 0.5;
+    const y = top + height * 0.5;
+
     const newBox: Box = {
       project: null,
-      left: rect.x,
-      top: rect.y + rect.height * (1 - percent),
-      width: rect.width,
-      height: rect.height * percent,
-      x: rect.x + rect.width / 2,
-      y: rect.y + rect.height * (1 - percent) + (rect.height * percent) / 2,
+      left: left,
+      top: top,
+      width: width,
+      height: height,
+      x: x,
+      y: y,
     };
     myNewBoxes.push(newBox);
 

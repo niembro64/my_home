@@ -7,8 +7,8 @@ import {
   updatePlayerFrictionAir,
   updatePlayerFrictionGround,
   getNearestPlatformUnderPlayer,
-} from './pHelpers/movement';
-import { updateSpriteFlip } from './pHelpers/sprite';
+} from './helpersPhaser/movement';
+import { updateSpriteFlip } from './helpersPhaser/sprite';
 
 export default class GameScene extends Phaser.Scene {
   kirby: Player;

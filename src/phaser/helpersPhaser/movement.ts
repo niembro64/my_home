@@ -1,3 +1,4 @@
+import { printMe } from '../../helpersReact/printing';
 import { Platform, Player } from '../../typescript';
 import GameScene from '../GameScene';
 import { getDistance, getNormalizedVector } from './math';
@@ -121,8 +122,8 @@ export const getNearestPlatformUnderPlayer = (
 
   p.forEach((p: Platform) => {
     const distanceNew = getDistance(
-      k.sprite.body.x,
-      k.sprite.body.y,
+      k.sprite.body.x + k.sprite.body.width * 0.5,
+      k.sprite.body.y + k.sprite.body.height * 0.5,
       p.box.x,
       p.box.y
     );
@@ -134,7 +135,14 @@ export const getNearestPlatformUnderPlayer = (
   });
 
   if (platformNearest !== null && platformNearest['box'] !== null) {
-    console.log(platformNearest['box']['project']);
+    printMe(
+      'pNearest',
+      platformNearest['box']['project'] +
+        JSON.parse(platformNearest['box']['x']).toFixed(0) +
+        'k' +
+        k.sprite.x.toFixed(0)
+    );
+    // console.log(platformNearest['box']['project']);
     return platformNearest;
   }
   return null;
