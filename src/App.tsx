@@ -15,6 +15,8 @@ function App() {
   const grassRef = useRef<HTMLDivElement>(null);
   const [customEventData, setCustomEventData] = useState<any>(null);
   const [navigateTo, setNavigateTo] = useState<ProjectName | null>(null);
+  const [countUp, setCountUp] = useState<number>(0);
+  let myInterval = useRef<any>(null);
 
   const handleGameState = (event: any) => {
     const site = event.detail;
@@ -24,11 +26,38 @@ function App() {
     // console.log('site', site);
     setNavigateTo(site);
 
-    reactNavigate(site);
-
     // console.log('event', event);
     // setCustomEventData(event.detail.data);
   };
+
+  useEffect(() => {
+    console.log('useEffect', navigateTo);
+
+    if (navigateTo === null) {
+      setCountUp(0);
+      clearInterval(myInterval.current);
+      return;
+    }
+
+    myInterval.current = setInterval(() => {
+      setCountUp((prev) => {
+        return (prev + 1) % 100;
+      });
+    }, 100);
+
+    if (!debugOptions.navigateActive) {
+      return;
+    }
+    reactNavigate(navigateTo);
+    return () => {
+      clearInterval(myInterval.current);
+      setCountUp(0);
+    };
+  }, [navigateTo]);
+
+  useEffect(() => {
+    console.log('countUp', countUp);
+  }, [countUp]);
 
   const [gameReady, setGameReady] = useState<boolean>(false);
   const handleGameReady = () => {
@@ -224,7 +253,7 @@ function App() {
       <div className="grass" ref={grassRef}></div>
       <div className="progress-bar">
         {/* <div className="project-bar-text">Loading Project</div> */}
-        <ProgressBar label="Loading Project" score={60} />
+        <ProgressBar label="Loading Project" score={countUp} />
         {/* <ProgressBar darkTheme={true} label="Loading Project" score={60} /> */}
       </div>
     </div>

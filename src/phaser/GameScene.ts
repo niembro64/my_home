@@ -129,9 +129,7 @@ export default class GameScene extends Phaser.Scene {
     updateSpriteFlip(k, this);
     updatePlayerFrictionGround(k);
     updatePlayerFrictionAir(k, this);
-    // getNearestPlatform(k, this);
     k.nearestProject = getNearestPlatformUnderPlayer(k, this);
     updateJustTouchedGround(k, this);
-    console.log('nearestProject', this.nearestProject);
   }
 }

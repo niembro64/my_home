@@ -61,15 +61,9 @@ export const updateJustTouchedGround = (
   player: Player,
   game: GameScene
 ): void => {
-  if (!debugOptions.navigateActive) {
-    return;
-  }
-
   const k = player;
 
   if (k.sprite.body.touching.down && !k.isTouchingPrev) {
-    // getNearestPlatformUnderPlayer(k, game);
-
     console.log('k.nearestProject', k.nearestProject);
     console.log('game.nearestProject', game.nearestProject);
     window.dispatchEvent(
