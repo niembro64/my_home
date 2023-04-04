@@ -41,9 +41,9 @@ function App() {
 
     myInterval.current = setInterval(() => {
       setCountUp((prev) => {
-        return (prev + 1) % 100;
+        return Math.min(prev + 20, 100);
       });
-    }, 100);
+    }, 1000);
 
     if (!debugOptions.navigateActive) {
       return;
