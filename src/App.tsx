@@ -245,17 +245,18 @@ function App() {
             <div className={'project'} key={index}>
               <div className="project-title">{project.title}</div>
               <div className="project-type">{project.stack[0]}</div>
+              <div className="progress-bar">
+                <ProgressBar label="Loading Project" score={countUp} />
+              </div>
             </div>
           );
         })}
       </div>
       <div id={'game-parent'} ref={gameParentRef} />
       <div className="grass" ref={grassRef}></div>
-      <div className="progress-bar">
-        {/* <div className="project-bar-text">Loading Project</div> */}
+      {/* <div className="progress-bar">
         <ProgressBar label="Loading Project" score={countUp} />
-        {/* <ProgressBar darkTheme={true} label="Loading Project" score={60} /> */}
-      </div>
+      </div> */}
     </div>
   );
 }
