@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import GameScene from './phaser/GameScene';
 import { projects } from './helpersReact/projectArray';
-import { Box, debugOptions, ProjectName, Screen } from './typescript';
+import { Box, ProjectName, Screen } from './typescript';
 import moment, { Moment } from 'moment';
 import { printMe } from './helpersReact/printing';
 import { reactNavigate } from './helpersReact/helpers';
+import { ProgressBar } from 'react-progressbar-fancy';
+import { debugOptions } from './debugOptions';
 
 function App() {
   const gameParentRef = useRef<HTMLDivElement>(null);
@@ -161,7 +163,6 @@ function App() {
       scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
-
         width: screen.width,
         height: screen.height,
       },
@@ -221,6 +222,11 @@ function App() {
       </div>
       <div id={'game-parent'} ref={gameParentRef} />
       <div className="grass" ref={grassRef}></div>
+      <div className="progress-bar">
+        {/* <div className="project-bar-text">Loading Project</div> */}
+        <ProgressBar label="Loading Project" score={60} />
+        {/* <ProgressBar darkTheme={true} label="Loading Project" score={60} /> */}
+      </div>
     </div>
   );
 }

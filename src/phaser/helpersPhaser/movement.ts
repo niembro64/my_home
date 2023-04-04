@@ -1,3 +1,4 @@
+import { debugOptions } from '../../debugOptions';
 import { printMe } from '../../helpersReact/printing';
 import { Platform, Player, ProjectName } from '../../typescript';
 import GameScene from '../GameScene';
@@ -60,6 +61,10 @@ export const updateJustTouchedGround = (
   player: Player,
   game: GameScene
 ): void => {
+  if (!debugOptions.navigateActive) {
+    return;
+  }
+
   const k = player;
 
   if (k.sprite.body.touching.down && !k.isTouchingPrev) {
@@ -71,9 +76,7 @@ export const updateJustTouchedGround = (
       new CustomEvent('gameState', { detail: k.nearestProject })
     );
   } else if (!k.sprite.body.touching.down && k.isTouchingPrev) {
-    window.dispatchEvent(
-      new CustomEvent('gameState', { detail: null })
-    );
+    window.dispatchEvent(new CustomEvent('gameState', { detail: null }));
   } else {
   }
 

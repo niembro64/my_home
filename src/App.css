@@ -1,7 +1,31 @@
+@font-face {
+  font-family: 'PixelOperator';
+  src: url('../src/fonts/pixel_operator/PixelOperator.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PixelOperator-Bold';
+  src: url('../src/fonts/pixel_operator/PixelOperator-Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PixelOperator8-Bold';
+  src: url('../src/fonts/pixel_operator/PixelOperator-Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
 * {
   margin: 0px;
   padding: 0px;
   /* overflow: hidden; */
+
+  font-family: 'PixelOperator8-Bold', 'Roboto', sans-serif;
+  /* font-family: 'PixelOperator', 'Roboto', sans-serif; */
 }
 
 .top {
@@ -34,7 +58,7 @@
 }
 
 #game-parent {
-  background-color: rgba(255, 0, 0, 0.135);
+  /* background-color: rgba(255, 0, 0, 0.135); */
   position: absolute;
   top: 0px;
   left: 0px;
@@ -69,4 +93,34 @@
   background-repeat: repeat;
 
   /* border: 3px dashed orange; */
+}
+
+.progress-bar {
+  position: absolute;
+  bottom: 0px;
+  /* bottom: 0px; */
+  left: 0px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 3%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-bar-text {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: white;
+
+  /* // prevent cursor from selecting text */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                        supported by Chrome and Opera */
 }
