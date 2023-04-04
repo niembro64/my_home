@@ -14,50 +14,62 @@ function App() {
   const gameRef = useRef<any>(null);
   const grassRef = useRef<HTMLDivElement>(null);
   const [customEventData, setCustomEventData] = useState<any>(null);
-  const [navigateTo, setNavigateTo] = useState<ProjectName | null>(null);
+  const [navigateCandidate, setNavigateCandidate] =
+    useState<ProjectName | null>(null);
+  const [navigateActual, setNavigateActual] = useState<ProjectName | null>(
+    null
+  );
   const [countUp, setCountUp] = useState<number>(0);
+  const countUpAmount = 20;
   let myInterval = useRef<any>(null);
 
   const handleGameState = (event: any) => {
     const site = event.detail;
-    // const site = event.detail.data;
-    // printMe('site', site);
-    // console.log('event', event);
-    // console.log('site', site);
-    setNavigateTo(site);
-
-    // console.log('event', event);
-    // setCustomEventData(event.detail.data);
+    setNavigateCandidate(site);
   };
 
   useEffect(() => {
-    console.log('useEffect', navigateTo);
+    console.log('useEffect', navigateCandidate);
 
-    if (navigateTo === null) {
-      setCountUp(0);
+    if (navigateCandidate === null) {
       clearInterval(myInterval.current);
+      setCountUp(0);
       return;
     }
+
+    setCountUp(0);
+    // setCountUp(countUpAmount);
 
     myInterval.current = setInterval(() => {
       setCountUp((prev) => {
-        return Math.min(prev + 20, 100);
+        console.log('prev', prev);
+        return Math.min(prev + countUpAmount, 100);
       });
     }, 1000);
 
-    if (!debugOptions.navigateActive) {
-      return;
-    }
-    reactNavigate(navigateTo);
     return () => {
       clearInterval(myInterval.current);
-      setCountUp(0);
+      setNavigateActual(navigateCandidate);
     };
-  }, [navigateTo]);
+  }, [navigateCandidate]);
+
+  useEffect(() => {
+    if (navigateActual === null) {
+      return;
+    }
+    console.log('navigateActual', navigateActual);
+    setTimeout(() => {
+      reactNavigate(navigateActual);
+    }, 2000);
+  }, [navigateActual]);
 
   useEffect(() => {
     console.log('countUp', countUp);
-  }, [countUp]);
+    if (navigateCandidate !== null && countUp === 100) {
+      clearInterval(myInterval.current);
+      reactNavigate(navigateCandidate);
+    }
+  }, [countUp, navigateCandidate]);
 
   const [gameReady, setGameReady] = useState<boolean>(false);
   const handleGameReady = () => {
@@ -246,10 +258,10 @@ function App() {
               <div className="project-title">{project.title}</div>
               <div className="project-type">{project.stack[0]}</div>
 
-              {project.title === navigateTo && (
+              {project.title === navigateCandidate && (
                 <div className="progress-bar">
                   <ProgressBar
-                    label={'Loading: ' + navigateTo}
+                    label={'Loading: ' + navigateCandidate}
                     score={countUp}
                   />
                 </div>
@@ -260,6 +272,11 @@ function App() {
       </div>
       <div id={'game-parent'} ref={gameParentRef} />
       <div className="grass" ref={grassRef}></div>
+      <div className="nav-notif">
+        <div className="nav-notif-text"></div>
+      </div>
+      {/* {navigateActual !== null && (
+      )} */}
       {/* <div className="progress-bar">
         <ProgressBar label="Loading Project" score={countUp} />
       </div> */}
