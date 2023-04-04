@@ -64,6 +64,7 @@ export const updateJustTouchedGround = (
   if (k.sprite.body.touching.down && !k.isTouchingPrev) {
     console.log("I'm touching the ground");
     // game.events.emit('phaserUpdate', { data: 'TOUCHING' });
+
     window.dispatchEvent(
       new CustomEvent('gameState', { detail: 'TOUCHING 2' })
     );

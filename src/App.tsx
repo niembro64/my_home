@@ -12,6 +12,11 @@ function App() {
   const [customEventData, setCustomEventData] = useState<any>(null);
 
   const handleCustomEvent = (event: any) => {
+
+
+    window.open('https://niembro64.com', '_blank');
+    return;
+
     console.log('event', event);
     setCustomEventData(event.detail.data);
   };
