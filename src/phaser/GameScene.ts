@@ -125,7 +125,6 @@ export default class GameScene extends Phaser.Scene {
   update(): void {
     const k = this.kirby;
 
-    console.log('nearestProject', this.nearestProject);
     goToXY(k, this.mouse.x, this.mouse.y, this);
     updateSpriteFlip(k, this);
     updatePlayerFrictionGround(k);
@@ -133,5 +132,6 @@ export default class GameScene extends Phaser.Scene {
     // getNearestPlatform(k, this);
     k.nearestProject = getNearestPlatformUnderPlayer(k, this);
     updateJustTouchedGround(k, this);
+    console.log('nearestProject', this.nearestProject);
   }
 }

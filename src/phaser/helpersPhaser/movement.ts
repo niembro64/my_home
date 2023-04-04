@@ -72,7 +72,7 @@ export const updateJustTouchedGround = (
     );
   } else if (!k.sprite.body.touching.down && k.isTouchingPrev) {
     window.dispatchEvent(
-      new CustomEvent('gameState', { detail: k.nearestProject })
+      new CustomEvent('gameState', { detail: null })
     );
   } else {
   }

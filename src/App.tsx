@@ -5,23 +5,24 @@ import { projects } from './helpersReact/projectArray';
 import { Box, debugOptions, ProjectName, Screen } from './typescript';
 import moment, { Moment } from 'moment';
 import { printMe } from './helpersReact/printing';
+import { reactNavigate } from './helpersReact/helpers';
 
 function App() {
   const gameParentRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<any>(null);
   const grassRef = useRef<HTMLDivElement>(null);
   const [customEventData, setCustomEventData] = useState<any>(null);
+  const [navigateTo, setNavigateTo] = useState<ProjectName | null>(null);
 
   const handleGameState = (event: any) => {
     const site = event.detail;
     // const site = event.detail.data;
     // printMe('site', site);
-    console.log('event', event);
+    // console.log('event', event);
     // console.log('site', site);
-    if (site !== null && (site satisfies ProjectName)) {
-      let fullUrl = 'https://' + site.toLowerCase() + '.niembro64.com';
-      window.open(fullUrl, '_blank');
-    }
+    setNavigateTo(site);
+
+    reactNavigate(site);
 
     // console.log('event', event);
     // setCustomEventData(event.detail.data);
