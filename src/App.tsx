@@ -14,35 +14,27 @@ function App() {
   const gameRef = useRef<any>(null);
   const grassRef = useRef<HTMLDivElement>(null);
   const [customEventData, setCustomEventData] = useState<any>(null);
-  const [navigateCandidate, setNavigateCandidate] =
-    useState<ProjectName | null>(null);
-  const [navigateActual, setNavigateActual] = useState<ProjectName | null>(
-    null
-  );
+  const [navTouch, setNavTouch] = useState<ProjectName | null>(null);
+  const [navWaiting, setNavWaiting] = useState<ProjectName | null>(null);
+  const [navGo, setNavGo] = useState<ProjectName | null>(null);
   const [countUp, setCountUp] = useState<number>(0);
-  const countUpAmount = 20;
+  const countUpAmount = 40;
   let myInterval = useRef<any>(null);
 
   const handleGameState = (event: any) => {
     const site = event.detail;
-    setNavigateCandidate(site);
+    setNavTouch(site);
   };
 
   useEffect(() => {
-    console.log('useEffect', navigateCandidate);
-
-    if (navigateCandidate === null) {
+    if (navTouch === null) {
       clearInterval(myInterval.current);
       setCountUp(0);
       return;
     }
-
-    setCountUp(0);
-    // setCountUp(countUpAmount);
-
+    setCountUp(20);
     myInterval.current = setInterval(() => {
       setCountUp((prev) => {
-        console.log('prev', prev);
         const newBoy = prev + countUpAmount;
         const newLessThan100 = newBoy < 100 ? newBoy : 100;
         return newLessThan100;
@@ -51,27 +43,35 @@ function App() {
 
     return () => {
       clearInterval(myInterval.current);
-      setNavigateActual(navigateCandidate);
     };
-  }, [navigateCandidate]);
+  }, [navTouch]);
 
   useEffect(() => {
-    if (navigateActual === null) {
+    if (navTouch !== null && countUp === 100) {
+      clearInterval(myInterval.current);
+      setNavWaiting(navTouch);
+    }
+  }, [countUp, navTouch]);
+
+  useEffect(() => {
+    if (navWaiting === null) {
       return;
     }
-    console.log('navigateActual', navigateActual);
+    // console.log('TIMEOUT BEFORE', navWaiting);
     setTimeout(() => {
-      reactNavigate(navigateActual);
+      // console.log('TIMEOUT AFTER', navWaiting);
+      setNavGo(navWaiting);
+      setNavWaiting(null);
     }, 2000);
-  }, [navigateActual]);
+  }, [navWaiting]);
 
   useEffect(() => {
-    console.log('countUp', countUp);
-    if (navigateCandidate !== null && countUp === 100) {
-      clearInterval(myInterval.current);
-      reactNavigate(navigateCandidate);
+    if (navGo === null || navTouch === null) {
+      return;
     }
-  }, [countUp, navigateCandidate]);
+    // console.log('NAVIGATING', navGo);
+    reactNavigate(navGo);
+  }, [navGo]);
 
   const [gameReady, setGameReady] = useState<boolean>(false);
   const handleGameReady = () => {
@@ -260,10 +260,10 @@ function App() {
               <div className="project-title">{project.title}</div>
               <div className="project-type">{project.stack[0]}</div>
 
-              {project.title === navigateCandidate && (
+              {project.title === navTouch && (
                 <div className="progress-bar">
                   <ProgressBar
-                    label={navigateCandidate?.toUpperCase() + ''}
+                    label={navTouch?.toUpperCase() + ''}
                     // label={navigateCandidate + ''}
                     // label={'Loading: ' + navigateCandidate}
                     score={countUp}
