@@ -100,7 +100,7 @@
 
 .progress-bar {
   position: absolute;
-  bottom: -40px;
+  bottom: -65px;
   /* top: 0px; */
   left: -30%;
   width: 160%;
@@ -117,7 +117,7 @@
 .progress-bar-text {
   font-size: 1.5em;
   font-weight: bold;
-  color: white;
+  color: black;
 
   /* // prevent cursor from selecting text */
   -webkit-touch-callout: none; /* iOS Safari */
@@ -144,7 +144,7 @@
 .nav-notif-text {
   width: 100%;
   transform: translate(-50%, -50%);
-  font-size: 1.5em;
+  font-size: 0.5em;
   font-weight: bold;
   color: white;
 

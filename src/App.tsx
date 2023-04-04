@@ -43,7 +43,9 @@ function App() {
     myInterval.current = setInterval(() => {
       setCountUp((prev) => {
         console.log('prev', prev);
-        return Math.min(prev + countUpAmount, 100);
+        const newBoy = prev + countUpAmount;
+        const newLessThan100 = newBoy < 100 ? newBoy : 100;
+        return newLessThan100;
       });
     }, 1000);
 
@@ -261,9 +263,12 @@ function App() {
               {project.title === navigateCandidate && (
                 <div className="progress-bar">
                   <ProgressBar
-                    label={'Loading: ' + navigateCandidate}
+                    label={navigateCandidate?.toUpperCase() + ''}
+                    // label={navigateCandidate + ''}
+                    // label={'Loading: ' + navigateCandidate}
                     score={countUp}
                   />
+                  <div className="progress-bar-text">LOADING</div>
                 </div>
               )}
             </div>
