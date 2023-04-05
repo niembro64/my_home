@@ -266,9 +266,10 @@ function App() {
                 muted
                 loop
               ></video>
-              <div className="project-title">{project.title}</div>
-              <div className="project-type">{project.stack[0]}</div>
-
+              <div className="project-overlay">
+                <div className="project-title">{project.title}</div>
+                <div className="project-type">{project.stack[0]}</div>
+              </div>
               {project.title === navTouch && (
                 <div className="progress-bar">
                   <ProgressBar
