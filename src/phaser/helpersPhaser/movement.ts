@@ -64,8 +64,7 @@ export const updateJustTouchedGround = (
   const k = player;
 
   if (k.sprite.body.touching.down && !k.isTouchingPrev) {
-    console.log('k.nearestProject', k.nearestProject);
-    console.log('game.nearestProject', game.nearestProject);
+    console.log('PHASER | k.nearestProject', k.nearestProject);
     window.dispatchEvent(
       new CustomEvent('gameState', { detail: k.nearestProject })
     );
@@ -133,23 +132,7 @@ export const getNearestPlatformUnderPlayer = (
   });
 
   if (platformNearest !== null && platformNearest['box'] !== null) {
-    // printMe(
-    //   'pNearest',
-    //   platformNearest['box']['project'] +
-    //     ' ' +
-    //     JSON.parse(platformNearest['box']['x']).toFixed(0) +
-    //     ' ' +
-    //     'k' +
-    //     ' ' +
-    //     k.sprite.x.toFixed(0)
-    // );
-    // console.log(platformNearest['box']['project']);
-    // k.nearestProject = platformNearest['box']['project'];
-    // game.nearestProject = platformNearest['box']['project'];
-    // console.log('k.nearestProject', k.nearestProject);
     return platformNearest['box']['project'];
   }
   return null;
-  // k.nearestProject = null;
-  // game.nearestProject = null;
 };

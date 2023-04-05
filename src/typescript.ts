@@ -10,7 +10,7 @@ export interface Platform {
 }
 
 export interface Box {
-  project: ProjectName;
+  project: ProjectName | null;
   left: number;
   top: number;
   width: number;
@@ -29,7 +29,7 @@ export interface Player {
   velX: number;
   velY: number;
   isTouchingPrev: boolean;
-  nearestProject: ProjectName;
+  nearestProject: ProjectName | null;
 }
 
 export interface Mouse {
@@ -50,5 +50,4 @@ export type ProjectName =
   | 'Pirates'
   | 'Events'
   | 'Shows'
-  | 'Media'
-  | null;
+  | 'Media';

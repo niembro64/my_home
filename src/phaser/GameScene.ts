@@ -15,7 +15,6 @@ export default class GameScene extends Phaser.Scene {
   platforms: Platform[];
   mouse: Mouse;
   objects: Phaser.Physics.Arcade.Sprite[] = [];
-  nearestProject: ProjectName;
 
   constructor() {
     super('GameScene');
@@ -40,7 +39,6 @@ export default class GameScene extends Phaser.Scene {
       y: 0,
     };
 
-    this.nearestProject = null;
   }
 
   preload(): void {

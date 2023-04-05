@@ -14,7 +14,6 @@ function App() {
   const gameParentRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<any>(null);
   const grassRef = useRef<HTMLDivElement>(null);
-  const [customEventData, setCustomEventData] = useState<any>(null);
   const [navTouch, setNavTouch] = useState<ProjectName | null>(null);
   const [navWaiting, setNavWaiting] = useState<ProjectName | null>(null);
   const [navGo, setNavGo] = useState<ProjectName | null>(null);
@@ -24,6 +23,7 @@ function App() {
 
   const handleGameState = (event: any) => {
     const site = event.detail;
+    console.log('handleGameState site', event);
     setNavTouch(site);
   };
 
@@ -257,7 +257,7 @@ function App() {
         {projects.map((project, index) => {
           return (
             <div className={'project'} key={index}>
-              <video
+              {/* <video
                 className="project-video"
                 src={
                   process.env.PUBLIC_URL + '/videos/' + project.title + '.mp4'
@@ -265,7 +265,7 @@ function App() {
                 autoPlay
                 muted
                 loop
-              ></video>
+              ></video> */}
               <div className="project-overlay">
                 <div className="project-title">{project.title}</div>
                 <div className="project-type">{project.stack[0]}</div>
