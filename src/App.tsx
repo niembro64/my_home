@@ -244,11 +244,9 @@ function App() {
     }
 
     console.log('Game Ready');
-    // gameRef.current.events.on('phaserUpdate', handleCustomEvent);
     window.addEventListener('gameState', handleGameState);
 
     return () => {
-      // gameRef.current.events.off('phaserUpdate', handleCustomEvent);
       window.removeEventListener('gameState', handleGameState);
     };
   }, [gameReady]);
@@ -259,6 +257,15 @@ function App() {
         {projects.map((project, index) => {
           return (
             <div className={'project'} key={index}>
+              <video
+                className="project-video"
+                src={
+                  process.env.PUBLIC_URL + '/videos/' + project.title + '.mp4'
+                }
+                autoPlay
+                muted
+                loop
+              ></video>
               <div className="project-title">{project.title}</div>
               <div className="project-type">{project.stack[0]}</div>
 
