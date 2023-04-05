@@ -14,6 +14,7 @@ function App() {
   const gameParentRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<any>(null);
   const grassRef = useRef<HTMLDivElement>(null);
+  const [customEventData, setCustomEventData] = useState<any>(null);
   const [navTouch, setNavTouch] = useState<ProjectName | null>(null);
   const [navWaiting, setNavWaiting] = useState<ProjectName | null>(null);
   const [navGo, setNavGo] = useState<ProjectName | null>(null);
@@ -23,7 +24,6 @@ function App() {
 
   const handleGameState = (event: any) => {
     const site = event.detail;
-    console.log('handleGameState site', event);
     setNavTouch(site);
   };
 
@@ -133,7 +133,8 @@ function App() {
     for (let i = 0; i < numChildren; i++) {
       const child = reactParentRef.current.children[i];
       const rect = child.getBoundingClientRect();
-      const project: ProjectName = child.children[0].innerHTML as ProjectName;
+      const project: ProjectName = child.children[0].children[0]
+        .innerHTML as ProjectName;
 
       console.log('project', project);
       const top = rect.y;
@@ -257,7 +258,11 @@ function App() {
         {projects.map((project, index) => {
           return (
             <div className={'project'} key={index}>
-              {/* <video
+              <div className="project-overlay">
+                <div className="project-title">{project.title}</div>
+                <div className="project-type">{project.stack[0]}</div>
+              </div>
+              <video
                 className="project-video"
                 src={
                   process.env.PUBLIC_URL + '/videos/' + project.title + '.mp4'
@@ -265,11 +270,7 @@ function App() {
                 autoPlay
                 muted
                 loop
-              ></video> */}
-              <div className="project-overlay">
-                <div className="project-title">{project.title}</div>
-                <div className="project-type">{project.stack[0]}</div>
-              </div>
+              ></video>
               {project.title === navTouch && (
                 <div className="progress-bar">
                   <ProgressBar
@@ -297,11 +298,6 @@ function App() {
 
       {navWaiting !== null && navTouch !== null && (
         <div className="nav-notif">
-          <img
-            className="nav-img"
-            src={process.env.PUBLIC_URL + '/k.png'}
-            alt="kirby"
-          />
           <div className="nav-notif-text-small">Navigating To</div>
           <div className="nav-notif-text-big">{navTouch}</div>
         </div>
