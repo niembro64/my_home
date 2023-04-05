@@ -297,6 +297,11 @@ function App() {
 
       {navWaiting !== null && navTouch !== null && (
         <div className="nav-notif">
+          <img
+            className="nav-img"
+            src={process.env.PUBLIC_URL + '/k.png'}
+            alt="kirby"
+          />
           <div className="nav-notif-text-small">Navigating To</div>
           <div className="nav-notif-text-big">{navTouch}</div>
         </div>
