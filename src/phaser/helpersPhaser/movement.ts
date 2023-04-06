@@ -2,7 +2,7 @@ import { Platform, Player } from '../../typescript';
 import GameScene from '../GameScene';
 import { getDistance, getNormalizedVector } from './math';
 
-export const goToLocationAir = (
+export const updateGoLocationAir = (
   player: Player,
   gotoX: number,
   gotoY: number,
@@ -27,7 +27,7 @@ export const goToLocationAir = (
   }
 };
 
-export const goToLocationGround = (
+export const updateGoLocationGround = (
   player: Player,
   gotoX: number,
   gotoY: number,
@@ -39,8 +39,8 @@ export const goToLocationGround = (
   const speed = 10;
 
   const k = player;
-  const width = 50;
-  const percentVel = 0.1;
+  const width = 20;
+  const percentVel = 0.2;
   // const width = k.sprite.width * 0.3;
 
   if (k.sprite.body.x + width < gotoX) {
@@ -59,8 +59,7 @@ export const goToLocationGround = (
 };
 
 export const setJump = (player: Player): void => {
-  const k = player;
-  k.sprite.setVelocityY(-k.jumpPower);
+  player.sprite.setVelocityY(-player.jumpPower);
 };
 
 export const updatePlayerFrictionGround = (player: Player): void => {
@@ -90,7 +89,6 @@ export const updateJustTouchedGround = (
   const k = player;
 
   if (k.sprite.body.touching.down && !k.isTouchingPrev) {
-    console.log('PHASER | k.nearestProject', k.nearestProject);
     window.dispatchEvent(
       new CustomEvent('gameState', { detail: k.nearestProject })
     );
@@ -102,7 +100,7 @@ export const updateJustTouchedGround = (
   k.isTouchingPrev = k.sprite.body.touching.down;
 };
 
-export const getNearestPlatform = (
+export const updateNearestPlatform = (
   player: Player,
   game: GameScene
 ): Platform | null => {
@@ -127,13 +125,12 @@ export const getNearestPlatform = (
   });
 
   if (platformNearest !== null && platformNearest['box'] !== null) {
-    console.log('nearestPlatform.project', platformNearest['box']['project']);
     return platformNearest;
   }
   return null;
 };
 
-export const getNearestPlatformUnderPlayer = (
+export const updateNearestPlatformUnderPlayer = (
   player: Player,
   game: GameScene
 ): void => {

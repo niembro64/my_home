@@ -1,9 +1,9 @@
 import Phaser from 'phaser';
 import { Box, Mouse, Platform, Player } from '../typescript';
 import {
-  getNearestPlatformUnderPlayer,
-  goToLocationGround,
-  goToLocationAir,
+  updateNearestPlatformUnderPlayer,
+  updateGoLocationGround,
+  updateGoLocationAir,
   setJump,
   updateJustTouchedGround,
   updatePlayerFrictionAir,
@@ -14,7 +14,7 @@ import { updateSpriteFlip } from './helpersPhaser/sprite';
 export default class GameScene extends Phaser.Scene {
   kirby: Player;
   speedSlow: number = 20;
-  speedFast: number = 50;
+  speedFast: number = 30;
   platforms: Platform[];
   mouse: Mouse;
   objects: Phaser.Physics.Arcade.Sprite[] = [];
@@ -24,9 +24,9 @@ export default class GameScene extends Phaser.Scene {
 
     this.kirby = {
       sprite: null,
-      frictionGround: 0.95,
+      frictionGround: 0.85,
       frictionAir: 0.95,
-      jumpPower: 800,
+      jumpPower: 600,
       posInitX: 400,
       posInitY: 300,
       velX: this.speedSlow,
@@ -131,9 +131,9 @@ export default class GameScene extends Phaser.Scene {
       if (this.kirby.velX !== this.speedFast) {
         this.kirby.velX = this.speedFast;
       }
-      if (this.kirby.sprite.body.velocity.y > -10) {
-        setJump(this.kirby);
-      }
+      setJump(this.kirby);
+      // if (this.kirby.sprite.body.velocity.y > -10) {
+      // }
     });
 
     this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
@@ -146,13 +146,12 @@ export default class GameScene extends Phaser.Scene {
   update(): void {
     const k = this.kirby;
 
-    goToLocationGround(k, this.mouse.x, this.mouse.y, this);
-    goToLocationAir(k, this.mouse.x, this.mouse.y, this);
+    updateGoLocationGround(k, this.mouse.x, this.mouse.y, this);
+    updateGoLocationAir(k, this.mouse.x, this.mouse.y, this);
     updateSpriteFlip(k, this);
     updatePlayerFrictionGround(k);
     updatePlayerFrictionAir(k, this);
-    getNearestPlatformUnderPlayer(k, this);
+    updateNearestPlatformUnderPlayer(k, this);
     updateJustTouchedGround(k, this);
-    // updateJumpOnClick(k, this);
   }
 }

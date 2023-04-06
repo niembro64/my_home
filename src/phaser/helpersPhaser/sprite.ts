@@ -3,10 +3,10 @@ import GameScene from '../GameScene';
 
 export const updateSpriteFlip = (player: Player, game: GameScene): void => {
   const k = player;
-  if (k.sprite.body.velocity.x === 0) {
-  } else if (k.sprite.body.velocity.x < 0) {
+  const width = 150;
+  if (k.sprite.body.velocity.x < -width) {
     k.sprite.flipX = true;
-  } else {
+  } else if (k.sprite.body.velocity.x > width) {
     k.sprite.flipX = false;
   }
 };
