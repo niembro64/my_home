@@ -38,7 +38,6 @@ export default class GameScene extends Phaser.Scene {
       x: 0,
       y: 0,
     };
-
   }
 
   preload(): void {
@@ -63,7 +62,8 @@ export default class GameScene extends Phaser.Scene {
 
     console.log('phaser myBoxes', myBoxes);
 
-    this.load.image('k', 'k.png');
+    this.load.image('k', 'bigk.png');
+    // this.load.image('k', 'k.png');
   }
 
   create(): void {
@@ -75,7 +75,8 @@ export default class GameScene extends Phaser.Scene {
     k.sprite = this.physics.add
       .sprite(k.posInitX, k.posInitY, 'k')
       .setOrigin(0.5, 0.5)
-      .setCollideWorldBounds(true);
+      .setCollideWorldBounds(true)
+      .setScale(0.3);
 
     p.forEach((platform, pIndex) => {
       // Create a Phaser.Geom.Rectangle

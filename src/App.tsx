@@ -300,7 +300,7 @@ function App() {
         <div className="nav-notif">
           <img
             className="nav-kirby"
-            src={process.env.PUBLIC_URL + '/k.png'}
+            src={process.env.PUBLIC_URL + '/bigk.png'}
             alt="kirby"
           />
           <div className="nav-notif-text-small">Navigating To</div>
