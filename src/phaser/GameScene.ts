@@ -13,6 +13,8 @@ import { updateSpriteFlip } from './helpersPhaser/sprite';
 
 export default class GameScene extends Phaser.Scene {
   kirby: Player;
+  speedSlow: number = 20;
+  speedFast: number = 50;
   platforms: Platform[];
   mouse: Mouse;
   objects: Phaser.Physics.Arcade.Sprite[] = [];
@@ -27,7 +29,7 @@ export default class GameScene extends Phaser.Scene {
       jumpPower: 800,
       posInitX: 400,
       posInitY: 300,
-      velX: 20,
+      velX: this.speedSlow,
       velY: 60,
       isTouchingPrev: false,
       nearestProject: null,
@@ -79,7 +81,9 @@ export default class GameScene extends Phaser.Scene {
       .sprite(k.posInitX, k.posInitY, 'k')
       .setOrigin(0.5, 0.5)
       .setCollideWorldBounds(true)
-      .setScale(0.3);
+      .setScale(0.3)
+      .setBounceX(1)
+      .setBounceY(0.5);
 
     p.forEach((platform, pIndex) => {
       // Create a Phaser.Geom.Rectangle
@@ -124,16 +128,18 @@ export default class GameScene extends Phaser.Scene {
     });
 
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-      // this.mouse.pointerDownPrev = this.mouse.pointerDownCurr;
-      // this.mouse.pointerDownCurr = pointer.isDown;
+      if (this.kirby.velX !== this.speedFast) {
+        this.kirby.velX = this.speedFast;
+      }
       if (this.kirby.sprite.body.velocity.y > -10) {
         setJump(this.kirby);
       }
     });
 
     this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
-      // this.mouse.pointerDownPrev = this.mouse.pointerDownCurr;
-      // this.mouse.pointerDownCurr = pointer.isDown;
+      if (this.kirby.velX !== this.speedSlow) {
+        this.kirby.velX = this.speedSlow;
+      }
     });
   }
 
