@@ -288,11 +288,17 @@ function App() {
           return (
             <div
               className={
-                project.title === navTouch ? 'project' : 'project project-touch'
+                project.title === navTouch ? 'project project-touch' : 'project'
               }
               key={index}
             >
-              <div className="project-overlay">
+              <div
+                className={
+                  project.title === navTouch
+                    ? 'project-overlay project-overlay-touch'
+                    : 'project-overlay'
+                }
+              >
                 <div className="project-title">{project.title}</div>
                 <div className="project-type">{project.stack[0]}</div>
               </div>
