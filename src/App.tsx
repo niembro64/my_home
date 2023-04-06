@@ -18,8 +18,9 @@ function App() {
   const [navTouch, setNavTouch] = useState<ProjectName | null>(null);
   const [navWaiting, setNavWaiting] = useState<ProjectName | null>(null);
   const [navGo, setNavGo] = useState<ProjectName | null>(null);
-  const [countUp, setCountUp] = useState<number>(0);
-  const countUpAmount = 40;
+  const [navCount, setNavCount] = useState<number>(0);
+  const navCountAdd = 50;
+  const navCountTop = 150;
   let myInterval = useRef<any>(null);
 
   const handleGameState = (event: any) => {
@@ -27,19 +28,22 @@ function App() {
     setNavTouch(site);
   };
 
+  //////////////////////////////////////////////////
+  // NAV_TOUCH => COUNTING
+  //////////////////////////////////////////////////
   useEffect(() => {
     if (navTouch === null) {
       clearInterval(myInterval.current);
-      setCountUp(0);
+      setNavCount(0);
       setNavGo(null);
       setNavWaiting(null);
       return;
     }
-    setCountUp(20);
+    setNavCount(0);
     myInterval.current = setInterval(() => {
-      setCountUp((prev) => {
-        const newBoy = prev + countUpAmount;
-        const newLessThan100 = newBoy < 100 ? newBoy : 100;
+      setNavCount((prev) => {
+        const newBoy = prev + navCountAdd;
+        const newLessThan100 = newBoy < navCountTop ? newBoy : navCountTop;
         return newLessThan100;
       });
     }, 1000);
@@ -49,29 +53,35 @@ function App() {
     };
   }, [navTouch]);
 
+  //////////////////////////////////////////////////
+  // COUNTING => NAV_WAITING
+  //////////////////////////////////////////////////
   useEffect(() => {
-    if (navTouch !== null && countUp === 100) {
+    if (navTouch !== null && navCount === navCountTop) {
       clearInterval(myInterval.current);
       setNavWaiting(navTouch);
     }
-  }, [countUp, navTouch]);
+  }, [navCount, navTouch]);
 
+  //////////////////////////////////////////////////
+  // NAV_WAITING => NAV_GO
+  //////////////////////////////////////////////////
   useEffect(() => {
     if (navWaiting === null) {
       return;
     }
-    // console.log('TIMEOUT BEFORE', navWaiting);
     setTimeout(() => {
-      // console.log('TIMEOUT AFTER', navWaiting);
       setNavGo(navWaiting);
     }, 2000);
   }, [navWaiting]);
 
+  //////////////////////////////////////////////////
+  // NAV_GO
+  //////////////////////////////////////////////////
   useEffect(() => {
     if (navGo === null || navTouch === null) {
       return;
     }
-    // console.log('NAVIGATING', navGo);
     reactNavigate(navGo);
   }, [navGo]);
 
@@ -86,25 +96,6 @@ function App() {
     width: 0,
     height: 0,
   });
-
-  /////////////////
-  // COUNT UP
-  /////////////////
-  // const [countState, setCountState] = useState<number>(0);
-  // let countUp = 0;
-
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     countUp++;
-  //     setCountState((prev) => {
-  //       return ((prev + 0.1) % 10) / 10;
-  //     });
-  //   }, 1000);
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log('countUp', countState);
-  // }, [countState]);
 
   /////////////////////////////////////
   // SET SCREEN INFO WHEN RENDERED
@@ -231,7 +222,9 @@ function App() {
       plugins: {
         global: [],
       },
-      transparent: true,
+      backgroundColor: '#3399ff',
+      // backgroundColor: '#aaccff',
+      // transparent: true,
       title: 'niembro64',
       antialias: true,
       pixelArt: false,
@@ -299,8 +292,20 @@ function App() {
                     : 'project-overlay'
                 }
               >
-                <div className="project-title">{project.title}</div>
-                <div className="project-type">{project.stack[0]}</div>
+                <div
+                  className={
+                    project.title === navTouch ? 'trans' : 'project-title'
+                  }
+                >
+                  {project.title}
+                </div>
+                <div
+                  className={
+                    project.title === navTouch ? 'trans' : 'project-type'
+                  }
+                >
+                  {project.stack[0]}
+                </div>
               </div>
               <video
                 className="project-video"
@@ -314,12 +319,14 @@ function App() {
               {project.title === navTouch && (
                 <div className="progress-bar">
                   <ProgressBar
-                    label={navTouch?.toUpperCase() + ''}
-                    // label={navigateCandidate + ''}
-                    // label={'Loading: ' + navigateCandidate}
-                    score={countUp}
+                    label={'LOADING'}
+                    // label={navTouch?.toUpperCase() + ''}
+                    score={navCount}
                   />
-                  <div className="progress-bar-text">LOADING</div>
+                  <div className="progress-bar-text">
+                    {navTouch?.toUpperCase() + ''}
+                  </div>
+                  {/* <div className="progress-bar-text">LOADING</div> */}
                 </div>
               )}
             </div>
