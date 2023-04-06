@@ -8,6 +8,10 @@ export const updateGoLocationAir = (
   gotoY: number,
   game: GameScene
 ): void => {
+  if (!game.input.activePointer.isDown) {
+    return;
+  }
+
   if (player.sprite.body.touching.down) {
     return;
   }
@@ -33,6 +37,9 @@ export const updateGoLocationGround = (
   gotoY: number,
   game: GameScene
 ): void => {
+  if (!game.input.activePointer.isDown) {
+    return;
+  }
   if (!player.sprite.body.touching.down) {
     return;
   }

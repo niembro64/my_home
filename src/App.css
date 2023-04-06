@@ -123,11 +123,13 @@
 }
 
 .project-title {
-  font-size: 2.5em;
+  /* font-size: 2.5em; */
+  font-size: clamp(3vw, 5vw, 100vw);
 }
 
 .project-type {
   color: white;
+  font-size: clamp(3vw, 2vw, 100vw);
 }
 .color-trans {
   color: transparent;
