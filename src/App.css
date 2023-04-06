@@ -91,7 +91,10 @@
   align-items: center;
 
   /* overflow: hidden; */
-  /* border: 4px dashed magenta; */
+  border: 4px solid rgb(245, 172, 24);
+}
+.project-touch {
+  border: 4px solid transparent;
 }
 
 .project-overlay {

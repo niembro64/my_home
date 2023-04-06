@@ -286,7 +286,12 @@ function App() {
       <div id={'react-parent'} ref={reactParentRef}>
         {projects.map((project, index) => {
           return (
-            <div className={'project'} key={index}>
+            <div
+              className={
+                project.title === navTouch ? 'project' : 'project project-touch'
+              }
+              key={index}
+            >
               <div className="project-overlay">
                 <div className="project-title">{project.title}</div>
                 <div className="project-type">{project.stack[0]}</div>
