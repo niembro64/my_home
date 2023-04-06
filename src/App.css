@@ -73,22 +73,25 @@
   align-items: center;
 
   z-index: 0;
+
+  overflow: hidden;
+  /* pointer-events: none; */
 }
 
 .project {
   position: relative;
   color: white;
-  /* background-color: red; */
-  width: 20%;
-  /* height: 10%; */
-  /* border-radius: 100px; */
+  width: auto;
+  height: auto;
   margin: 50px;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 3px dashed red;
+
+  /* overflow: hidden; */
+  /* border: 4px dashed magenta; */
 }
 
 .project-overlay {
@@ -105,6 +108,7 @@
   align-items: center;
 
   z-index: 2;
+  /* border: 4px dashed green; */
 }
 .project-title {
   color: white;
@@ -117,9 +121,10 @@
 
 .project-video {
   position: relative;
-  width: 100%;
+  width: 20vw;
   z-index: 1;
   pointer-events: none;
+  /* border: 4px dashed blue; */
 }
 
 .grass {
@@ -132,13 +137,11 @@
   background: url(../public/grass.png);
   background-size: contain;
   background-repeat: repeat;
-
-  /* border: 3px dashed orange; */
 }
 
 .progress-bar {
   position: absolute;
-  bottom: -165px;
+  bottom: -65px;
   /* top: 0px; */
   left: -30%;
   width: 160%;

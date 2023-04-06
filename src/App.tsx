@@ -117,11 +117,40 @@ function App() {
     setScreen(newScreen);
   }, []);
 
+  const [numVidsLoaded, setNumVidsLoaded] = useState<number>(0);
+  const [allVidsLoaded, setAllVidsLoaded] = useState<boolean>(false);
+
+  useEffect(() => {
+    const videos = document.querySelectorAll('video');
+
+    const onVideoLoaded = () => {
+      setNumVidsLoaded((prevLoadedVideos) => prevLoadedVideos + 1);
+    };
+
+    videos.forEach((video) => {
+      video.addEventListener('loadeddata', onVideoLoaded);
+    });
+
+    // Clean up the event listeners when the component unmounts
+    return () => {
+      videos.forEach((video) => {
+        video.removeEventListener('loadeddata', onVideoLoaded);
+      });
+    };
+  }, []);
+
+  useEffect(() => {
+    if (numVidsLoaded === projects.length) {
+      console.log('All videos have loaded, do something here.');
+      setAllVidsLoaded(true);
+    }
+  }, [numVidsLoaded]);
+
   /////////////////////////////////////
   // SET BOXES FOR PHASER
   /////////////////////////////////////
   useEffect(() => {
-    if (!reactParentRef.current || !grassRef.current) {
+    if (!reactParentRef.current || !grassRef.current || !allVidsLoaded) {
       return;
     }
 
@@ -183,7 +212,7 @@ function App() {
     myNewBoxes.push(newBox);
 
     setMyBoxes(myNewBoxes);
-  }, [reactParentRef]);
+  }, [reactParentRef, grassRef, allVidsLoaded]);
 
   /////////////////////////////////////
   // MAKE PHASER GAME
