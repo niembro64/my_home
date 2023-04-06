@@ -35,6 +35,8 @@ export interface Player {
 export interface Mouse {
   x: number;
   y: number;
+  pointerDownCurr: boolean;
+  pointerDownPrev: boolean;
 }
 
 export interface Project {

@@ -37,6 +37,8 @@ export default class GameScene extends Phaser.Scene {
     this.mouse = {
       x: 0,
       y: 0,
+      pointerDownCurr: false,
+      pointerDownPrev: false,
     };
   }
 
@@ -118,6 +120,8 @@ export default class GameScene extends Phaser.Scene {
     this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
       this.mouse.x = pointer.x - this.kirby.sprite.body.width / 2;
       this.mouse.y = pointer.y - this.kirby.sprite.body.height / 2;
+      this.mouse.pointerDownPrev = this.mouse.pointerDownCurr;
+      this.mouse.pointerDownCurr = pointer.isDown;
     });
   }
 
@@ -128,7 +132,7 @@ export default class GameScene extends Phaser.Scene {
     updateSpriteFlip(k, this);
     updatePlayerFrictionGround(k);
     updatePlayerFrictionAir(k, this);
-    k.nearestProject = getNearestPlatformUnderPlayer(k, this);
+    getNearestPlatformUnderPlayer(k, this);
     updateJustTouchedGround(k, this);
   }
 }

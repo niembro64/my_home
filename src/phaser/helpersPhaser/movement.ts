@@ -15,6 +15,7 @@ export const goToXY = (
   if (!game.input.activePointer.isDown) {
     return;
   }
+
   updatePlayerJump(k);
 
   let { x, y } = getNormalizedVector(
@@ -110,7 +111,7 @@ export const getNearestPlatform = (
 export const getNearestPlatformUnderPlayer = (
   player: Player,
   game: GameScene
-): ProjectName | null => {
+): void => {
   const k = player;
   const p = game.platforms;
 
@@ -132,7 +133,8 @@ export const getNearestPlatformUnderPlayer = (
   });
 
   if (platformNearest !== null && platformNearest['box'] !== null) {
-    return platformNearest['box']['project'];
+    k.nearestProject = platformNearest['box']['project'];
+    return;
   }
-  return null;
+  k.nearestProject = null;
 };
