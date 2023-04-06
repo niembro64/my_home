@@ -4,7 +4,7 @@ export const projects: Project[] = [
     title: 'Design',
     colorScheme: 'light',
     type: 'Front-End',
-    stack: ['HTML', 'CSS', 'JavaScript'],
+    stack: ['CSS', 'HTML', 'JavaScript'],
     url: 'http://design.niembro64.com/',
   },
   {
@@ -46,7 +46,7 @@ export const projects: Project[] = [
     title: 'Media',
     colorScheme: 'light',
     type: 'Art',
-    stack: ['WordPress', 'FL Studio', 'Aseprite', 'Adobe Creative Suite'],
+    stack: ['FL Studio', 'Aseprite', 'Adobe Creative Suite', 'WordPress'],
     url: 'http://media.niembro64.com/',
   },
 ];
