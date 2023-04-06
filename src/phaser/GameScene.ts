@@ -1,9 +1,13 @@
 import Phaser from 'phaser';
 import { Box, Mouse, Platform, Player } from '../typescript';
 import {
-  getNearestPlatformUnderPlayer, goToXY, setJump, updateJustTouchedGround,
+  getNearestPlatformUnderPlayer,
+  goToLocationGround,
+  goToLocationAir,
+  setJump,
+  updateJustTouchedGround,
   updatePlayerFrictionAir,
-  updatePlayerFrictionGround
+  updatePlayerFrictionGround,
 } from './helpersPhaser/movement';
 import { updateSpriteFlip } from './helpersPhaser/sprite';
 
@@ -18,7 +22,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.kirby = {
       sprite: null,
-      frictionGround: 0.8,
+      frictionGround: 0.95,
       frictionAir: 0.95,
       jumpPower: 800,
       posInitX: 400,
@@ -136,7 +140,8 @@ export default class GameScene extends Phaser.Scene {
   update(): void {
     const k = this.kirby;
 
-    goToXY(k, this.mouse.x, this.mouse.y, this);
+    goToLocationGround(k, this.mouse.x, this.mouse.y, this);
+    goToLocationAir(k, this.mouse.x, this.mouse.y, this);
     updateSpriteFlip(k, this);
     updatePlayerFrictionGround(k);
     updatePlayerFrictionAir(k, this);
