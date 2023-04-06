@@ -183,7 +183,10 @@ function App() {
     // ADD GRASS
     ///////////////////////////////
     const rect = grassRef.current.getBoundingClientRect();
-    const percentKeep = (15 - 3) / 15;
+    const grassPxHeight = 32;
+    const grassPixTop = 6;
+    const percentKeep = (grassPxHeight - grassPixTop) / grassPxHeight;
+    // const percentKeep = (15 - 3) / 15;
     const top = rect.y + rect.height * (1 - percentKeep);
     const left = rect.x;
     const width = rect.width;
