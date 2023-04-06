@@ -1,12 +1,9 @@
 import Phaser from 'phaser';
-import { Box, Mouse, Platform, Player, ProjectName } from '../typescript';
+import { Box, Mouse, Platform, Player } from '../typescript';
 import {
-  goToXY,
-  getNearestPlatform,
-  updateJustTouchedGround,
+  getNearestPlatformUnderPlayer, goToXY, setJump, updateJustTouchedGround,
   updatePlayerFrictionAir,
-  updatePlayerFrictionGround,
-  getNearestPlatformUnderPlayer,
+  updatePlayerFrictionGround
 } from './helpersPhaser/movement';
 import { updateSpriteFlip } from './helpersPhaser/sprite';
 
@@ -120,8 +117,19 @@ export default class GameScene extends Phaser.Scene {
     this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
       this.mouse.x = pointer.x - this.kirby.sprite.body.width / 2;
       this.mouse.y = pointer.y - this.kirby.sprite.body.height / 2;
-      this.mouse.pointerDownPrev = this.mouse.pointerDownCurr;
-      this.mouse.pointerDownCurr = pointer.isDown;
+    });
+
+    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      // this.mouse.pointerDownPrev = this.mouse.pointerDownCurr;
+      // this.mouse.pointerDownCurr = pointer.isDown;
+      if (this.kirby.sprite.body.velocity.y > -10) {
+        setJump(this.kirby);
+      }
+    });
+
+    this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
+      // this.mouse.pointerDownPrev = this.mouse.pointerDownCurr;
+      // this.mouse.pointerDownCurr = pointer.isDown;
     });
   }
 
@@ -134,5 +142,6 @@ export default class GameScene extends Phaser.Scene {
     updatePlayerFrictionAir(k, this);
     getNearestPlatformUnderPlayer(k, this);
     updateJustTouchedGround(k, this);
+    // updateJumpOnClick(k, this);
   }
 }

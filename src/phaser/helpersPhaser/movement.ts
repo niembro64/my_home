@@ -12,11 +12,11 @@ export const goToXY = (
 ): void => {
   const k = player;
 
-  if (!game.input.activePointer.isDown) {
-    return;
-  }
+  // if (!game.input.activePointer.isDown) {
+  //   return;
+  // }
 
-  updatePlayerJump(k);
+  // updatePlayerJump(k);
 
   let { x, y } = getNormalizedVector(
     k.sprite.body.x,
@@ -27,9 +27,24 @@ export const goToXY = (
 
   k.sprite.setVelocityX(k.velX * x + k.sprite.body.velocity.x);
   if (game.mouse.y < k.sprite.body.y) {
-    k.sprite.setVelocityY(k.velY * y + k.sprite.body.velocity.y);
+    // k.sprite.setVelocityY(k.velY * y + k.sprite.body.velocity.y);
+    setJump(player);
   }
 };
+
+export const setJump = (player: Player): void => {
+  const k = player;
+  k.sprite.setVelocityY(-k.jumpPower);
+};
+
+// export const updateJumpOnClick = (player: Player, game: GameScene): void => {
+//   if (game.mouse.pointerDownCurr && !game.mouse.pointerDownPrev) {
+//     console.log(
+//       'PHASER | updateJumpOnClick | game.mouse.pointerDownCurr && !game.mouse.pointerDownPrev'
+//     );
+//     setJump(player);
+//   }
+// };
 
 export const updatePlayerFrictionGround = (player: Player): void => {
   if (!player.sprite.body.touching.down) {
@@ -51,12 +66,12 @@ export const updatePlayerFrictionAir = (
   k.sprite.setVelocityY(k.sprite.body.velocity.y * k.frictionAir);
 };
 
-export const updatePlayerJump = (player: Player): void => {
-  const k = player;
-  if (k.sprite.body.touching.down) {
-    k.sprite.setVelocityY(-k.jumpPower);
-  }
-};
+// export const updatePlayerJump = (player: Player): void => {
+//   const k = player;
+//   if (k.sprite.body.touching.down) {
+//     k.sprite.setVelocityY(-k.jumpPower);
+//   }
+// };
 
 export const updateJustTouchedGround = (
   player: Player,
