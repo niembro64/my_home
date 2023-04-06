@@ -39,8 +39,10 @@ export interface Mouse {
   pointerDownPrev: boolean;
 }
 
+export type ColorScheme = 'light' | 'dark';
 export interface Project {
   title: ProjectName;
+  colorScheme: ColorScheme;
   url: string;
   type: string;
   stack: string[];

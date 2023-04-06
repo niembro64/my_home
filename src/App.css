@@ -91,7 +91,8 @@
   align-items: center;
 
   /* overflow: hidden; */
-  border: 4px solid transparent;
+  /* border: 4px solid #3399ff; */
+  border: 4px solid #115599;
 }
 .project-touch {
   border: 4px solid white;
@@ -104,7 +105,9 @@
   left: 0px;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  /* background-color: #3399ff; */
+  background-color: rgba(0, 0, 0, 0);
+  /* background-color: rgba(0, 0, 0, 0.5); */
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -116,19 +119,31 @@
 }
 .project-overlay-touch {
   background-color: rgba(0, 0, 0, 0);
-  box-shadow: inset 0px 0px 0px 0px rgb(245, 172, 24);
+  /* box-shadow: inset 0px 0px 0px 0px rgb(245, 172, 24); */
 }
 
 .project-title {
-  color: white;
   font-size: 2.5em;
 }
 
 .project-type {
   color: white;
 }
-.trans {
+.color-trans {
   color: transparent;
+}
+.color-dark {
+  color: black;
+}
+.color-light {
+  color: white;
+}
+
+.border-dark {
+  border: 4px solid black;
+}
+.border-light {
+  border: 4px solid white;
 }
 
 .project-video {
@@ -173,7 +188,8 @@
 .progress-bar-text {
   font-size: 1.5em;
   font-weight: bold;
-  color: black;
+  color: white;
+  /* color: black; */
 
   /* // prevent cursor from selecting text */
   -webkit-touch-callout: none; /* iOS Safari */
