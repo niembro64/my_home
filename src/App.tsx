@@ -253,6 +253,7 @@ function App() {
     };
 
     gameRef.current = new Phaser.Game(config);
+    gameRef.current.registry.set('config', config);
     gameRef.current.registry.set('myBoxes', myBoxes);
     gameRef.current.events.on('ready', handleGameReady);
     return () => {

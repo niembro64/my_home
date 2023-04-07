@@ -18,6 +18,8 @@ export default class GameScene extends Phaser.Scene {
   platforms: Platform[];
   mouse: Mouse;
   objects: Phaser.Physics.Arcade.Sprite[] = [];
+  config: any;
+  isMobile: boolean = false;
 
   constructor() {
     super('GameScene');
@@ -46,6 +48,11 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload(): void {
+    this.config = this.game.config;
+    this.isMobile = this.config.width < this.config.height;
+    console.log('this.config', this.config);
+    console.log('this.isMobile', this.isMobile);
+
     let myBoxes: Box[] = this.game.registry.get('myBoxes');
     if (myBoxes) {
       myBoxes.forEach((box: Box) => {
@@ -128,18 +135,18 @@ export default class GameScene extends Phaser.Scene {
     });
 
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-      if (this.kirby.velX !== this.speedFast) {
-        this.kirby.velX = this.speedFast;
-      }
+      // if (this.kirby.velX !== this.speedFast) {
+      //   this.kirby.velX = this.speedFast;
+      // }
       setJump(this.kirby);
       // if (this.kirby.sprite.body.velocity.y > -10) {
       // }
     });
 
     this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
-      if (this.kirby.velX !== this.speedSlow) {
-        this.kirby.velX = this.speedSlow;
-      }
+      // if (this.kirby.velX !== this.speedSlow) {
+      //   this.kirby.velX = this.speedSlow;
+      // }
     });
   }
 
