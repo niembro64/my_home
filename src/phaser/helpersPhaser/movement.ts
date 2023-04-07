@@ -17,16 +17,16 @@ export const updateGoLocationAir = (
   }
 
   const k = player;
-  const width = 0;
-  // const width = k.sprite.width * 0.3;
+  const deadzoneWidth = 0;
+  const mouseVert = 50;
 
-  if (k.sprite.body.x + width < gotoX) {
+  if (k.sprite.body.x + deadzoneWidth < gotoX) {
     k.sprite.setVelocityX(k.sprite.body.velocity.x + k.velX);
-  } else if (k.sprite.body.x - width > gotoX) {
+  } else if (k.sprite.body.x - deadzoneWidth > gotoX) {
     k.sprite.setVelocityX(k.sprite.body.velocity.x - k.velX);
   }
 
-  if (game.mouse.y < k.sprite.body.y) {
+  if (game.mouse.y - mouseVert < k.sprite.body.y) {
     setJump(player);
   }
 };
@@ -43,20 +43,19 @@ export const updateGoLocationGround = (
   if (!player.sprite.body.touching.down) {
     return;
   }
-  const speed = 10;
+  const speedMult = 10;
 
   const k = player;
-  const width = 20;
-  const percentVel = 0.2;
-  // const width = k.sprite.width * 0.3;
+  const deadzoneWidth = 20;
+  const pVelKeep = 0.2;
 
-  if (k.sprite.body.x + width < gotoX) {
+  if (k.sprite.body.x + deadzoneWidth < gotoX) {
     k.sprite.setVelocityX(
-      k.velX * speed + k.sprite.body.velocity.x * percentVel
+      k.velX * speedMult + k.sprite.body.velocity.x * pVelKeep
     );
-  } else if (k.sprite.body.x - width > gotoX) {
+  } else if (k.sprite.body.x - deadzoneWidth > gotoX) {
     k.sprite.setVelocityX(
-      1 - k.velX * speed + k.sprite.body.velocity.x * percentVel
+      1 - k.velX * speedMult + k.sprite.body.velocity.x * pVelKeep
     );
   }
 
