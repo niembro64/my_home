@@ -358,14 +358,12 @@ function App() {
                 <div className="progress-bar">
                   <ProgressBar
                     label={'LOADING'}
-                    // label={navTouch?.toUpperCase() + ''}
                     darkTheme={true}
                     score={navCount}
                   />
                   <div className="progress-bar-text">
                     {navTouch?.toUpperCase() + ''}
                   </div>
-                  {/* <div className="progress-bar-text">LOADING</div> */}
                 </div>
               )}
             </div>
@@ -393,11 +391,6 @@ function App() {
           <div className="nav-notif-text-big">{navTouch}</div>
         </div>
       )}
-      {/* {navigateActual !== null && (
-      )} */}
-      {/* <div className="progress-bar">
-        <ProgressBar label="Loading Project" score={countUp} />
-      </div> */}
     </div>
   );
 }
