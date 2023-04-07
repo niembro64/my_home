@@ -44,7 +44,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Media',
-    colorScheme: 'light',
+    colorScheme: 'dark',
     type: 'Art',
     stack: ['FL Studio', 'Aseprite', 'Adobe Creative Suite', 'WordPress'],
     url: 'http://media.niembro64.com/',

@@ -306,7 +306,7 @@ function App() {
                       className={
                         project.title === navTouch
                           ? 'color-trans'
-                          : 'project-title color=light'
+                          : 'project-title color-light'
                       }
                     >
                       {project.title}
@@ -348,7 +348,7 @@ function App() {
               <video
                 className="project-video"
                 src={
-                  process.env.PUBLIC_URL + '/videos/' + project.title + '.mp4'
+                  process.env.PUBLIC_URL + '/videos2/' + project.title + '.mp4'
                 }
                 autoPlay
                 muted
