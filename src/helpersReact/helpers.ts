@@ -12,6 +12,7 @@ export const reactNavigate = (project: ProjectName): void => {
 
   let fullUrl: string = '';
 
+  console.log('reactNavigate', 'project', project);
   if (project === 'Resume') {
     fullUrl = 'https://www.ericniemeyer.com';
   } else if (project === 'Media') {

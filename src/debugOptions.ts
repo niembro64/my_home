@@ -4,5 +4,5 @@ export interface DebugOptions {
 }
 export const debugOptions: DebugOptions = {
   devMode: false,
-  navigateActive: false,
+  navigateActive: true,
 };

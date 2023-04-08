@@ -170,8 +170,6 @@ function App() {
         left: left,
         width: width,
         height: height,
-        // x: left,
-        // y: top,
         x: x,
         y: y,
       };
@@ -221,6 +219,14 @@ function App() {
       return;
     }
 
+    const boxLast = myBoxes[myBoxes.length - 1];
+    const boxPenultimate = myBoxes[myBoxes.length - 2];
+
+    const kirbyXY = {
+      x: (boxLast.x + boxPenultimate.x) * 0.5,
+      y: (boxLast.y + boxPenultimate.y) * 0.5,
+    };
+
     let config: Phaser.Types.Core.GameConfig = {
       plugins: {
         global: [],
@@ -255,7 +261,9 @@ function App() {
     gameRef.current = new Phaser.Game(config);
     gameRef.current.registry.set('config', config);
     gameRef.current.registry.set('myBoxes', myBoxes);
+    gameRef.current.registry.set('kirbyXY', kirbyXY);
     gameRef.current.events.on('ready', handleGameReady);
+
     return () => {
       gameRef.current.destroy(true);
       gameRef.current.events.off('ready', handleGameReady);
@@ -370,8 +378,14 @@ function App() {
           );
         })}
       </div>
-      <div className="project-resume">
-        <div className="project-title">Resume</div>
+      <div
+        className="project-resume"
+        onClick={() => {
+          console.log('Resume Clicked');
+          reactNavigate('Resume');
+        }}
+      >
+        <div className="project-title">RESUME</div>
       </div>
       <div id={'game-parent'} ref={gameParentRef} />
       <div className="grass" ref={grassRef}></div>
@@ -387,7 +401,7 @@ function App() {
         <div className="nav-notif">
           <img
             className="nav-kirby"
-            src={process.env.PUBLIC_URL + '/bigk.png'}
+            src={process.env.PUBLIC_URL + '/bigksquare.png'}
             alt="kirby"
           />
           <div className="nav-notif-text-small">Navigating To</div>
