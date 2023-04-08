@@ -370,6 +370,9 @@ function App() {
           );
         })}
       </div>
+      <div className="project-resume">
+        <div className="project-title">Resume</div>
+      </div>
       <div id={'game-parent'} ref={gameParentRef} />
       <div className="grass" ref={grassRef}></div>
       {debugOptions.devMode && (

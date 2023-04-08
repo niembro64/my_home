@@ -50,7 +50,8 @@
 
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
+  /* justify-content: space-around; */
   align-items: center;
 
   flex-wrap: wrap;
@@ -83,7 +84,7 @@
   color: white;
   width: auto;
   height: auto;
-  margin: 50px;
+  margin: 30px;
 
   display: flex;
   flex-direction: column;
@@ -115,7 +116,6 @@
   align-items: center;
 
   z-index: 2;
-
 }
 .project-overlay-touch {
   background-color: rgba(0, 0, 0, 0);
@@ -136,7 +136,6 @@
 .color-dark {
   color: black;
   text-shadow: 0px 0px 5px white;
-  
 }
 .color-light {
   color: white;
@@ -261,4 +260,23 @@
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+}
+
+.project-resume {
+  position: absolute;
+  bottom: 0px;
+  right: 5%;
+  width: 23%;
+  height: 10%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 5px solid #582a0b;
+  /* border: 5px solid #115599; */
+
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
 }

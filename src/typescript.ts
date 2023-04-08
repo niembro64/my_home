@@ -54,4 +54,5 @@ export type ProjectName =
   | 'Pirates'
   | 'Events'
   | 'Shows'
-  | 'Media';
+  | 'Media'
+  | 'Resume';

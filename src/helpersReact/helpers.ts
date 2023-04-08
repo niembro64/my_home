@@ -12,8 +12,10 @@ export const reactNavigate = (project: ProjectName): void => {
 
   let fullUrl: string = '';
 
-  if (project === 'Media') {
-    fullUrl = 'https://' + project.toLowerCase() + '.niembro64.com/wordpress/';
+  if (project === 'Resume') {
+    fullUrl = 'https://www.ericniemeyer.com';
+  } else if (project === 'Media') {
+    fullUrl = 'https://media.niembro64.com/wordpress/';
   } else {
     fullUrl = 'https://' + project.toLowerCase() + '.niembro64.com';
   }
