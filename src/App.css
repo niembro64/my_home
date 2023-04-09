@@ -169,7 +169,7 @@
   width: 100%;
   height: 20%;
   background: url(../public/grass_05.png);
-  /* background-size: contain; */
+  background-size: contain;
   background-repeat: repeat-x;
   pointer-events: none;
 }
