@@ -50,7 +50,8 @@
 
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: space-evenly;
   /* justify-content: space-around; */
   align-items: center;
 
@@ -130,7 +131,6 @@
 }
 
 .project-type {
-  color: white;
   font-size: clamp(3vw, 2vw, 100vw);
 }
 .color-trans {
@@ -164,14 +164,19 @@
   position: absolute;
   bottom: 0%;
   left: 0px;
-
-  width: 100%;
   width: 100%;
   height: 20%;
   background: url(../public/grass_05.png);
-  background-size: contain;
   background-repeat: repeat-x;
   pointer-events: none;
+}
+
+.computer {
+  background-size: contain;
+}
+
+.phone {
+  background-size: cover;
 }
 
 .progress-bar {
@@ -239,7 +244,7 @@
   color: white;
 
   margin-top: 1.5vh;
-  margin-bottom: -1.5vh;
+  margin-bottom: -1vh;
   pointer-events: none;
 }
 .nav-notif-text-big {
@@ -268,12 +273,16 @@
 
 .project-resume {
   position: absolute;
-  bottom: 0px;
-  right: 5%;
-  width: 23%;
-  height: 10%;
-  background-color: rgba(0, 0, 0, 0.5);
-  border: 5px solid #582a0b;
+  bottom: 1%;
+  right: 1%;
+  /* width: 23%; */
+  height: 5%;
+  background-color: #582a0b00;
+  border: 5px solid #582a0b00;
+
+  padding: 1%;
+  /* padding-bottom: 1%; */
+  padding-top: 0.6%;
   /* border: 5px solid #115599; */
 
   z-index: 1;
@@ -282,7 +291,7 @@
   justify-content: center;
   align-items: center;
 
-  color: white;
+  color: rgba(255, 255, 255, 0.366);
 
   /* // prevent cursor from selecting text */
   -webkit-touch-callout: none; /* iOS Safari */
@@ -297,5 +306,9 @@
 }
 
 .project-resume:hover {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: #2d180a;
+  border: 5px solid #43220d;
+  background-color: rgba(64, 36, 25);
+  border: 5px solid white;
+  color: white;
 }

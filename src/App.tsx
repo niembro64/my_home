@@ -385,10 +385,15 @@ function App() {
           reactNavigate('Resume');
         }}
       >
-        <div className="project-title">RESUME</div>
+        <div className="project-type">Resume</div>
       </div>
       <div id={'game-parent'} ref={gameParentRef} />
-      <div className="grass" ref={grassRef}></div>
+      <div
+        className={
+          screen.height > screen.width ? 'grass phone' : 'grass computer'
+        }
+        ref={grassRef}
+      ></div>
       {debugOptions.devMode && (
         <div className="states">
           <div className="nav-touch">NAV-TOUCH {navTouch}</div>
