@@ -56,3 +56,8 @@ export type ProjectName =
   | 'Shows'
   | 'Media'
   | 'Resume';
+
+export interface Location2D {
+  x: number;
+  y: number;
+}

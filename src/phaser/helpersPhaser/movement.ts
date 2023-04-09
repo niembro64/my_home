@@ -18,7 +18,7 @@ export const updateGoLocationAir = (
 
   const k = player;
   const deadzoneWidth = 0;
-  const mouseVert = 50;
+  const mouseVert = 75;
 
   if (k.sprite.body.x + deadzoneWidth < gotoX) {
     k.sprite.setVelocityX(k.sprite.body.velocity.x + k.velX);

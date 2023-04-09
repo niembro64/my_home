@@ -77,8 +77,8 @@ export default class GameScene extends Phaser.Scene {
 
     this.kirby.posInitX = kirbyXY.x;
     this.kirby.posInitY = kirbyXY.y;
+    console.log('kirbyXY', this.kirby);
     this.load.image('k', 'bigk.png');
-
 
     // this.load.image('k', 'k.png');
   }
