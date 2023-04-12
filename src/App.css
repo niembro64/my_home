@@ -338,9 +338,23 @@
   z-index: 1;
 }
 
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .clicks-text {
   font-size: 2em;
   color: white;
+  animation: cubic-bezier(1, 0, 0, 1) 1s infinite;
+  animation-name: blink;
 }
 .clicks-text-last {
   margin-bottom: -15%;
@@ -350,4 +364,6 @@
   font-size: 3em;
   color: white;
   margin-bottom: 15%;
+  animation: cubic-bezier(1, 0, 0, 1) 1s infinite;
+  animation-name: blink;
 }
