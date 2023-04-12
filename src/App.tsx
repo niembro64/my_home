@@ -23,10 +23,31 @@ function App() {
   const navCountTop = 150;
   let myInterval = useRef<any>(null);
   let playerXY = useRef<Location2D | null>(null);
+  const [clickMoment, setClickMoment] = useState<Moment | null>(null);
+  const [numClicks, setNumClicks] = useState<number>(0);
 
   const handleGameState = (event: any) => {
     const site = event.detail;
     setNavTouch(site);
+  };
+
+  useEffect(() => {
+    console.log('numClicks', numClicks);
+  }, [numClicks]);
+
+  useEffect(() => {
+    console.log('handleClick', clickMoment);
+    if (clickMoment === null) {
+      return;
+    }
+
+    setNumClicks((prev) => prev + 1);
+  }, [clickMoment]);
+  const handleClick = () => {
+    // e.preventDefault();
+    // e.stopPropagation();
+
+    setClickMoment(moment());
   };
 
   //////////////////////////////////////////////////
@@ -238,12 +259,12 @@ function App() {
       return;
     }
 
-    const boxUltimate = myBoxes[myBoxes.length - 1];
-    const boxPenultimate = myBoxes[myBoxes.length - 2];
+    const boxFirst = myBoxes[0];
+    const boxSecond = myBoxes[1];
 
     const kirbyXY = {
-      x: (boxUltimate.x + boxPenultimate.x) * 0.5,
-      y: (boxUltimate.y + boxPenultimate.y) * 0.5,
+      x: (boxFirst.x + boxSecond.x) * 0.5,
+      y: (boxFirst.y + boxSecond.y) * 0.5,
     };
 
     let config: Phaser.Types.Core.GameConfig = {
@@ -299,9 +320,13 @@ function App() {
 
     console.log('Game Ready');
     window.addEventListener('gameState', handleGameState);
+    window.addEventListener('mousedown', handleClick);
+    window.addEventListener('touchstart', handleClick);
 
     return () => {
       window.removeEventListener('gameState', handleGameState);
+      window.removeEventListener('mousedown', handleClick);
+      window.removeEventListener('touchstart', handleClick);
     };
   }, [gameReady]);
 
@@ -410,7 +435,7 @@ function App() {
           reactNavigate('Resume');
         }}
       >
-        <div className="project-type">Resume</div>
+        <div className="project-resume-text">Eric's Resume</div>
       </div>
       <div id={'game-parent'} ref={gameParentRef} />
       <div
@@ -437,6 +462,55 @@ function App() {
           <div className="nav-notif-text-small">Navigating To</div>
           <div className="nav-notif-text-big">{navTouch}</div>
         </div>
+      )}
+
+      {/* ////////////////////////////////// */}
+      {/* PHONE */}
+      {/* ////////////////////////////////// */}
+      {screen.height > screen.width && (
+        <>
+          {numClicks === 0 && (
+            <div className="clicks">
+              <div className="clicks-text clicks-text-last">Click!</div>
+            </div>
+          )}
+          {numClicks === 1 && (
+            <div className="clicks">
+              <div className="clicks-text">He</div>
+              <div className="clicks-text">Follows</div>
+              <div className="clicks-text clicks-text-last">You!</div>
+            </div>
+          )}
+          {numClicks === 2 && (
+            <div className="clicks">
+              <div className="clicks-text">Put Him</div>
+              <div className="clicks-text">On A</div>
+              <div className="clicks-text clicks-text-last">Project!</div>
+            </div>
+          )}
+        </>
+      )}
+      {/* ////////////////////////////////// */}
+      {/* COMPUTER */}
+      {/* ////////////////////////////////// */}
+      {screen.height < screen.width && (
+        <>
+          {numClicks === 0 && (
+            <div className="clicks">
+              <div className="clicks-text-mid">Click!</div>
+            </div>
+          )}
+          {numClicks === 1 && (
+            <div className="clicks">
+              <div className="clicks-text-mid">He Follows You!</div>
+            </div>
+          )}
+          {numClicks === 2 && (
+            <div className="clicks">
+              <div className="clicks-text-mid">Put Him On A Project!</div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
