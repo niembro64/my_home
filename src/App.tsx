@@ -259,12 +259,19 @@ function App() {
       return;
     }
 
-    const boxFirst = myBoxes[0];
-    const boxSecond = myBoxes[1];
+    const boxPenultimate = myBoxes[4];
+    const boxUltimate = myBoxes[5];
+
+    let sumY = 0;
+    for (let i = 0; i < myBoxes.length; i++) {
+      sumY += myBoxes[i].y;
+    }
+
+    const kirbyY = sumY / myBoxes.length;
 
     const kirbyXY = {
-      x: (boxFirst.x + boxSecond.x) * 0.5,
-      y: (boxFirst.y + boxSecond.y) * 0.5,
+      x: (boxPenultimate.x + boxUltimate.x) * 0.5,
+      y: kirbyY,
     };
 
     let config: Phaser.Types.Core.GameConfig = {

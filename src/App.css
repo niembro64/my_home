@@ -49,7 +49,7 @@
   z-index: 0;
 
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   /* justify-content: space-between; */
   justify-content: space-evenly;
   /* justify-content: space-around; */
