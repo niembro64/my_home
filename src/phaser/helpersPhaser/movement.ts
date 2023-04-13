@@ -27,7 +27,7 @@ export const updateGoLocationAir = (
   }
 
   if (game.mouse.y - mouseVert < k.sprite.body.y) {
-    setJump(player);
+    setJump(player, game);
   }
 };
 
@@ -60,12 +60,24 @@ export const updateGoLocationGround = (
   }
 
   if (game.mouse.y < k.sprite.body.y) {
-    setJump(player);
+    setJump(player, game);
   }
 };
 
-export const setJump = (player: Player): void => {
-  player.sprite.setVelocityY(-player.jumpPower);
+export const setJump = (player: Player, game: GameScene): void => {
+  const mouse = game.input.activePointer;
+  let { x, y } = getNormalizedVector(
+    player.sprite.body.x,
+    player.sprite.body.y,
+    mouse.x,
+    mouse.y
+  );
+
+  const xVel = x * player.jumpPower;
+  const yVel = Math.max(Math.abs(y) * player.jumpPower, player.jumpPower * 0.5);
+
+  player.sprite.setVelocityX(xVel);
+  player.sprite.setVelocityY(-yVel);
 };
 
 export const updatePlayerFrictionGround = (player: Player): void => {

@@ -143,7 +143,7 @@ export default class GameScene extends Phaser.Scene {
       // if (this.kirby.velX !== this.speedFast) {
       //   this.kirby.velX = this.speedFast;
       // }
-      setJump(this.kirby);
+      setJump(this.kirby, this);
       // if (this.kirby.sprite.body.velocity.y > -10) {
       // }
     });
