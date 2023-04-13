@@ -25,11 +25,14 @@ function App() {
   let playerXY = useRef<Location2D | null>(null);
   const [clickMoment, setClickMoment] = useState<Moment | null>(null);
   const [numClicks, setNumClicks] = useState<number>(0);
+  const [isClickDown, setIsClickDown] = useState<boolean>(false);
 
   const handleGameState = (event: any) => {
     const site = event.detail;
     setNavTouch(site);
-    setNumClicks(100);
+    if (site !== null) {
+      setNumClicks(100);
+    }
   };
 
   useEffect(() => {
@@ -37,18 +40,23 @@ function App() {
   }, [numClicks]);
 
   useEffect(() => {
-    console.log('handleClick', clickMoment);
+    console.log('clickMoment', clickMoment);
     if (clickMoment === null) {
       return;
     }
 
     setNumClicks((prev) => prev + 1);
   }, [clickMoment]);
-  const handleClick = () => {
-    // e.preventDefault();
-    // e.stopPropagation();
-
+  const handleClickDown = () => {
+    console.log('clickDown');
+    setIsClickDown(true);
+    // document.body.classList.remove('cursorCrosshair');
     setClickMoment(moment());
+  };
+  const handleClickUp = () => {
+    console.log('clickUp');
+    // document.body.classList.add('cursorCrosshair');
+    setIsClickDown(false);
   };
 
   //////////////////////////////////////////////////
@@ -328,19 +336,33 @@ function App() {
 
     console.log('Game Ready');
     window.addEventListener('gameState', handleGameState);
-    window.addEventListener('mousedown', handleClick);
-    window.addEventListener('touchstart', handleClick);
+    window.addEventListener('mousedown', handleClickDown);
+    window.addEventListener('mouseup', handleClickUp);
+    window.addEventListener('touchstart', handleClickDown);
+    window.addEventListener('touchend', handleClickUp);
 
     return () => {
       window.removeEventListener('gameState', handleGameState);
-      window.removeEventListener('mousedown', handleClick);
-      window.removeEventListener('touchstart', handleClick);
+      window.removeEventListener('mousedown', handleClickDown);
+      window.removeEventListener('mouseup', handleClickUp);
+      window.removeEventListener('touchstart', handleClickDown);
+      window.removeEventListener('touchend', handleClickUp);
     };
   }, [gameReady]);
 
   return (
     <div className="top">
-      <div id={'react-parent'} ref={reactParentRef}>
+      <div
+        id={'react-parent'}
+        // className={isClickDown ? 'cursorCrosshair' : 'cursorNormal'}
+        // onMouseDown={() => {
+        //   setIsClickDown(true);
+        // }}
+        // onMouseUp={() => {
+        //   setIsClickDown(false);
+        // }}
+        ref={reactParentRef}
+      >
         {projects
           .slice()
           .reverse()
@@ -445,7 +467,17 @@ function App() {
       >
         <div className="project-resume-text">Eric's Resume</div>
       </div>
-      <div id={'game-parent'} ref={gameParentRef} />
+      <div
+        className={'game-parent'}
+        // id={isClickDown ? 'cursorCrosshair' : 'cursorNormal'}
+        // onMouseDown={() => {
+        //   setIsClickDown(true);
+        // }}
+        // onMouseUp={() => {
+        //   setIsClickDown(false);
+        // }}
+        ref={gameParentRef}
+      />
       <div
         className={
           screen.height > screen.width ? 'grass phone' : 'grass computer'

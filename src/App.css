@@ -28,6 +28,7 @@
   /* font-family: 'PixelOperator', 'Roboto', sans-serif; */
   /* 
   pointer-events: none; */
+  /* cursor: crosshair; */
 }
 
 .top {
@@ -37,6 +38,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#cursorNormal {
+  cursor: normal;
+}
+#cursorCrosshair {
+  cursor: crosshair;
 }
 
 #react-parent {
@@ -58,12 +66,12 @@
   flex-wrap: wrap;
 
   pointer-events: none;
-  cursor: crosshair;
+  /* cursor: crosshair; */
 
   z-index: 1;
 }
 
-#game-parent {
+.game-parent {
   /* background-color: rgba(255, 0, 0, 0.135); */
   position: absolute;
   top: 0px;
@@ -80,7 +88,8 @@
 
   overflow: hidden;
   /* pointer-events: none; */
-  cursor: crosshair;
+  cursor: grab;
+  /* cursor: crosshair; */
 }
 
 .project {
