@@ -29,6 +29,7 @@ function App() {
   const handleGameState = (event: any) => {
     const site = event.detail;
     setNavTouch(site);
+    setNumClicks(100);
   };
 
   useEffect(() => {
