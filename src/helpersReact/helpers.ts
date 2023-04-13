@@ -14,7 +14,7 @@ export const reactNavigate = (project: ProjectName): void => {
 
   console.log('reactNavigate', 'project', project);
   if (project === 'Resume') {
-    fullUrl = 'https://www.ericniemeyer.com';
+    fullUrl = 'https://ericniemeyer.com';
   } else if (project === 'Media') {
     fullUrl = 'https://media.niembro64.com/wordpress/';
   } else {
