@@ -20,5 +20,6 @@ export const reactNavigate = (project: ProjectName): void => {
   } else {
     fullUrl = 'https://' + project.toLowerCase() + '.niembro64.com';
   }
-  window.open(fullUrl, '_blank');
+  // window.open(fullUrl, '_blank');
+  window.location.href = fullUrl;
 };
