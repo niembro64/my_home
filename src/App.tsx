@@ -10,6 +10,8 @@ import { ProgressBar } from 'react-progressbar-fancy';
 import { debugOptions } from './debugOptions';
 import { debug } from 'console';
 
+export const __DEV__ = process.env.NODE_ENV === 'development';
+
 function App() {
   const gameParentRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<any>(null);
@@ -36,11 +38,11 @@ function App() {
   };
 
   useEffect(() => {
-    console.log('numClicks', numClicks);
+    __DEV__ && console.log('numClicks', numClicks);
   }, [numClicks]);
 
   useEffect(() => {
-    console.log('clickMoment', clickMoment);
+    __DEV__ && console.log('clickMoment', clickMoment);
     if (clickMoment === null) {
       return;
     }
@@ -48,13 +50,13 @@ function App() {
     setNumClicks((prev) => prev + 1);
   }, [clickMoment]);
   const handleClickDown = () => {
-    console.log('clickDown');
+    __DEV__ && console.log('clickDown');
     setIsClickDown(true);
     // document.body.classList.remove('cursorCrosshair');
     setClickMoment(moment());
   };
   const handleClickUp = () => {
-    console.log('clickUp');
+    __DEV__ && console.log('clickUp');
     // document.body.classList.add('cursorCrosshair');
     setIsClickDown(false);
   };
@@ -163,7 +165,7 @@ function App() {
 
   useEffect(() => {
     if (numVidsLoaded === projects.length) {
-      console.log('All videos have loaded, do something here.');
+      __DEV__ && console.log('All videos have loaded, do something here.');
       setAllVidsLoaded(true);
     }
   }, [numVidsLoaded]);
@@ -191,7 +193,7 @@ function App() {
       const project: ProjectName = child.children[0].children[0]
         .innerHTML as ProjectName;
 
-      console.log('project', project);
+      __DEV__ && console.log('project', project);
       const top = rect.y;
       const left = rect.x;
       const width = rect.width;
@@ -334,7 +336,7 @@ function App() {
       return;
     }
 
-    console.log('Game Ready');
+    __DEV__ && console.log('Game Ready');
     window.addEventListener('gameState', handleGameState);
     window.addEventListener('mousedown', handleClickDown);
     window.addEventListener('mouseup', handleClickUp);
@@ -461,7 +463,7 @@ function App() {
       <div
         className="project-resume"
         onClick={() => {
-          console.log('Resume Clicked');
+          __DEV__ && console.log('Resume Clicked');
           reactNavigate('Resume');
         }}
       >
