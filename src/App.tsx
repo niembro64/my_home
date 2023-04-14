@@ -354,10 +354,46 @@ function App() {
     };
   }, [gameReady]);
 
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleClick = (event: {
+    stopPropagation: () => void;
+    currentTarget: Element;
+    clientX: number;
+    clientY: number;
+  }) => {
+    if (isHovering) {
+      event.stopPropagation();
+
+      const container = event.currentTarget.parentNode;
+      // @ts-ignore
+      const rect = container.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      const elements = document.elementsFromPoint(x, y);
+      for (const elem of elements) {
+        // @ts-ignore
+        if (elem !== event.currentTarget && elem.click) {
+          // @ts-ignore
+          elem.click();
+          break;
+        }
+      }
+    }
+  };
+
   return (
     <div className="top">
       <div
         id={'react-parent'}
+        onMouseEnter={() => {
+          setIsHovering(true);
+        }}
+        onMouseLeave={() => {
+          setIsHovering(false);
+        }}
+        // onClick={handleClick}
         // className={isClickDown ? 'cursorCrosshair' : 'cursorNormal'}
         // onMouseDown={() => {
         //   setIsClickDown(true);
@@ -381,6 +417,12 @@ function App() {
                     : 'project project-touch border-light'
                 }
                 key={index}
+                // onMouseEnter={() => {
+                //   setIsHovering(true);
+                // }}
+                // onMouseLeave={() => {
+                //   setIsHovering(false);
+                // }}
               >
                 <div
                   className={
