@@ -115,7 +115,8 @@
 }
 
 .project:hover {
-  border: 5px solid transparent;
+  border: 5px solid white;
+  /* border: 5px solid transparent; */
 }
 
 .project:hover,
