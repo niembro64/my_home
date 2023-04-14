@@ -29,6 +29,10 @@
   /* 
   pointer-events: none; */
   /* cursor: crosshair; */
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
 .top {
@@ -65,8 +69,9 @@
 
   flex-wrap: wrap;
 
-  pointer-events: none;
+  /* pointer-events: none; */
   /* cursor: crosshair; */
+  cursor: grab;
 
   z-index: 1;
 }
@@ -87,7 +92,7 @@
   z-index: 0;
 
   overflow: hidden;
-  /* pointer-events: none; */
+  pointer-events: none;
   cursor: grab;
   /* cursor: crosshair; */
 }
@@ -108,9 +113,16 @@
   /* border: 5px solid #3399ff; */
   border: 5px solid #115599;
 }
+
+.project:hover {
+  border: 5px solid white;
+  /* border: 5px solid rgb(245, 172, 24); */
+}
+
 .project-touch {
   border: 5px solid white;
   /* border: 5px solid rgb(245, 172, 24); */
+  pointer-events: none;
 }
 
 .project-overlay {

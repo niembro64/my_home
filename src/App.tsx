@@ -49,12 +49,14 @@ function App() {
 
     setNumClicks((prev) => prev + 1);
   }, [clickMoment]);
+
   const handleClickDown = () => {
     __DEV__ && console.log('clickDown');
     setIsClickDown(true);
     // document.body.classList.remove('cursorCrosshair');
     setClickMoment(moment());
   };
+
   const handleClickUp = () => {
     __DEV__ && console.log('clickUp');
     // document.body.classList.add('cursorCrosshair');
