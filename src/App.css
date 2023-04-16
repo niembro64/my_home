@@ -69,8 +69,7 @@
 
   flex-wrap: wrap;
 
-  /* pointer-events: fill; */
-  /* pointer-events: none; */
+  pointer-events: none;
   /* cursor: crosshair; */
   cursor: grab;
 
@@ -93,7 +92,6 @@
   z-index: 0;
 
   overflow: hidden;
-  /* pointer-events: none; */
   cursor: grab;
   /* cursor: crosshair; */
 }
@@ -113,7 +111,6 @@
   /* overflow: hidden; */
   /* border: 5px solid #3399ff; */
   border: 5px solid #115599;
-  pointer-events: none;
 }
 
 .project:hover {

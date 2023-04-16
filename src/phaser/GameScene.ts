@@ -109,7 +109,8 @@ export default class GameScene extends Phaser.Scene {
       // Draw the rectangle using graphics
       platform.graphic = this.add
         // .graphics()
-        .graphics({ fillStyle: { color: 0x335544 } })
+        .graphics({ fillStyle: { color: 0x693B29 } })
+        // .graphics({ fillStyle: { color: 0x335544 } })
         .fillRectShape(rect);
 
       // Create a static Arcade Physics body for the rectangle

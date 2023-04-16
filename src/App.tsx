@@ -59,6 +59,26 @@ function App() {
     __DEV__ && console.log('clickUp');
   };
 
+  const handleMouseMove = (event: any) => {
+    if (gameRef.current === null) {
+      return;
+    }
+
+    // Update active pointer's position in Phaser
+    const bounds = gameRef.current.canvas.getBoundingClientRect();
+    const x = event.clientX - bounds.left;
+    const y = event.clientY - bounds.top;
+    gameRef.current.input.activePointer.position.setTo(x, y);
+
+    // Trigger the appropriate Phaser events
+    gameRef.current.input.activePointer.dirty = true;
+    gameRef.current.input.updateInputPlugins(
+      'pointermove',
+      gameRef.current.input.activePointer,
+      false
+    );
+  };
+
   //////////////////////////////////////////////////
   // NAV_TOUCH => COUNTING
   //////////////////////////////////////////////////
@@ -339,6 +359,7 @@ function App() {
     window.addEventListener('mouseup', handleClickUp);
     window.addEventListener('touchstart', handleClickDown);
     window.addEventListener('touchend', handleClickUp);
+    window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
       window.removeEventListener('gameState', handleGameState);
@@ -346,48 +367,20 @@ function App() {
       window.removeEventListener('mouseup', handleClickUp);
       window.removeEventListener('touchstart', handleClickDown);
       window.removeEventListener('touchend', handleClickUp);
+      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, [gameReady]);
-
-  const [isHovering, setIsHovering] = useState(false);
-
-  const handleClick = (event: {
-    stopPropagation: () => void;
-    currentTarget: Element;
-    clientX: number;
-    clientY: number;
-  }) => {
-    if (isHovering) {
-      event.stopPropagation();
-
-      const container = event.currentTarget.parentNode;
-      // @ts-ignore
-      const rect = container.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-
-      const elements = document.elementsFromPoint(x, y);
-      for (const elem of elements) {
-        // @ts-ignore
-        if (elem !== event.currentTarget && elem.click) {
-          // @ts-ignore
-          elem.click();
-          break;
-        }
-      }
-    }
-  };
 
   return (
     <div className="top">
       <div
         id={'react-parent'}
-        onMouseEnter={() => {
-          setIsHovering(true);
-        }}
-        onMouseLeave={() => {
-          setIsHovering(false);
-        }}
+        // onMouseEnter={() => {
+        //   setIsHovering(true);
+        // }}
+        // onMouseLeave={() => {
+        //   setIsHovering(false);
+        // }}
         // onClick={handleClick}
         // className={isClickDown ? 'cursorCrosshair' : 'cursorNormal'}
         // onMouseDown={() => {
