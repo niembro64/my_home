@@ -72,6 +72,7 @@
   /* pointer-events: none; */
   /* cursor: crosshair; */
   cursor: grab;
+  overflow: hidden;
 
   z-index: 1;
 }
@@ -116,6 +117,9 @@
 .project:hover {
   border: 5px solid white;
   /* border: 5px solid transparent; */
+
+  transform: scale(1.5);
+  transform-origin: 50% 0%;
 }
 
 .project:hover,
