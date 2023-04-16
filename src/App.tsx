@@ -16,18 +16,18 @@ function App() {
   const gameParentRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<any>(null);
   const grassRef = useRef<HTMLDivElement>(null);
-  const [customEventData, setCustomEventData] = useState<any>(null);
+  let myInterval = useRef<any>(null);
+  let playerXY = useRef<Location2D | null>(null);
+
+  const [gameReady, setGameReady] = useState<boolean>(false);
   const [navTouch, setNavTouch] = useState<ProjectName | null>(null);
   const [navWaiting, setNavWaiting] = useState<ProjectName | null>(null);
   const [navGo, setNavGo] = useState<ProjectName | null>(null);
   const [navCount, setNavCount] = useState<number>(0);
   const navCountAdd = 50;
   const navCountTop = 150;
-  let myInterval = useRef<any>(null);
-  let playerXY = useRef<Location2D | null>(null);
   const [clickMoment, setClickMoment] = useState<Moment | null>(null);
   const [numClicks, setNumClicks] = useState<number>(0);
-  const [isClickDown, setIsClickDown] = useState<boolean>(false);
 
   const handleGameState = (event: any) => {
     const site = event.detail;
@@ -52,15 +52,11 @@ function App() {
 
   const handleClickDown = () => {
     __DEV__ && console.log('clickDown');
-    setIsClickDown(true);
-    // document.body.classList.remove('cursorCrosshair');
     setClickMoment(moment());
   };
 
   const handleClickUp = () => {
     __DEV__ && console.log('clickUp');
-    // document.body.classList.add('cursorCrosshair');
-    setIsClickDown(false);
   };
 
   //////////////////////////////////////////////////
@@ -120,7 +116,6 @@ function App() {
     reactNavigate(navGo);
   }, [navGo]);
 
-  const [gameReady, setGameReady] = useState<boolean>(false);
   const handleGameReady = () => {
     setGameReady(true);
   };
@@ -597,6 +592,15 @@ function App() {
             </div>
           )}
         </>
+      )}
+
+      {/* ////////////////////////////////// */}
+      {/* LOADER */}
+      {/* ////////////////////////////////// */}
+      {!gameReady && (
+        <div className="loader">
+          <div className="clicks-text-mid">Loading...</div>
+        </div>
       )}
     </div>
   );
