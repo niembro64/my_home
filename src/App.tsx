@@ -373,6 +373,7 @@ function App() {
 
   return (
     <div className="top">
+      <div className="transparent-layer"></div>
       <div
         id={'react-parent'}
         // onMouseEnter={() => {
