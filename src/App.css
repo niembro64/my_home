@@ -37,6 +37,12 @@
   /* border: 1px dashed lime;  */
 }
 
+body {
+  touch-action: none;
+  overflow: hidden;
+  height: 100vh;
+}
+
 .top {
   width: 100%;
   height: 100%;

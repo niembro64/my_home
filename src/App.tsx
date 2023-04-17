@@ -60,6 +60,8 @@ function App() {
   };
 
   const handleMouseMove = (event: any) => {
+    event.preventDefault();
+
     if (gameRef.current === null) {
       return;
     }
@@ -375,8 +377,8 @@ function App() {
     window.addEventListener('mouseup', handleClickUp);
     window.addEventListener('touchstart', handleClickDown);
     window.addEventListener('touchend', handleClickUp);
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: false });
+    window.addEventListener('touchmove', handleMouseMove, { passive: false });
 
     return () => {
       window.removeEventListener('gameState', handleGameState);
