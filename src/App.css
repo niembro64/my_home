@@ -115,7 +115,7 @@
 }
 
 .project:hover {
-  border: 5px solid white;
+  /* border: 5px solid white; */
   /* border: 5px solid transparent; */
 
   transform: scale(1.5);
@@ -436,7 +436,7 @@
   width: 100%;
   height: 100%;
 
-  background-color: #0000ff22;
+  /* background-color: #0000ff22; */
 
   display: flex;
   flex-direction: column;
