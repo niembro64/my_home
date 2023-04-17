@@ -187,16 +187,22 @@ export const updateJustTouchedGround = (
 ): void => {
   const k = player;
 
-  if (k.sprite.body.touching.down && !k.isTouchingPrev) {
+  let touchingAny: boolean =
+    k.sprite.body.touching.down ||
+    k.sprite.body.touching.up ||
+    k.sprite.body.touching.left ||
+    k.sprite.body.touching.right;
+
+  if (touchingAny && !k.isTouchingPrev) {
     window.dispatchEvent(
       new CustomEvent('gameState', { detail: k.nearestProject })
     );
-  } else if (!k.sprite.body.touching.down && k.isTouchingPrev) {
+  } else if (!touchingAny && k.isTouchingPrev) {
     window.dispatchEvent(new CustomEvent('gameState', { detail: null }));
   } else {
   }
 
-  k.isTouchingPrev = k.sprite.body.touching.down;
+  k.isTouchingPrev = touchingAny;
 };
 
 export const updateNearestPlatform = (
@@ -248,6 +254,36 @@ export const updateNearestPlatformUnderPlayer = (
     );
 
     if (distanceNew < distanceNearest && k.sprite.body.y < p.box.y) {
+      platformNearest = p;
+      distanceNearest = distanceNew;
+    }
+  });
+
+  if (platformNearest !== null && platformNearest['box'] !== null) {
+    k.nearestProject = platformNearest['box']['project'];
+    return;
+  }
+  k.nearestProject = null;
+};
+export const updateNearestPlatformUnderPlayerNew = (
+  player: Player,
+  game: GameScene
+): void => {
+  const k = player;
+  const p = game.platforms;
+
+  let platformNearest: Platform | null = null;
+  let distanceNearest: number = Infinity;
+
+  p.forEach((p: Platform) => {
+    const distanceNew = getDistance(
+      k.sprite.body.x + k.sprite.body.width * 0.5,
+      k.sprite.body.y + k.sprite.body.height * 0.5,
+      p.box.x,
+      p.box.y
+    );
+
+    if (distanceNew < distanceNearest) {
       platformNearest = p;
       distanceNearest = distanceNew;
     }

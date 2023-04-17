@@ -13,6 +13,8 @@ import {
   updatePlayerFrictionWall,
   updatePlayerFrictionCeiling,
   updateGoLocationCeiling,
+  updateNearestPlatform,
+  updateNearestPlatformUnderPlayerNew,
 } from './helpersPhaser/movement';
 import { updateSpriteFlip } from './helpersPhaser/sprite';
 import { __DEV__ } from '../App';
@@ -209,7 +211,9 @@ export default class GameScene extends Phaser.Scene {
       updatePlayerFrictionAir(k, this);
       updateGoLocationAir(k, this.mouse.x, this.mouse.y, this);
     }
+    // updateNearestPlatformUnderPlayerNew(k, this);
     updateNearestPlatformUnderPlayer(k, this);
+    // updateNearestPlatform(k, this);
     updateJustTouchedGround(k, this);
     updateSprite(k, this);
   }
