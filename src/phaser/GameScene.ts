@@ -97,7 +97,8 @@ export default class GameScene extends Phaser.Scene {
 
     this.load.spritesheet({
       key: 'spritesheet',
-      url: 'sprite_sheet_10.1_kirby_4x.png',
+      url: 'sprite_sheet_10.2_kirby_4x.png',
+      // url: 'sprite_sheet_10.1_kirby_4x.png',
       // url: 'sprite_sheet_8.1_kirby_4x.png',
       frameConfig: {
         frameWidth: 13 * 4 + 2,
