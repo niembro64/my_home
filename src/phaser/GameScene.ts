@@ -8,7 +8,6 @@ import {
   updateJustTouchedGround,
   updatePlayerFrictionAir,
   updatePlayerFrictionGround,
-  createSpriteSheet,
   updateSprite,
 } from './helpersPhaser/movement';
 import { updateSpriteFlip } from './helpersPhaser/sprite';
@@ -189,7 +188,7 @@ export default class GameScene extends Phaser.Scene {
   update(): void {
     const k = this.kirby;
     updateMouse(this.mouse, this);
-    updateGoLocationGround(k, this.mouse.x, this.mouse.y, this);
+    // updateGoLocationGround(k, this.mouse.x, this.mouse.y, this);
     updateGoLocationAir(k, this.mouse.x, this.mouse.y, this);
     updateSpriteFlip(k, this);
     updatePlayerFrictionGround(k);
@@ -206,3 +205,80 @@ const updateMouse = (mouse: Mouse, game: GameScene) => {
   mouse.x = p.x;
   mouse.y = p.y;
 };
+
+function createSpriteSheet(game: GameScene): void {
+  var config_idle = {
+    key: 'idle',
+    frames: game.anims.generateFrameNumbers('spritesheet', {
+      start: 0,
+      end: 0,
+      first: 0,
+    }),
+    frameRate: 1,
+    repeat: -1,
+  };
+
+  var config_walk = {
+    key: 'walk',
+    frames: game.anims.generateFrameNumbers('spritesheet', {
+      start: 1,
+      end: 3,
+      first: 1,
+    }),
+    frameRate: 15,
+    repeat: -1,
+  };
+
+  var config_jumpUp = {
+    key: 'jumpUp',
+    frames: game.anims.generateFrameNumbers('spritesheet', {
+      start: 4,
+      end: 4,
+      first: 4,
+    }),
+    frameRate: 1,
+    repeat: -1,
+  };
+
+  var config_jumpDown = {
+    key: 'jumpDown',
+    frames: game.anims.generateFrameNumbers('spritesheet', {
+      start: 7,
+      end: 7,
+      first: 7,
+    }),
+    frameRate: 1,
+    repeat: -1,
+  };
+
+  var config_climb = {
+    key: 'climb',
+    frames: game.anims.generateFrameNumbers('spritesheet', {
+      start: 5,
+      end: 6,
+      first: 5,
+    }),
+    frameRate: 10,
+    repeat: -1,
+  };
+
+  game.anims.create(config_idle);
+  game.anims.create(config_walk);
+  game.anims.create(config_jumpUp);
+  game.anims.create(config_jumpDown);
+  game.anims.create(config_climb);
+
+  const k = game.kirby;
+  k.sprite = game.physics.add
+    .sprite(k.posInitX, k.posInitY, 'spritesheet')
+    // .sprite(k.posInitX, k.posInitY, 'k')
+    // .setOrigin(0, 1)
+    // .setOrigin(0, 0)
+    // .setOrigin(0.5, 0.5)
+    .setCollideWorldBounds(true)
+    // .setScale(0.3)
+    // .setBounceX(1)
+    .setBounceY(0.5);
+
+  // game.kirby.sprite.setScale(1);
+}
