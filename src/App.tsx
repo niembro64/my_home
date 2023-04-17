@@ -376,6 +376,7 @@ function App() {
     window.addEventListener('touchstart', handleClickDown);
     window.addEventListener('touchend', handleClickUp);
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleMouseMove);
 
     return () => {
       window.removeEventListener('gameState', handleGameState);
@@ -384,6 +385,7 @@ function App() {
       window.removeEventListener('touchstart', handleClickDown);
       window.removeEventListener('touchend', handleClickUp);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleMouseMove);
     };
   }, [gameReady]);
 
