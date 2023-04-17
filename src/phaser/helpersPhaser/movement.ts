@@ -245,11 +245,12 @@ export function createSpriteSheet(game: GameScene): void {
 
   const k = game.kirby;
   k.sprite = game.physics.add
-    .sprite(k.posInitX, k.posInitY, 'k')
+    .sprite(k.posInitX, k.posInitY, 'spritesheet')
+    // .sprite(k.posInitX, k.posInitY, 'k')
     // .setOrigin(0.5, 0.5)
     .setCollideWorldBounds(true)
     // .setScale(0.3)
-    .setBounceX(1)
+    // .setBounceX(1)
     .setBounceY(0.5);
 
   // game.kirby.sprite.setScale(1);
