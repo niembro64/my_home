@@ -8,6 +8,7 @@ import {
   updateJustTouchedGround,
   updatePlayerFrictionAir,
   updatePlayerFrictionGround,
+  createSpriteSheet,
 } from './helpersPhaser/movement';
 import { updateSpriteFlip } from './helpersPhaser/sprite';
 
@@ -81,6 +82,19 @@ export default class GameScene extends Phaser.Scene {
     this.load.image('k', 'bigk.png');
 
     // this.load.image('k', 'k.png');
+
+    this.load.spritesheet({
+      key: 'spritesheet',
+      url: 'sprite_sheet_8.1_kirby_4x.png',
+      frameConfig: {
+        frameWidth: 13 * 4 + 2,
+        frameHeight: 13 * 4 + 2,
+        startFrame: 0,
+        endFrame: 7,
+        margin: 0,
+        spacing: 0,
+      },
+    });
   }
 
   create(): void {
@@ -109,7 +123,7 @@ export default class GameScene extends Phaser.Scene {
       // Draw the rectangle using graphics
       platform.graphic = this.add
         // .graphics()
-        .graphics({ fillStyle: { color: 0x693B29 } })
+        .graphics({ fillStyle: { color: 0x693b29 } })
         // .graphics({ fillStyle: { color: 0x335544 } })
         .fillRectShape(rect);
 
@@ -154,6 +168,8 @@ export default class GameScene extends Phaser.Scene {
       //   this.kirby.velX = this.speedSlow;
       // }
     });
+
+    createSpriteSheet(this);
   }
 
   update(): void {

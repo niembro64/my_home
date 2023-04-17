@@ -23,3 +23,5 @@ export const reactNavigate = (project: ProjectName): void => {
   // window.open(fullUrl, '_blank');
   window.location.href = fullUrl;
 };
+
+

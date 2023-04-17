@@ -178,3 +178,66 @@ export const updateNearestPlatformUnderPlayer = (
   }
   k.nearestProject = null;
 };
+
+export function createSpriteSheet(game: GameScene): void {
+  var config_idle = {
+    key: 'animation_idle',
+    frames: game.anims.generateFrameNumbers('spritesheet', {
+      start: 0,
+      end: 0,
+      first: 0,
+    }),
+    frameRate: 1,
+    repeat: -1,
+  };
+
+  var config_walk = {
+    key: 'animation_walk',
+    frames: game.anims.generateFrameNumbers('spritesheet', {
+      start: 1,
+      end: 3,
+      first: 1,
+    }),
+    frameRate: 20,
+    repeat: -1,
+  };
+
+  var config_jumpUp = {
+    key: 'animation_jumpUp',
+    frames: game.anims.generateFrameNumbers('spritesheet', {
+      start: 4,
+      end: 4,
+      first: 4,
+    }),
+    frameRate: 1,
+    repeat: -1,
+  };
+
+  var config_jumpDown = {
+    key: 'animation_jumpDown',
+    frames: game.anims.generateFrameNumbers('spritesheet', {
+      start: 7,
+      end: 7,
+      first: 7,
+    }),
+    frameRate: 1,
+    repeat: -1,
+  };
+
+  var config_climb = {
+    key: 'animation_climb',
+    frames: game.anims.generateFrameNumbers('spritesheet', {
+      start: 5,
+      end: 6,
+      first: 5,
+    }),
+    frameRate: 10,
+    repeat: -1,
+  };
+
+  game.anims.create(config_idle);
+  game.anims.create(config_walk);
+  game.anims.create(config_jumpUp);
+  game.anims.create(config_jumpDown);
+  game.anims.create(config_climb);
+}
