@@ -108,15 +108,12 @@ export const updateGoLocationGround = (
 
 export const setJump = (player: Player, game: GameScene): void => {
   const mouse = game.input.activePointer;
-  __DEV__ && console.log('JUMP');
   let { x, y } = getNormalizedVector(
     player.sprite.body.x,
     player.sprite.body.y,
     mouse.x,
     mouse.y
   );
-
-  __DEV__ && console.log('x', x);
 
   const xVel = x * player.jumpPower;
   const yVel = Math.max(Math.abs(y) * player.jumpPower, player.jumpPower * 0.5);

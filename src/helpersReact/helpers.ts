@@ -1,3 +1,4 @@
+import { __DEV__ } from '../App';
 import { debugOptions } from '../debugOptions';
 import { ProjectName } from '../typescript';
 
@@ -12,7 +13,7 @@ export const reactNavigate = (project: ProjectName): void => {
 
   let fullUrl: string = '';
 
-  console.log('reactNavigate', 'project', project);
+  __DEV__ && console.log('reactNavigate', 'project', project);
   if (project === 'Resume') {
     fullUrl = 'https://ericniemeyer.com';
   } else if (project === 'Media') {
@@ -23,5 +24,3 @@ export const reactNavigate = (project: ProjectName): void => {
   // window.open(fullUrl, '_blank');
   window.location.href = fullUrl;
 };
-
-

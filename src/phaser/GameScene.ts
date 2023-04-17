@@ -61,8 +61,8 @@ export default class GameScene extends Phaser.Scene {
   preload(): void {
     this.config = this.game.config;
     this.isMobile = this.config.width < this.config.height;
-    console.log('this.config', this.config);
-    console.log('this.isMobile', this.isMobile);
+    __DEV__ && console.log('this.config', this.config);
+    __DEV__ && console.log('this.isMobile', this.isMobile);
 
     const kirbyXY: { x: number; y: number } = this.game.registry.get('kirbyXY');
     let myBoxes: Box[] = this.game.registry.get('myBoxes');
@@ -84,11 +84,11 @@ export default class GameScene extends Phaser.Scene {
       });
     }
 
-    console.log('phaser myBoxes', myBoxes);
+    __DEV__ && console.log('phaser myBoxes', myBoxes);
 
     this.kirby.posInitX = kirbyXY.x;
     this.kirby.posInitY = kirbyXY.y;
-    console.log('kirbyXY', this.kirby);
+    __DEV__ && console.log('kirbyXY', this.kirby);
     // this.load.image('k', 'bigk.png');
 
     // this.load.image('k', 'k.png');
