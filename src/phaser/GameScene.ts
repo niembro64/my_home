@@ -95,7 +95,8 @@ export default class GameScene extends Phaser.Scene {
 
     this.load.spritesheet({
       key: 'spritesheet',
-      url: 'sprite_sheet_8.1_kirby_4x.png',
+      url: 'sprite_sheet_10.1_kirby_4x.png',
+      // url: 'sprite_sheet_8.1_kirby_4x.png',
       frameConfig: {
         frameWidth: 13 * 4 + 2,
         frameHeight: 13 * 4 + 2,
@@ -270,6 +271,7 @@ function createSpriteSheet(game: GameScene): void {
     frameRate: 10,
     repeat: -1,
   };
+
   var config_climb_slow = {
     key: 'climbSlow',
     frames: game.anims.generateFrameNumbers('spritesheet', {
@@ -281,12 +283,36 @@ function createSpriteSheet(game: GameScene): void {
     repeat: -1,
   };
 
+  var config_hang_move = {
+    key: 'hangMove',
+    frames: game.anims.generateFrameNumbers('spritesheet', {
+      start: 8,
+      end: 9,
+      first: 8,
+    }),
+    frameRate: 5,
+    repeat: -1,
+  };
+
+  var config_hang_idle = {
+    key: 'hangIdle',
+    frames: game.anims.generateFrameNumbers('spritesheet', {
+      start: 8,
+      end: 8,
+      first: 8,
+    }),
+    frameRate: 1,
+    repeat: -1,
+  };
+
   game.anims.create(config_idle);
   game.anims.create(config_walk);
   game.anims.create(config_jumpUp);
   game.anims.create(config_jumpDown);
   game.anims.create(config_climb_fast);
   game.anims.create(config_climb_slow);
+  game.anims.create(config_hang_move);
+  game.anims.create(config_hang_idle);
 
   const k = game.kirby;
   k.sprite = game.physics.add
