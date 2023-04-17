@@ -8,7 +8,6 @@ import { printMe } from './helpersReact/printing';
 import { reactNavigate } from './helpersReact/helpers';
 import { ProgressBar } from 'react-progressbar-fancy';
 import { debugOptions } from './debugOptions';
-import { debug } from 'console';
 
 export const __DEV__ = process.env.NODE_ENV === 'development';
 
@@ -20,6 +19,7 @@ function App() {
   let playerXY = useRef<Location2D | null>(null);
 
   const [gameReady, setGameReady] = useState<boolean>(false);
+  const [hoverClass, setHoverClass] = useState<string>('disable-hover');
   const [navTouch, setNavTouch] = useState<ProjectName | null>(null);
   const [navWaiting, setNavWaiting] = useState<ProjectName | null>(null);
   const [navGo, setNavGo] = useState<ProjectName | null>(null);
@@ -353,6 +353,8 @@ function App() {
       return;
     }
 
+    setHoverClass('');
+
     __DEV__ && console.log('Game Ready');
     window.addEventListener('gameState', handleGameState);
     window.addEventListener('mousedown', handleClickDown);
@@ -372,7 +374,7 @@ function App() {
   }, [gameReady]);
 
   return (
-    <div className="top">
+    <div className={'top' && hoverClass ? ' disable-hover' : ''}>
       <div className="transparent-layer"></div>
       <div
         id={'react-parent'}
