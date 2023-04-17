@@ -13,6 +13,14 @@ export const updateSpriteFlip = (player: Player, game: GameScene): void => {
     return;
   }
 
+  if (k.sprite.body.touching.up) {
+    if (k.sprite.body.velocity.x < 0) {
+      k.sprite.flipX = true;
+      return;
+    }
+    k.sprite.flipX = false;
+  }
+
   if (k.sprite.body.velocity.x < -width) {
     k.sprite.flipX = true;
   } else if (k.sprite.body.velocity.x > width) {

@@ -105,6 +105,41 @@ export const updateGoLocationGround = (
     setJump(player, game);
   }
 };
+export const updateGoLocationCeiling = (
+  player: Player,
+  gotoX: number,
+  gotoY: number,
+  game: GameScene
+): void => {
+  if (!game.input.activePointer.isDown) {
+    return;
+  }
+
+  // 13 * 4 + 2 = 54
+
+  const speedMult = 3;
+
+  const k = player;
+  const s = k.sprite;
+  const xCenter = s.x + s.width * 0.5;
+  // __DEV__ && console.log('width', s.width);
+  const deadzoneWidth = 20;
+  const pVelKeep = 0.2;
+
+  if (xCenter + deadzoneWidth < gotoX) {
+    k.sprite.setVelocityX(
+      k.sprite.body.velocity.x * pVelKeep + k.velX * speedMult
+    );
+  } else if (xCenter - deadzoneWidth > gotoX) {
+    k.sprite.setVelocityX(
+      +k.sprite.body.velocity.x * pVelKeep - k.velX * speedMult
+    );
+  }
+
+  if (game.mouse.y - mouseVert < k.sprite.body.y) {
+    setJump(player, game);
+  }
+};
 
 export const setJump = (player: Player, game: GameScene): void => {
   const mouse = game.input.activePointer;
@@ -125,6 +160,11 @@ export const setJump = (player: Player, game: GameScene): void => {
 export const updatePlayerFrictionGround = (player: Player): void => {
   const k = player;
   k.sprite.setVelocityX(k.sprite.body.velocity.x * k.frictionGround);
+};
+
+export const updatePlayerFrictionCeiling = (player: Player): void => {
+  const k = player;
+  k.sprite.setVelocityX(k.sprite.body.velocity.x * k.frictionGround * 0.1);
 };
 
 export const updatePlayerFrictionWall = (player: Player): void => {

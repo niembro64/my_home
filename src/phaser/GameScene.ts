@@ -11,6 +11,8 @@ import {
   updateSprite,
   updateGoLocationWall,
   updatePlayerFrictionWall,
+  updatePlayerFrictionCeiling,
+  updateGoLocationCeiling,
 } from './helpersPhaser/movement';
 import { updateSpriteFlip } from './helpersPhaser/sprite';
 import { __DEV__ } from '../App';
@@ -196,6 +198,9 @@ export default class GameScene extends Phaser.Scene {
     if (k.sprite.body.touching.down) {
       updatePlayerFrictionGround(k);
       updateGoLocationGround(k, this.mouse.x, this.mouse.y, this);
+    } else if (k.sprite.body.touching.up) {
+      updatePlayerFrictionCeiling(k);
+      updateGoLocationCeiling(k, this.mouse.x, this.mouse.y, this);
     } else if (k.sprite.body.touching.left || k.sprite.body.touching.right) {
       updatePlayerFrictionWall(k);
       updateGoLocationWall(k, this.mouse.x, this.mouse.y, this);
