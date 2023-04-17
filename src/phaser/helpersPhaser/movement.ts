@@ -187,11 +187,13 @@ export const updateJustTouchedGround = (
 ): void => {
   const k = player;
 
-  let touchingAny: boolean =
-    k.sprite.body.touching.down ||
-    k.sprite.body.touching.up ||
-    k.sprite.body.touching.left ||
-    k.sprite.body.touching.right;
+  // const touchingAny: boolean =
+  //   k.sprite.body.touching.down ||
+  //   k.sprite.body.touching.up ||
+  //   k.sprite.body.touching.left ||
+  //   k.sprite.body.touching.right;
+
+  const touchingAny: boolean = k.sprite.body.touching.down;
 
   if (touchingAny && !k.isTouchingPrev) {
     window.dispatchEvent(
