@@ -251,6 +251,12 @@ export function updateSpriteState(
     case 'climbSlow':
       s.anims.play('climbSlow', true);
       break;
+    case 'hangMove':
+      s.anims.play('hangMove', true);
+      break;
+    case 'hangIdle':
+      s.anims.play('hangIdle', true);
+      break;
   }
 }
 
@@ -270,6 +276,16 @@ export const updateSprite = (player: Player, game: GameScene): void => {
       return;
     }
     updateSpriteState('idle', k, game);
+    return;
+  }
+
+  if (s.body.touching.up) {
+    if (mHoriz) {
+      updateSpriteState('hangMove', k, game);
+      return;
+    }
+
+    updateSpriteState('hangIdle', k, game);
     return;
   }
 

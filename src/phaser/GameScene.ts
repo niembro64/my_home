@@ -101,7 +101,7 @@ export default class GameScene extends Phaser.Scene {
         frameWidth: 13 * 4 + 2,
         frameHeight: 13 * 4 + 2,
         startFrame: 0,
-        endFrame: 7,
+        endFrame: 9,
         margin: 0,
         spacing: 0,
       },
@@ -290,7 +290,7 @@ function createSpriteSheet(game: GameScene): void {
       end: 9,
       first: 8,
     }),
-    frameRate: 5,
+    frameRate: 8,
     repeat: -1,
   };
 

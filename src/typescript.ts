@@ -69,4 +69,6 @@ export type SpriteStateName =
   | 'jumpUp'
   | 'jumpDown'
   | 'climbFast'
-  | 'climbSlow';
+  | 'climbSlow'
+  | 'hangMove'
+  | 'hangIdle';
