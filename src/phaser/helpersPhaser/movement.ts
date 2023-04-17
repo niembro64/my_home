@@ -247,7 +247,7 @@ export function createSpriteSheet(game: GameScene): void {
   k.sprite = game.physics.add
     .sprite(k.posInitX, k.posInitY, 'spritesheet')
     // .sprite(k.posInitX, k.posInitY, 'k')
-    // .setOrigin(0.5, 0.5)
+    .setOrigin(0.5, 0.5)
     .setCollideWorldBounds(true)
     // .setScale(0.3)
     // .setBounceX(1)
