@@ -403,9 +403,9 @@ function App() {
                 className={
                   project.title !== navTouch
                     ? 'project'
-                    : project.colorScheme === 'light'
-                    ? 'project project-touch border-dark'
-                    : 'project project-touch border-light'
+                    : // : project.colorScheme === 'light'
+                      // ? 'project project-touch border-dark'
+                      'project project-touch border-light'
                 }
                 key={index}
                 // onMouseEnter={() => {
@@ -422,50 +422,26 @@ function App() {
                       : 'project-overlay'
                   }
                 >
-                  {project.colorScheme === 'dark' && (
-                    <>
-                      <div
-                        className={
-                          project.title === navTouch
-                            ? 'color-trans'
-                            : 'project-title color-light'
-                        }
-                      >
-                        {project.title}
-                      </div>
-                      <div
-                        className={
-                          project.title === navTouch
-                            ? 'color-trans'
-                            : 'project-type color-light'
-                        }
-                      >
-                        {project.stack[0]}
-                      </div>
-                    </>
-                  )}
-                  {project.colorScheme === 'light' && (
-                    <>
-                      <div
-                        className={
-                          project.title === navTouch
-                            ? 'color-trans'
-                            : 'project-title color-dark'
-                        }
-                      >
-                        {project.title}
-                      </div>
-                      <div
-                        className={
-                          project.title === navTouch
-                            ? 'color-trans'
-                            : 'project-type color-dark'
-                        }
-                      >
-                        {project.stack[0]}
-                      </div>
-                    </>
-                  )}
+                  <>
+                    <div
+                      className={
+                        project.title === navTouch
+                          ? 'color-trans'
+                          : 'project-title color-light'
+                      }
+                    >
+                      {project.title}
+                    </div>
+                    <div
+                      className={
+                        project.title === navTouch
+                          ? 'color-trans'
+                          : 'project-type color-light'
+                      }
+                    >
+                      {project.stack[0]}
+                    </div>
+                  </>
                 </div>
                 <video
                   className="project-video"
