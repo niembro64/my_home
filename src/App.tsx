@@ -352,10 +352,10 @@ function App() {
     if (!gameReady) {
       return;
     }
+    __DEV__ && console.log('Game Ready');
 
     setHoverClass('');
 
-    __DEV__ && console.log('Game Ready');
     window.addEventListener('gameState', handleGameState);
     window.addEventListener('mousedown', handleClickDown);
     window.addEventListener('mouseup', handleClickUp);
