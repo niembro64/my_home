@@ -13,17 +13,19 @@ export const updateGoLocationAir = (
     return;
   }
 
-  // if (player.sprite.body.touching.down) {
-  //   return;
-  // }
-
   const k = player;
+  const s = k.sprite;
+  const xCenter = s.x + s.width * 0.5;
+
+
   const deadzoneWidth = 0;
   const mouseVert = 75;
 
-  if (k.sprite.body.x + deadzoneWidth < gotoX) {
+  if (xCenter + deadzoneWidth < gotoX) {
+    // if (k.sprite.body.x + deadzoneWidth < gotoX) {
     k.sprite.setVelocityX(k.sprite.body.velocity.x + k.velX);
-  } else if (k.sprite.body.x - deadzoneWidth > gotoX) {
+  } else if (xCenter - deadzoneWidth > gotoX) {
+    // } else if (k.sprite.body.x - deadzoneWidth > gotoX) {
     k.sprite.setVelocityX(k.sprite.body.velocity.x - k.velX);
   }
 
@@ -41,22 +43,25 @@ export const updateGoLocationGround = (
   if (!game.input.activePointer.isDown) {
     return;
   }
-  if (!player.sprite.body.touching.down) {
-    return;
-  }
+
+// 13 * 4 + 2 = 54
+
   const speedMult = 10;
 
   const k = player;
+  const s = k.sprite;
+  const xCenter = s.x + s.width * 0.5;
+  // __DEV__ && console.log('width', s.width);
   const deadzoneWidth = 20;
   const pVelKeep = 0.2;
 
-  if (k.sprite.body.x + deadzoneWidth < gotoX) {
+  if (xCenter + deadzoneWidth < gotoX) {
     k.sprite.setVelocityX(
-      k.velX * speedMult + k.sprite.body.velocity.x * pVelKeep
+      k.sprite.body.velocity.x * pVelKeep + k.velX * speedMult
     );
-  } else if (k.sprite.body.x - deadzoneWidth > gotoX) {
+  } else if (xCenter - deadzoneWidth > gotoX) {
     k.sprite.setVelocityX(
-      1 - k.velX * speedMult + k.sprite.body.velocity.x * pVelKeep
+      +k.sprite.body.velocity.x * pVelKeep - k.velX * speedMult
     );
   }
 
@@ -75,10 +80,12 @@ export const setJump = (player: Player, game: GameScene): void => {
     mouse.y
   );
 
+  __DEV__ && console.log('x', x);
+
   const xVel = x * player.jumpPower;
   const yVel = Math.max(Math.abs(y) * player.jumpPower, player.jumpPower * 0.5);
 
-  player.sprite.setVelocityX(xVel);
+  // player.sprite.setVelocityX(xVel);
   player.sprite.setVelocityY(-yVel);
 };
 
@@ -180,7 +187,6 @@ export const updateNearestPlatformUnderPlayer = (
   }
   k.nearestProject = null;
 };
-
 
 export function updateSpriteState(
   newState: SpriteStateName,

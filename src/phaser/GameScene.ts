@@ -188,9 +188,13 @@ export default class GameScene extends Phaser.Scene {
   update(): void {
     const k = this.kirby;
     updateMouse(this.mouse, this);
-    // updateGoLocationGround(k, this.mouse.x, this.mouse.y, this);
-    updateGoLocationAir(k, this.mouse.x, this.mouse.y, this);
     updateSpriteFlip(k, this);
+
+    if (k.sprite.body.touching.down) {
+      updateGoLocationGround(k, this.mouse.x, this.mouse.y, this);
+    } else {
+      updateGoLocationAir(k, this.mouse.x, this.mouse.y, this);
+    }
     updatePlayerFrictionGround(k);
     updatePlayerFrictionAir(k, this);
     updateNearestPlatformUnderPlayer(k, this);
@@ -273,7 +277,7 @@ function createSpriteSheet(game: GameScene): void {
     .sprite(k.posInitX, k.posInitY, 'spritesheet')
     // .sprite(k.posInitX, k.posInitY, 'k')
     // .setOrigin(0, 1)
-    // .setOrigin(0, 0)
+    .setOrigin(0, 0)
     // .setOrigin(0.5, 0.5)
     .setCollideWorldBounds(true)
     // .setScale(0.3)
