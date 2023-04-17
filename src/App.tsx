@@ -66,35 +66,22 @@ function App() {
       return;
     }
 
-    // if mouse down, return
-    if (!(event.buttons === 1)) {
+    // Check if the event is a touch event
+    const isTouchEvent = event.type === 'touchmove';
+    const clientX = isTouchEvent ? event.touches[0].clientX : event.clientX;
+    const clientY = isTouchEvent ? event.touches[0].clientY : event.clientY;
+
+    // If not a touch event and mouse button isn't down, return
+    if (!isTouchEvent && !(event.buttons === 1)) {
       return;
     }
 
-    // Update active pointer's position in Phaser
-    // const bounds = gameRef.current.canvas.getBoundingClientRect();
-    const x = event.clientX;
-    const y = event.clientY;
+    const x = clientX;
+    const y = clientY;
 
-    // __DEV__ && console.log('x', x);
-    // __DEV__ && console.log('y', y);
-    // const x = event.clientX - bounds.left;
-    // const y = event.clientY - bounds.top;
-    // gameRef.current.input.Pointer.setX(x);
-    // gameRef.current.input.Pointer.y = y;
-    // gameRef.current.input.activePointer.position.setTo(x, y);
     gameRef.current.input.activePointer.x = x;
     gameRef.current.input.activePointer.y = y;
-
-    // Trigger the appropriate Phaser events
-    // gameRef.current.input.activePointer.dirty = true;
-    // gameRef.current.input.updateInputPlugins(
-    //   'pointermove',
-    //   gameRef.current.input.activePointer,
-    //   false
-    // );
   };
-
   //////////////////////////////////////////////////
   // NAV_TOUCH => COUNTING
   //////////////////////////////////////////////////
