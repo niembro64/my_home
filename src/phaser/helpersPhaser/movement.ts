@@ -200,7 +200,7 @@ export function createSpriteSheet(game: GameScene): void {
       end: 3,
       first: 1,
     }),
-    frameRate: 20,
+    frameRate: 15,
     repeat: -1,
   };
 
@@ -291,8 +291,14 @@ export const updateSprite = (player: Player, game: GameScene): void => {
   const k = player;
   const s = k.sprite;
 
+  const movingXThreshold = 10;
+
+  let mHoriz =
+    s.body.velocity.x > movingXThreshold ||
+    s.body.velocity.x < -movingXThreshold;
+
   if (s.body.touching.down) {
-    if (k.sprite.body.velocity.x !== 0) {
+    if (mHoriz) {
       updateSpriteState('walk', k, game);
       return;
     } else {
