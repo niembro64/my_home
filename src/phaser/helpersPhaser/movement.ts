@@ -2,6 +2,7 @@ import { __DEV__ } from '../../App';
 import { Platform, Player, SpriteStateName } from '../../typescript';
 import GameScene from '../GameScene';
 import { getDistance, getNormalizedVector } from './math';
+export const mouseVert = 75;
 
 export const updateGoLocationAir = (
   player: Player,
@@ -17,9 +18,7 @@ export const updateGoLocationAir = (
   const s = k.sprite;
   const xCenter = s.x + s.width * 0.5;
 
-
   const deadzoneWidth = 0;
-  const mouseVert = 75;
 
   if (xCenter + deadzoneWidth < gotoX) {
     // if (k.sprite.body.x + deadzoneWidth < gotoX) {
@@ -34,7 +33,7 @@ export const updateGoLocationAir = (
   }
 };
 
-export const updateGoLocationGround = (
+export const updateGoLocationWall = (
   player: Player,
   gotoX: number,
   gotoY: number,
@@ -44,7 +43,7 @@ export const updateGoLocationGround = (
     return;
   }
 
-// 13 * 4 + 2 = 54
+  // 13 * 4 + 2 = 54
 
   const speedMult = 10;
 
@@ -65,7 +64,44 @@ export const updateGoLocationGround = (
     );
   }
 
-  if (game.mouse.y < k.sprite.body.y) {
+  if (game.mouse.y - mouseVert < k.sprite.body.y) {
+    // setJump(player, game);
+    k.sprite.setVelocityY(k.sprite.body.velocity.y - 100);
+  }
+};
+
+export const updateGoLocationGround = (
+  player: Player,
+  gotoX: number,
+  gotoY: number,
+  game: GameScene
+): void => {
+  if (!game.input.activePointer.isDown) {
+    return;
+  }
+
+  // 13 * 4 + 2 = 54
+
+  const speedMult = 10;
+
+  const k = player;
+  const s = k.sprite;
+  const xCenter = s.x + s.width * 0.5;
+  // __DEV__ && console.log('width', s.width);
+  const deadzoneWidth = 20;
+  const pVelKeep = 0.2;
+
+  if (xCenter + deadzoneWidth < gotoX) {
+    k.sprite.setVelocityX(
+      k.sprite.body.velocity.x * pVelKeep + k.velX * speedMult
+    );
+  } else if (xCenter - deadzoneWidth > gotoX) {
+    k.sprite.setVelocityX(
+      +k.sprite.body.velocity.x * pVelKeep - k.velX * speedMult
+    );
+  }
+
+  if (game.mouse.y - mouseVert < k.sprite.body.y) {
     setJump(player, game);
   }
 };
@@ -90,20 +126,19 @@ export const setJump = (player: Player, game: GameScene): void => {
 };
 
 export const updatePlayerFrictionGround = (player: Player): void => {
-  if (!player.sprite.body.touching.down) {
-    return;
-  }
   const k = player;
   k.sprite.setVelocityX(k.sprite.body.velocity.x * k.frictionGround);
+};
+
+export const updatePlayerFrictionWall = (player: Player): void => {
+  const k = player;
+  k.sprite.setVelocityY(k.sprite.body.velocity.y * k.frictionGround * 0.1);
 };
 
 export const updatePlayerFrictionAir = (
   player: Player,
   game: GameScene
 ): void => {
-  if (player.sprite.body.touching.down) {
-    return;
-  }
   const k = player;
   k.sprite.setVelocityX(k.sprite.body.velocity.x * k.frictionAir);
   k.sprite.setVelocityY(k.sprite.body.velocity.y * k.frictionAir);
@@ -213,8 +248,11 @@ export function updateSpriteState(
     case 'jumpDown':
       s.anims.play('jumpDown', true);
       break;
-    case 'climb':
-      s.anims.play('climb', true);
+    case 'climbFast':
+      s.anims.play('climbFast', true);
+      break;
+    case 'climbSlow':
+      s.anims.play('climbSlow', true);
       break;
   }
 }
@@ -233,14 +271,18 @@ export const updateSprite = (player: Player, game: GameScene): void => {
     if (mHoriz) {
       updateSpriteState('walk', k, game);
       return;
-    } else {
-      updateSpriteState('idle', k, game);
-      return;
     }
+    updateSpriteState('idle', k, game);
+    return;
   }
 
   if (s.body.touching.left || s.body.touching.right) {
-    updateSpriteState('climb', k, game);
+    if (s.body.velocity.y < 0) {
+      updateSpriteState('climbFast', k, game);
+      return;
+    }
+
+    updateSpriteState('climbSlow', k, game);
     return;
   }
 

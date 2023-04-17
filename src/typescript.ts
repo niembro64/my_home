@@ -63,4 +63,10 @@ export interface Location2D {
   y: number;
 }
 
-export type SpriteStateName = 'idle' | 'walk' | 'jumpUp' | 'jumpDown' | 'climb';
+export type SpriteStateName =
+  | 'idle'
+  | 'walk'
+  | 'jumpUp'
+  | 'jumpDown'
+  | 'climbFast'
+  | 'climbSlow';

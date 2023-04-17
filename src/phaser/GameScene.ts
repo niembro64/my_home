@@ -9,6 +9,8 @@ import {
   updatePlayerFrictionAir,
   updatePlayerFrictionGround,
   updateSprite,
+  updateGoLocationWall,
+  updatePlayerFrictionWall,
 } from './helpersPhaser/movement';
 import { updateSpriteFlip } from './helpersPhaser/sprite';
 import { __DEV__ } from '../App';
@@ -191,12 +193,15 @@ export default class GameScene extends Phaser.Scene {
     updateSpriteFlip(k, this);
 
     if (k.sprite.body.touching.down) {
+      updatePlayerFrictionGround(k);
       updateGoLocationGround(k, this.mouse.x, this.mouse.y, this);
+    } else if (k.sprite.body.touching.left || k.sprite.body.touching.right) {
+      updatePlayerFrictionWall(k);
+      updateGoLocationWall(k, this.mouse.x, this.mouse.y, this);
     } else {
+      updatePlayerFrictionAir(k, this);
       updateGoLocationAir(k, this.mouse.x, this.mouse.y, this);
     }
-    updatePlayerFrictionGround(k);
-    updatePlayerFrictionAir(k, this);
     updateNearestPlatformUnderPlayer(k, this);
     updateJustTouchedGround(k, this);
     updateSprite(k, this);
@@ -255,8 +260,8 @@ function createSpriteSheet(game: GameScene): void {
     repeat: -1,
   };
 
-  var config_climb = {
-    key: 'climb',
+  var config_climb_fast = {
+    key: 'climbFast',
     frames: game.anims.generateFrameNumbers('spritesheet', {
       start: 5,
       end: 6,
@@ -265,12 +270,23 @@ function createSpriteSheet(game: GameScene): void {
     frameRate: 10,
     repeat: -1,
   };
+  var config_climb_slow = {
+    key: 'climbSlow',
+    frames: game.anims.generateFrameNumbers('spritesheet', {
+      start: 5,
+      end: 6,
+      first: 5,
+    }),
+    frameRate: 5,
+    repeat: -1,
+  };
 
   game.anims.create(config_idle);
   game.anims.create(config_walk);
   game.anims.create(config_jumpUp);
   game.anims.create(config_jumpDown);
-  game.anims.create(config_climb);
+  game.anims.create(config_climb_fast);
+  game.anims.create(config_climb_slow);
 
   const k = game.kirby;
   k.sprite = game.physics.add
