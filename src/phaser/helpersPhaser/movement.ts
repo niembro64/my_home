@@ -1,4 +1,5 @@
-import { Platform, Player } from '../../typescript';
+import { __DEV__ } from '../../App';
+import { Platform, Player, SpriteStateName } from '../../typescript';
 import GameScene from '../GameScene';
 import { getDistance, getNormalizedVector } from './math';
 
@@ -66,6 +67,7 @@ export const updateGoLocationGround = (
 
 export const setJump = (player: Player, game: GameScene): void => {
   const mouse = game.input.activePointer;
+  __DEV__ && console.log('JUMP');
   let { x, y } = getNormalizedVector(
     player.sprite.body.x,
     player.sprite.body.y,
@@ -181,7 +183,7 @@ export const updateNearestPlatformUnderPlayer = (
 
 export function createSpriteSheet(game: GameScene): void {
   var config_idle = {
-    key: 'animation_idle',
+    key: 'idle',
     frames: game.anims.generateFrameNumbers('spritesheet', {
       start: 0,
       end: 0,
@@ -192,7 +194,7 @@ export function createSpriteSheet(game: GameScene): void {
   };
 
   var config_walk = {
-    key: 'animation_walk',
+    key: 'walk',
     frames: game.anims.generateFrameNumbers('spritesheet', {
       start: 1,
       end: 3,
@@ -203,7 +205,7 @@ export function createSpriteSheet(game: GameScene): void {
   };
 
   var config_jumpUp = {
-    key: 'animation_jumpUp',
+    key: 'jumpUp',
     frames: game.anims.generateFrameNumbers('spritesheet', {
       start: 4,
       end: 4,
@@ -214,7 +216,7 @@ export function createSpriteSheet(game: GameScene): void {
   };
 
   var config_jumpDown = {
-    key: 'animation_jumpDown',
+    key: 'jumpDown',
     frames: game.anims.generateFrameNumbers('spritesheet', {
       start: 7,
       end: 7,
@@ -225,7 +227,7 @@ export function createSpriteSheet(game: GameScene): void {
   };
 
   var config_climb = {
-    key: 'animation_climb',
+    key: 'climb',
     frames: game.anims.generateFrameNumbers('spritesheet', {
       start: 5,
       end: 6,
@@ -240,4 +242,74 @@ export function createSpriteSheet(game: GameScene): void {
   game.anims.create(config_jumpUp);
   game.anims.create(config_jumpDown);
   game.anims.create(config_climb);
+
+  const k = game.kirby;
+  k.sprite = game.physics.add
+    .sprite(k.posInitX, k.posInitY, 'k')
+    // .setOrigin(0.5, 0.5)
+    .setCollideWorldBounds(true)
+    // .setScale(0.3)
+    .setBounceX(1)
+    .setBounceY(0.5);
+
+  // game.kirby.sprite.setScale(1);
 }
+
+export function updateSpriteState(
+  newState: SpriteStateName,
+  player: Player,
+  game: GameScene
+): void {
+  if (newState === player.spriteStateName) {
+    return;
+  }
+
+  player.spriteStateName = newState;
+  const s = player.sprite;
+
+  switch (newState) {
+    case 'idle':
+      s.anims.play('idle', true);
+      break;
+    case 'walk':
+      s.anims.play('walk', true);
+      break;
+    case 'jumpUp':
+      s.anims.play('jumpUp', true);
+      break;
+    case 'jumpDown':
+      s.anims.play('jumpDown', true);
+      break;
+    case 'climb':
+      s.anims.play('climb', true);
+      break;
+  }
+}
+
+export const updateSprite = (player: Player, game: GameScene): void => {
+  const k = player;
+  const s = k.sprite;
+
+  if (s.body.touching.down) {
+    if (k.sprite.body.velocity.x !== 0) {
+      updateSpriteState('walk', k, game);
+      return;
+    } else {
+      updateSpriteState('idle', k, game);
+      return;
+    }
+  }
+
+  if (s.body.touching.left || s.body.touching.right) {
+    updateSpriteState('climb', k, game);
+    return;
+  }
+
+  if (k.sprite.body.velocity.y < 0) {
+    updateSpriteState('jumpDown', k, game);
+    return;
+  } else {
+    updateSpriteState('jumpUp', k, game);
+    return;
+  }
+};

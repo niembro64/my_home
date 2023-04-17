@@ -38,11 +38,11 @@ function App() {
   };
 
   useEffect(() => {
-    __DEV__ && console.log('numClicks', numClicks);
+    // __DEV__ && console.log('numClicks', numClicks);
   }, [numClicks]);
 
   useEffect(() => {
-    __DEV__ && console.log('clickMoment', clickMoment);
+    // __DEV__ && console.log('clickMoment', clickMoment);
     if (clickMoment === null) {
       return;
     }
@@ -51,12 +51,12 @@ function App() {
   }, [clickMoment]);
 
   const handleClickDown = () => {
-    __DEV__ && console.log('clickDown');
+    // __DEV__ && console.log('clickDown');
     setClickMoment(moment());
   };
 
   const handleClickUp = () => {
-    __DEV__ && console.log('clickUp');
+    // __DEV__ && console.log('clickUp');
   };
 
   const handleMouseMove = (event: any) => {
@@ -64,19 +64,33 @@ function App() {
       return;
     }
 
+    // if mouse down, return
+    if (!(event.buttons === 1)) {
+      return;
+    }
+
     // Update active pointer's position in Phaser
-    const bounds = gameRef.current.canvas.getBoundingClientRect();
-    const x = event.clientX - bounds.left;
-    const y = event.clientY - bounds.top;
-    gameRef.current.input.activePointer.position.setTo(x, y);
+    // const bounds = gameRef.current.canvas.getBoundingClientRect();
+    const x = event.clientX;
+    const y = event.clientY;
+
+    // __DEV__ && console.log('x', x);
+    // __DEV__ && console.log('y', y);
+    // const x = event.clientX - bounds.left;
+    // const y = event.clientY - bounds.top;
+    // gameRef.current.input.Pointer.setX(x);
+    // gameRef.current.input.Pointer.y = y;
+    // gameRef.current.input.activePointer.position.setTo(x, y);
+    gameRef.current.input.activePointer.x = x;
+    gameRef.current.input.activePointer.y = y;
 
     // Trigger the appropriate Phaser events
-    gameRef.current.input.activePointer.dirty = true;
-    gameRef.current.input.updateInputPlugins(
-      'pointermove',
-      gameRef.current.input.activePointer,
-      false
-    );
+    // gameRef.current.input.activePointer.dirty = true;
+    // gameRef.current.input.updateInputPlugins(
+    //   'pointermove',
+    //   gameRef.current.input.activePointer,
+    //   false
+    // );
   };
 
   //////////////////////////////////////////////////

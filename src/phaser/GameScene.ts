@@ -9,8 +9,10 @@ import {
   updatePlayerFrictionAir,
   updatePlayerFrictionGround,
   createSpriteSheet,
+  updateSprite,
 } from './helpersPhaser/movement';
 import { updateSpriteFlip } from './helpersPhaser/sprite';
+import { __DEV__ } from '../App';
 
 export default class GameScene extends Phaser.Scene {
   kirby: Player;
@@ -36,6 +38,7 @@ export default class GameScene extends Phaser.Scene {
       velY: 60,
       isTouchingPrev: false,
       nearestProject: null,
+      spriteStateName: 'idle',
     };
 
     this.platforms = [];
@@ -47,6 +50,12 @@ export default class GameScene extends Phaser.Scene {
       pointerDownPrev: false,
     };
   }
+
+  setPointerPosition = (x: number, y: number) => {
+    if (this.input && this.input.activePointer) {
+      this.input.activePointer.position.setTo(x, y);
+    }
+  };
 
   preload(): void {
     this.config = this.game.config;
@@ -79,7 +88,7 @@ export default class GameScene extends Phaser.Scene {
     this.kirby.posInitX = kirbyXY.x;
     this.kirby.posInitY = kirbyXY.y;
     console.log('kirbyXY', this.kirby);
-    this.load.image('k', 'bigk.png');
+    // this.load.image('k', 'bigk.png');
 
     // this.load.image('k', 'k.png');
 
@@ -98,18 +107,20 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create(): void {
+    createSpriteSheet(this);
+
     const p = this.platforms;
-    const k = this.kirby;
+    // const k = this.kirby;
 
     const phy = this.physics;
 
-    k.sprite = this.physics.add
-      .sprite(k.posInitX, k.posInitY, 'k')
-      .setOrigin(0.5, 0.5)
-      .setCollideWorldBounds(true)
-      .setScale(0.3)
-      .setBounceX(1)
-      .setBounceY(0.5);
+    // k.sprite = this.physics.add
+    //   .sprite(k.posInitX, k.posInitY, 'k')
+    //   .setOrigin(0.5, 0.5)
+    //   .setCollideWorldBounds(true)
+    //   .setScale(0.3)
+    //   .setBounceX(1)
+    //   .setBounceY(0.5);
 
     p.forEach((platform, pIndex) => {
       // Create a Phaser.Geom.Rectangle
@@ -144,15 +155,20 @@ export default class GameScene extends Phaser.Scene {
         );
 
       // Add collider between Kirby and the platform
-      phy.add.collider(k.sprite, platform.sprite);
+      phy.add.collider(this.kirby.sprite, platform.sprite);
     });
 
     this.physics.world.setBounds(0, 0, this.scale.width, this.scale.height);
 
-    this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-      this.mouse.x = pointer.x - this.kirby.sprite.body.width / 2;
-      this.mouse.y = pointer.y - this.kirby.sprite.body.height / 2;
-    });
+    // this.setPointerPosition = this.setPointerPosition.bind(this);
+
+    // this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
+    //   console.log('pointer', pointer);
+    //   this.mouse.x = pointer.x;
+    //   this.mouse.y = pointer.y;
+    //   // this.mouse.x = pointer.x - this.kirby.sprite.body.width / 2;
+    //   // this.mouse.y = pointer.y - this.kirby.sprite.body.height / 2;
+    // });
 
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
       // if (this.kirby.velX !== this.speedFast) {
@@ -168,13 +184,11 @@ export default class GameScene extends Phaser.Scene {
       //   this.kirby.velX = this.speedSlow;
       // }
     });
-
-    createSpriteSheet(this);
   }
 
   update(): void {
     const k = this.kirby;
-
+    updateMouse(this.mouse, this);
     updateGoLocationGround(k, this.mouse.x, this.mouse.y, this);
     updateGoLocationAir(k, this.mouse.x, this.mouse.y, this);
     updateSpriteFlip(k, this);
@@ -182,5 +196,13 @@ export default class GameScene extends Phaser.Scene {
     updatePlayerFrictionAir(k, this);
     updateNearestPlatformUnderPlayer(k, this);
     updateJustTouchedGround(k, this);
+    updateSprite(k, this);
   }
 }
+
+const updateMouse = (mouse: Mouse, game: GameScene) => {
+  const p = game.input.activePointer;
+
+  mouse.x = p.x;
+  mouse.y = p.y;
+};

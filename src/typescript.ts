@@ -30,6 +30,7 @@ export interface Player {
   velY: number;
   isTouchingPrev: boolean;
   nearestProject: ProjectName | null;
+  spriteStateName: SpriteStateName;
 }
 
 export interface Mouse {
@@ -61,3 +62,5 @@ export interface Location2D {
   x: number;
   y: number;
 }
+
+export type SpriteStateName = 'idle' | 'walk' | 'jumpUp' | 'jumpDown' | 'climb';
