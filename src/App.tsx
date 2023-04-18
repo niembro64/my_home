@@ -448,18 +448,35 @@ function App() {
                     </div>
                   </>
                 </div>
-                <video
-                  className="project-video"
-                  src={
-                    process.env.PUBLIC_URL +
-                    '/videos2/' +
-                    project.title +
-                    '.mp4'
-                  }
-                  autoPlay
-                  muted
-                  loop
-                ></video>
+                {screen.width >= screen.height && (
+                  <video
+                    className="project-video"
+                    src={
+                      process.env.PUBLIC_URL +
+                      '/videos2/' +
+                      project.title +
+                      '.mp4'
+                    }
+                    autoPlay
+                    muted
+                    loop
+                  ></video>
+                )}
+                {screen.width < screen.height && (
+                  <img
+                    src={
+                      process.env.PUBLIC_URL +
+                      '/videos2/' +
+                      project.title +
+                      '.gif'
+                    }
+                    // autoPlay
+                    // muted
+                    // loop
+                    className="project-video"
+                    alt={'asdf'}
+                  ></img>
+                )}
                 {project.title === navTouch && (
                   <div className="progress-bar">
                     <ProgressBar
