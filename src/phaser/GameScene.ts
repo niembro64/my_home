@@ -68,7 +68,12 @@ export default class GameScene extends Phaser.Scene {
     __DEV__ && console.log('this.config', this.config);
     __DEV__ && console.log('this.isMobile', this.isMobile);
 
-    const kirbyXY: { x: number; y: number } = this.game.registry.get('kirbyXY');
+    const k: { x: number; y: number } = this.game.registry.get('kirbyXY');
+    const kirbyXY: { x: number; y: number } = {
+      x: k.x - (13 * 4 + 2) * 0.5,
+      y: k.y,
+    };
+
     let myBoxes: Box[] = this.game.registry.get('myBoxes');
     if (myBoxes) {
       myBoxes.forEach((box: Box) => {
