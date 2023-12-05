@@ -14,12 +14,10 @@ export const reactNavigate = (project: ProjectName): void => {
   let fullUrl: string = '';
 
   __DEV__ && console.log('reactNavigate', 'project', project);
-  if (project === 'Resume') {
-    fullUrl = 'https://ericniemeyer.com';
-  } else if (project === 'Media') {
-    fullUrl = 'https://media.niembro64.com/wordpress/';
+  if (project === 'Media' || project === 'Events' || project === 'Shows') {
+    fullUrl = 'https://niemo.io';
   } else {
-    fullUrl = 'https://' + project.toLowerCase() + '.niembro64.com';
+    fullUrl = 'https://' + project.toLowerCase() + '.niemo.io';
   }
   // window.open(fullUrl, '_blank');
   window.location.href = fullUrl;
