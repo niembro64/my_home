@@ -62,10 +62,10 @@ body {
 #react-parent {
   /* background-color: rgba(102, 154, 102, 0.381); */
   position: absolute;
-  top: 0px;
+  top: 4vw;
   left: 0px;
   width: 100%;
-  height: 80%;
+  height: calc(80% - 8vw);
   z-index: 0;
 
   display: flex;
@@ -83,6 +83,7 @@ body {
   overflow: hidden;
 
   z-index: 1;
+  /* border: 10px dashed lime; */
 }
 
 .game-parent {
@@ -110,7 +111,8 @@ body {
   color: white;
   width: auto;
   height: auto;
-  margin: 30px;
+  margin-left: 10vw;
+  margin-right: 10vw;
 
   display: flex;
   flex-direction: column;
@@ -447,18 +449,7 @@ body {
   left: 0px;
   width: 100%;
   height: 100%;
-
-  /* background-color: #0000ff22; */
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  /* pointer-events: none; */
-
   cursor: grab;
-
   z-index: 1;
 }
 

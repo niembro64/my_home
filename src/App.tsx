@@ -327,11 +327,12 @@ function App() {
       sumY += myBoxes[i].centerY;
     }
 
-    const kirbyY = sumY / myBoxes.length;
+    const screenWidth = screen.width;
+    const screenHeight = screen.height;
 
     const kirbyXY = {
-      x: (boxPenultimate.centerX + boxUltimate.centerX) * 0.5,
-      y: kirbyY,
+      x: screenWidth * 0.5,
+      y: screenHeight * 0.15,
     };
 
     const config: Phaser.Types.Core.GameConfig = {
@@ -536,9 +537,7 @@ function App() {
             alt="kirby"
           />
           <div className="nav-notif-text-small">Navigating To</div>
-          <div className="nav-notif-text-big">
-            {navTouch?.title || 'XXX'}
-          </div>
+          <div className="nav-notif-text-big">{navTouch?.title || 'XXX'}</div>
         </div>
       )}
 
