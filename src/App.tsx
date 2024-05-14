@@ -494,30 +494,32 @@ function App() {
             );
           })}
       </div>
-      {!isInIframe && (
-        <div
-          className="project-resume"
-          onClick={() => {
-            __DEV__ && console.log('Resume Clicked');
 
-            window.location.href = 'https://niemo.io';
-          }}
-        >
-          <div className="project-resume-text">Eric's Resume</div>
+      <div className={'game-parent'} ref={gameParentRef} />
+      {!isInIframe && (
+        <div className="project-resume">
+          <div
+            className="project-resume-text"
+            onClick={() => {
+              __DEV__ && console.log('Resume Clicked');
+
+              window.location.href = 'https://niemo.io';
+            }}
+          >
+            niemo.io
+          </div>
         </div>
       )}
-      <div className={'game-parent'} ref={gameParentRef} />
       <div
         className={
           screen.height > screen.width ? 'grass phone' : 'grass computer'
         }
         ref={grassRef}
       ></div>
+
       {debugOptions.devMode && (
         <div className="states">
-          <div className="nav-touch">
-            NAV-TOUCH {navTouch?.title || 'XXX'}
-          </div>
+          <div className="nav-touch">NAV-TOUCH {navTouch?.title || 'XXX'}</div>
           <div className="nav-waiting">
             NAV-WAITING {navWaiting?.title || 'XXX'}
           </div>

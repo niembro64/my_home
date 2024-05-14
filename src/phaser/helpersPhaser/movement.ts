@@ -213,7 +213,11 @@ export const updateNearestProjectUnderPlayer = (
   let distanceNearest: number = Infinity;
   let projectNearest: Project | null = null;
 
-  platforms.forEach((p: Platform) => {
+  for (let p of platforms) {
+    if (k.sprite.body.y > p.box.centerY) {
+      continue;
+    }
+
     const distanceNew = getDistance(
       k.sprite.body.x,
       k.sprite.body.y,
@@ -225,7 +229,7 @@ export const updateNearestProjectUnderPlayer = (
       platformNearest = p;
       distanceNearest = distanceNew;
     }
-  });
+  }
 
   if (platformNearest !== null && platformNearest) {
     const x = projects.find(
