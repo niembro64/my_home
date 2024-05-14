@@ -1,17 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react';
-import './App.css';
-import GameScene from './phaser/GameScene';
-import { projects } from './helpersReact/projectArray';
-import { Box, Location2D, Project, ProjectName, Screen } from './typescript';
 import moment, { Moment } from 'moment';
-import { printMe } from './helpersReact/printing';
-import { reactNavigate } from './helpersReact/helpers';
+import { useEffect, useRef, useState } from 'react';
 import { ProgressBar } from 'react-progressbar-fancy';
+import './App.css';
 import { debugOptions } from './debugOptions';
+import { reactNavigate } from './helpersReact/helpers';
+import { printMe } from './helpersReact/printing';
+import { projects } from './helpersReact/projectArray';
+import GameScene from './phaser/GameScene';
+import { Box, Location2D, Project, ProjectName, Screen } from './typescript';
 
 export const __DEV__ = process.env.NODE_ENV === 'development';
 
 function App() {
+  const isInIframe: boolean = (() => {
+    try {
+      return window.self !== window.top;
+    } catch (e) {
+      return true;
+    }
+  })();
+
   const gameParentRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<any>(null);
   const grassRef = useRef<HTMLDivElement>(null);
@@ -28,8 +36,6 @@ function App() {
   const navCountTop = 150;
   const [clickMoment, setClickMoment] = useState<Moment | null>(null);
   const [numClicks, setNumClicks] = useState<number>(0);
-
-  // const [projectsState, setProjectsState] = useState<Project[]>(projects);
 
   const handleGameState = (event: any) => {
     const site = event.detail;
@@ -491,15 +497,18 @@ function App() {
             );
           })}
       </div>
-      {/* <div
-        className="project-resume"
-        onClick={() => {
-          __DEV__ && console.log('Resume Clicked');
-          reactNavigate('Resume');
-        }}
-      >
-        <div className="project-resume-text">Eric's Resume</div>
-      </div> */}
+      {!isInIframe && (
+        <div
+          className="project-resume"
+          onClick={() => {
+            __DEV__ && console.log('Resume Clicked');
+
+            window.location.href = 'https://niemo.io';
+          }}
+        >
+          <div className="project-resume-text">Eric's Resume</div>
+        </div>
+      )}
       <div className={'game-parent'} ref={gameParentRef} />
       <div
         className={
@@ -509,7 +518,9 @@ function App() {
       ></div>
       {debugOptions.devMode && (
         <div className="states">
-          <div className="nav-touch">NAV-TOUCH {navTouch?.fileName || 'XXX'}</div>
+          <div className="nav-touch">
+            NAV-TOUCH {navTouch?.fileName || 'XXX'}
+          </div>
           <div className="nav-waiting">
             NAV-WAITING {navWaiting?.fileName || 'XXX'}
           </div>
