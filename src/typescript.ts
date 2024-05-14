@@ -15,8 +15,8 @@ export interface Box {
   top: number;
   width: number;
   height: number;
-  x: number;
-  y: number;
+  centerX: number;
+  centerY: number;
 }
 
 export interface Player {
@@ -29,7 +29,7 @@ export interface Player {
   velX: number;
   velY: number;
   isTouchingPrev: boolean;
-  nearestProject: ProjectName | null;
+  nearestProject: Project | null;
   spriteStateName: SpriteStateName;
 }
 
@@ -42,7 +42,7 @@ export interface Mouse {
 
 export type ColorScheme = 'light' | 'dark';
 export interface Project {
-  title: ProjectName;
+  fileName: ProjectName;
   colorScheme: ColorScheme;
   url: string;
   type: string;

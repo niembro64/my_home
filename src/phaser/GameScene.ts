@@ -1,23 +1,21 @@
 import Phaser from 'phaser';
+import { __DEV__ } from '../App';
 import { Box, Mouse, Platform, Player } from '../typescript';
 import {
-  updateNearestPlatformUnderPlayer,
-  updateGoLocationGround,
-  updateGoLocationAir,
   setJump,
-  updateJustTouchedGround,
-  updatePlayerFrictionAir,
-  updatePlayerFrictionGround,
-  updateSprite,
-  updateGoLocationWall,
-  updatePlayerFrictionWall,
-  updatePlayerFrictionCeiling,
+  updateGoLocationAir,
   updateGoLocationCeiling,
-  updateNearestPlatform,
-  updateNearestPlatformUnderPlayerNew,
+  updateGoLocationGround,
+  updateGoLocationWall,
+  updateJustTouchedGround,
+  updateNearestPlatformUnderPlayer,
+  updatePlayerFrictionAir,
+  updatePlayerFrictionCeiling,
+  updatePlayerFrictionGround,
+  updatePlayerFrictionWall,
+  updateSprite,
 } from './helpersPhaser/movement';
 import { updateSpriteFlip } from './helpersPhaser/sprite';
-import { __DEV__ } from '../App';
 
 export default class GameScene extends Phaser.Scene {
   kirby: Player;
@@ -76,7 +74,9 @@ export default class GameScene extends Phaser.Scene {
 
     let myBoxes: Box[] = this.game.registry.get('myBoxes');
     if (myBoxes) {
+      __DEV__ && console.log('phaser myBoxes', myBoxes);
       myBoxes.forEach((box: Box) => {
+        __DEV__ && console.log('phaser box', box);
         this.platforms.push({
           sprite: null,
           graphic: null,
@@ -86,8 +86,8 @@ export default class GameScene extends Phaser.Scene {
             top: box.top,
             width: box.width,
             height: box.height,
-            x: box.x,
-            y: box.y,
+            centerX: box.centerX,
+            centerY: box.centerY,
           },
         });
       });
@@ -105,6 +105,7 @@ export default class GameScene extends Phaser.Scene {
     this.load.spritesheet({
       key: 'spritesheet',
       url: 'sprite_sheet_10.2_kirby_4x.png',
+      // url: 'sprite_sheet_10.2_kirby_4x.png',
       // url: 'sprite_sheet_10.1_kirby_4x.png',
       // url: 'sprite_sheet_8.1_kirby_4x.png',
       frameConfig: {

@@ -1,4 +1,5 @@
 import { __DEV__ } from '../../App';
+import { projects } from '../../helpersReact/projectArray';
 import { Platform, Player, SpriteStateName } from '../../typescript';
 import GameScene from '../GameScene';
 import { getDistance, getNormalizedVector } from './math';
@@ -221,8 +222,8 @@ export const updateNearestPlatform = (
     const distanceNew = getDistance(
       k.sprite.body.x,
       k.sprite.body.y,
-      p.box.x,
-      p.box.y
+      p.box.centerX,
+      p.box.centerY
     );
 
     if (distanceNew < distanceNearest) {
@@ -251,18 +252,22 @@ export const updateNearestPlatformUnderPlayer = (
     const distanceNew = getDistance(
       k.sprite.body.x + k.sprite.body.width * 0.5,
       k.sprite.body.y + k.sprite.body.height * 0.5,
-      p.box.x,
-      p.box.y
+      p.box.centerX,
+      p.box.centerY
     );
 
-    if (distanceNew < distanceNearest && k.sprite.body.y < p.box.y) {
+    if (distanceNew < distanceNearest && k.sprite.body.y < p.box.centerY) {
       platformNearest = p;
       distanceNearest = distanceNew;
     }
   });
 
   if (platformNearest !== null && platformNearest['box'] !== null) {
-    k.nearestProject = platformNearest['box']['project'];
+    k.nearestProject =
+      projects.find(
+        (p) => p.fileName === platformNearest?.['box']['project']
+      ) || null;
+
     return;
   }
   k.nearestProject = null;
@@ -281,8 +286,8 @@ export const updateNearestPlatformUnderPlayerNew = (
     const distanceNew = getDistance(
       k.sprite.body.x + k.sprite.body.width * 0.5,
       k.sprite.body.y + k.sprite.body.height * 0.5,
-      p.box.x,
-      p.box.y
+      p.box.centerX,
+      p.box.centerY
     );
 
     if (distanceNew < distanceNearest) {
@@ -292,7 +297,11 @@ export const updateNearestPlatformUnderPlayerNew = (
   });
 
   if (platformNearest !== null && platformNearest['box'] !== null) {
-    k.nearestProject = platformNearest['box']['project'];
+    k.nearestProject =
+      projects.find(
+        (p) => p.fileName === platformNearest?.['box']['project']
+      ) || null;
+
     return;
   }
   k.nearestProject = null;

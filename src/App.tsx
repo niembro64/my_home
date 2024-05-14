@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import GameScene from './phaser/GameScene';
 import { projects } from './helpersReact/projectArray';
-import { Box, Location2D, ProjectName, Screen } from './typescript';
+import { Box, Location2D, Project, ProjectName, Screen } from './typescript';
 import moment, { Moment } from 'moment';
 import { printMe } from './helpersReact/printing';
 import { reactNavigate } from './helpersReact/helpers';
@@ -15,23 +15,44 @@ function App() {
   const gameParentRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<any>(null);
   const grassRef = useRef<HTMLDivElement>(null);
-  let myInterval = useRef<any>(null);
-  let playerXY = useRef<Location2D | null>(null);
+  const myInterval = useRef<any>(null);
+  const playerXY = useRef<Location2D | null>(null);
 
   const [gameReady, setGameReady] = useState<boolean>(false);
   const [hoverClass, setHoverClass] = useState<string>('disable-hover');
-  const [navTouch, setNavTouch] = useState<ProjectName | null>(null);
-  const [navWaiting, setNavWaiting] = useState<ProjectName | null>(null);
-  const [navGo, setNavGo] = useState<ProjectName | null>(null);
+  const [navTouch, setNavTouch] = useState<Project | null>(null);
+  const [navWaiting, setNavWaiting] = useState<Project | null>(null);
+  const [navGo, setNavGo] = useState<Project | null>(null);
   const [navCount, setNavCount] = useState<number>(0);
   const navCountAdd = 50;
   const navCountTop = 150;
   const [clickMoment, setClickMoment] = useState<Moment | null>(null);
   const [numClicks, setNumClicks] = useState<number>(0);
 
+  // const [projectsState, setProjectsState] = useState<Project[]>(projects);
+
   const handleGameState = (event: any) => {
     const site = event.detail;
-    setNavTouch(site);
+
+    if (site === null) {
+      __DEV__ && console.log('site is null');
+      setNavTouch(null);
+      return;
+    }
+
+    __DEV__ && console.log('site', site);
+
+    const foundProject: Project = projects.find(
+      (p) => p.fileName === site.fileName
+    ) as Project;
+
+    if (foundProject === undefined) {
+      __DEV__ && console.log('foundProject is undefined');
+      setNavTouch(null);
+      return;
+    }
+
+    setNavTouch(foundProject);
     if (site !== null) {
       setNumClicks(100);
     }
@@ -201,8 +222,8 @@ function App() {
     ///////////////////////////////
     // ADD PROJECTS
     ///////////////////////////////
-    let myNewBoxes: Box[] = [];
-    let numChildren = reactParentRef.current.children.length;
+    const myNewBoxes: Box[] = [];
+    const numChildren = reactParentRef.current.children.length;
     let lastBoxX = 0;
     let lastBoxY = 0;
     let penUltimateBoxX = 0;
@@ -218,8 +239,8 @@ function App() {
       const left = rect.x;
       const width = rect.width;
       const height = rect.height;
-      const x = left + width * 0.5;
-      const y = top + height * 0.5;
+      const centerCalcX = left + width * 0.5;
+      const centerCalcY = top + height * 0.5;
 
       const newBox: Box = {
         project: project,
@@ -227,19 +248,19 @@ function App() {
         left: left,
         width: width,
         height: height,
-        x: x,
-        y: y,
+        centerX: centerCalcX,
+        centerY: centerCalcY,
       };
       printMe('newBox', newBox);
       myNewBoxes.push(newBox);
 
       if (i === numChildren - 1) {
-        lastBoxX = x;
-        lastBoxY = y;
+        lastBoxX = centerCalcX;
+        lastBoxY = centerCalcY;
       }
       if (i === numChildren - 2) {
-        penUltimateBoxX = x;
-        penUltimateBoxY = y;
+        penUltimateBoxX = centerCalcX;
+        penUltimateBoxY = centerCalcY;
       }
     }
 
@@ -269,9 +290,10 @@ function App() {
       top: top,
       width: width,
       height: height,
-      x: x,
-      y: y,
+      centerX: x,
+      centerY: y,
     };
+
     myNewBoxes.push(newBox);
 
     setMyBoxes(myNewBoxes);
@@ -290,31 +312,32 @@ function App() {
       return;
     }
 
-    const boxPenultimate = myBoxes[4];
-    const boxUltimate = myBoxes[5];
+    const boxPenultimate = myBoxes[myBoxes.length - 2];
+
+    const boxUltimate = myBoxes[myBoxes.length - 1];
 
     let sumY = 0;
     for (let i = 0; i < myBoxes.length; i++) {
-      sumY += myBoxes[i].y;
+      sumY += myBoxes[i].centerY;
     }
 
     const kirbyY = sumY / myBoxes.length;
 
     const kirbyXY = {
-      x: (boxPenultimate.x + boxUltimate.x) * 0.5,
+      x: (boxPenultimate.centerX + boxUltimate.centerX) * 0.5,
       y: kirbyY,
     };
 
-    let config: Phaser.Types.Core.GameConfig = {
+    const config: Phaser.Types.Core.GameConfig = {
       plugins: {
         global: [],
       },
       backgroundColor: '#3399ff',
       // backgroundColor: '#aaccff',
       // transparent: true,
-      title: 'niembro64',
+      title: 'niemo.io',
       antialias: true,
-      pixelArt: false,
+      pixelArt: true,
       scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -381,49 +404,23 @@ function App() {
   return (
     <div className={'top' && hoverClass ? ' disable-hover' : ''}>
       <div className="transparent-layer"></div>
-      <div
-        id={'react-parent'}
-        // onMouseEnter={() => {
-        //   setIsHovering(true);
-        // }}
-        // onMouseLeave={() => {
-        //   setIsHovering(false);
-        // }}
-        // onClick={handleClick}
-        // className={isClickDown ? 'cursorCrosshair' : 'cursorNormal'}
-        // onMouseDown={() => {
-        //   setIsClickDown(true);
-        // }}
-        // onMouseUp={() => {
-        //   setIsClickDown(false);
-        // }}
-        ref={reactParentRef}
-      >
+      <div id={'react-parent'} ref={reactParentRef}>
         {projects
           .slice()
           .reverse()
           .map((project, index) => {
-            
             return (
               <div
                 className={
-                  project.title !== navTouch
+                  project.fileName !== navTouch?.fileName
                     ? 'project'
-                    : // : project.colorScheme === 'light'
-                      // ? 'project project-touch border-dark'
-                      'project project-touch border-light'
+                    : 'project project-touch border-light'
                 }
                 key={index}
-                // onMouseEnter={() => {
-                //   setIsHovering(true);
-                // }}
-                // onMouseLeave={() => {
-                //   setIsHovering(false);
-                // }}
               >
                 <div
                   className={
-                    project.title === navTouch
+                    project.fileName === navTouch?.fileName
                       ? 'project-overlay project-overlay-touch'
                       : 'project-overlay'
                   }
@@ -431,16 +428,16 @@ function App() {
                   <>
                     <div
                       className={
-                        project.title === navTouch
+                        project.fileName === navTouch?.fileName
                           ? 'color-trans'
                           : 'project-title color-light'
                       }
                     >
-                      {project.title}
+                      {project.fileName}
                     </div>
                     <div
                       className={
-                        project.title === navTouch
+                        project.fileName === navTouch?.fileName
                           ? 'color-trans'
                           : 'project-type color-light'
                       }
@@ -455,7 +452,7 @@ function App() {
                     src={
                       process.env.PUBLIC_URL +
                       '/videos2/' +
-                      project.title +
+                      project.fileName +
                       '.mp4'
                     }
                     autoPlay
@@ -468,7 +465,7 @@ function App() {
                     src={
                       process.env.PUBLIC_URL +
                       '/videos2/' +
-                      project.title +
+                      project.fileName +
                       '.gif'
                     }
                     // autoPlay
@@ -478,7 +475,7 @@ function App() {
                     alt={'asdf'}
                   ></img>
                 )}
-                {project.title === navTouch && (
+                {project.fileName === navTouch?.fileName && (
                   <div className="progress-bar">
                     <ProgressBar
                       label={'LOADING'}
@@ -486,7 +483,7 @@ function App() {
                       score={navCount}
                     />
                     <div className="progress-bar-text">
-                      {navTouch?.toUpperCase() + ''}
+                      {navTouch?.fileName.toUpperCase() + ''}
                     </div>
                   </div>
                 )}
@@ -494,7 +491,7 @@ function App() {
             );
           })}
       </div>
-      <div
+      {/* <div
         className="project-resume"
         onClick={() => {
           __DEV__ && console.log('Resume Clicked');
@@ -502,18 +499,8 @@ function App() {
         }}
       >
         <div className="project-resume-text">Eric's Resume</div>
-      </div>
-      <div
-        className={'game-parent'}
-        // id={isClickDown ? 'cursorCrosshair' : 'cursorNormal'}
-        // onMouseDown={() => {
-        //   setIsClickDown(true);
-        // }}
-        // onMouseUp={() => {
-        //   setIsClickDown(false);
-        // }}
-        ref={gameParentRef}
-      />
+      </div> */}
+      <div className={'game-parent'} ref={gameParentRef} />
       <div
         className={
           screen.height > screen.width ? 'grass phone' : 'grass computer'
@@ -522,9 +509,11 @@ function App() {
       ></div>
       {debugOptions.devMode && (
         <div className="states">
-          <div className="nav-touch">NAV-TOUCH {navTouch}</div>
-          <div className="nav-waiting">NAV-WAITING {navWaiting}</div>
-          <div className="nav-go">NAV-GO {navGo}</div>
+          <div className="nav-touch">NAV-TOUCH {navTouch?.fileName || 'XXX'}</div>
+          <div className="nav-waiting">
+            NAV-WAITING {navWaiting?.fileName || 'XXX'}
+          </div>
+          <div className="nav-go">NAV-GO {navGo?.fileName || 'XXX'}</div>
         </div>
       )}
 
@@ -536,7 +525,9 @@ function App() {
             alt="kirby"
           />
           <div className="nav-notif-text-small">Navigating To</div>
-          <div className="nav-notif-text-big">{navTouch}</div>
+          <div className="nav-notif-text-big">
+            {navTouch?.fileName || 'XXX'}
+          </div>
         </div>
       )}
 
