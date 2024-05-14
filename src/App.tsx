@@ -336,36 +336,66 @@ function App() {
       y: window.innerHeight * 0.1,
     };
 
-    const config: Phaser.Types.Core.GameConfig = {
-      plugins: {
-        global: [],
-      },
-      backgroundColor: '#3399ff',
-      // backgroundColor: '#aaccff',
-      // transparent: true,
-      title: 'niemo.io',
-      antialias: true,
-      pixelArt: true,
-      scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: screen.width,
-        height: screen.height,
-      },
-      type: Phaser.AUTO,
-      parent: gameParentRef.current,
-      input: {
-        gamepad: true,
-      },
-      physics: {
-        default: 'arcade',
-        arcade: {
-          gravity: { y: 1000 },
-          debug: debugOptions.devMode,
-        },
-      },
-      scene: [GameScene],
-    };
+    const config: Phaser.Types.Core.GameConfig = isInIframe
+      ? {
+          plugins: {
+            global: [],
+          },
+          // backgroundColor: '#3399ff',
+          // backgroundColor: '#aaccff',
+          transparent: true,
+          title: 'niemo.io',
+          antialias: true,
+          pixelArt: true,
+          scale: {
+            mode: Phaser.Scale.FIT,
+            autoCenter: Phaser.Scale.CENTER_BOTH,
+            width: screen.width,
+            height: screen.height,
+          },
+          type: Phaser.AUTO,
+          parent: gameParentRef.current,
+          input: {
+            gamepad: true,
+          },
+          physics: {
+            default: 'arcade',
+            arcade: {
+              gravity: { y: 1000 },
+              debug: debugOptions.devMode,
+            },
+          },
+          scene: [GameScene],
+        }
+      : {
+          plugins: {
+            global: [],
+          },
+          backgroundColor: '#3399ff',
+
+          title: 'niemo.io',
+          antialias: true,
+          pixelArt: true,
+          scale: {
+            mode: Phaser.Scale.FIT,
+            autoCenter: Phaser.Scale.CENTER_BOTH,
+            width: screen.width,
+            height: screen.height,
+          },
+          type: Phaser.AUTO,
+          parent: gameParentRef.current,
+          input: {
+            gamepad: true,
+          },
+          physics: {
+            default: 'arcade',
+            arcade: {
+              gravity: { y: 1000 },
+              debug: debugOptions.devMode,
+            },
+          },
+          scene: [GameScene],
+        };
 
     gameRef.current = new Phaser.Game(config);
     gameRef.current.registry.set('config', config);
