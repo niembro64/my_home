@@ -318,17 +318,22 @@ function App() {
       return;
     }
 
-    const boxPenultimate = myBoxes[myBoxes.length - 2];
+    // const boxPenultimate = myBoxes[myBoxes.length - 2];
 
-    const boxUltimate = myBoxes[myBoxes.length - 1];
+    // const boxUltimate = myBoxes[myBoxes.length - 1];
+
+    // const kirbyXY = {
+    //   x:
+    //     (boxPenultimate.left +
+    //       boxPenultimate.width * 0.5 +
+    //       (boxUltimate.left + boxUltimate.width * 0.5)) *
+    //     0.5,
+    //   y: boxPenultimate.top + boxPenultimate.height * 0.5,
+    // };
 
     const kirbyXY = {
-      x:
-        (boxPenultimate.left +
-          boxPenultimate.width * 0.5 +
-          (boxUltimate.left + boxUltimate.width * 0.5)) *
-        0.5,
-      y: boxPenultimate.top + boxPenultimate.height * 0.5,
+      x: window.innerWidth * 0.5,
+      y: window.innerHeight * 0.1,
     };
 
     const config: Phaser.Types.Core.GameConfig = {
