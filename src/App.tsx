@@ -322,17 +322,14 @@ function App() {
 
     const boxUltimate = myBoxes[myBoxes.length - 1];
 
-    let sumY = 0;
-    for (let i = 0; i < myBoxes.length; i++) {
-      sumY += myBoxes[i].centerY;
-    }
-
-    const screenWidth = screen.width;
-    const screenHeight = screen.height;
 
     const kirbyXY = {
-      x: screenWidth * 0.5,
-      y: screenHeight * 0.15,
+      x:
+        (boxPenultimate.left +
+          boxPenultimate.width * 0.5 +
+          (boxUltimate.left + boxUltimate.width * 0.5)) *
+        0.5,
+      y: boxPenultimate.top + boxPenultimate.height * 0.5
     };
 
     const config: Phaser.Types.Core.GameConfig = {

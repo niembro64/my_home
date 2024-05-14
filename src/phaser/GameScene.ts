@@ -35,8 +35,8 @@ export default class GameScene extends Phaser.Scene {
       frictionGround: 0.85,
       frictionAir: 0.95,
       jumpPower: 600,
-      posInitX: 400,
-      posInitY: 300,
+      posInitX: null,
+      posInitY: null,
       velX: this.speedSlow,
       velY: 60,
       isTouchingPrev: false,
@@ -68,7 +68,7 @@ export default class GameScene extends Phaser.Scene {
 
     const k: { x: number; y: number } = this.game.registry.get('kirbyXY');
     const kirbyXY: { x: number; y: number } = {
-      x: k.x - (13 * 4 + 2) * 0.5,
+      x: k.x,
       y: k.y,
     };
 
@@ -123,17 +123,8 @@ export default class GameScene extends Phaser.Scene {
     createSpriteSheet(this);
 
     const p = this.platforms;
-    // const k = this.kirby;
 
     const phy = this.physics;
-
-    // k.sprite = this.physics.add
-    //   .sprite(k.posInitX, k.posInitY, 'k')
-    //   .setOrigin(0.5, 0.5)
-    //   .setCollideWorldBounds(true)
-    //   .setScale(0.3)
-    //   .setBounceX(1)
-    //   .setBounceY(0.5);
 
     p.forEach((platform, pIndex) => {
       // Create a Phaser.Geom.Rectangle
@@ -144,14 +135,12 @@ export default class GameScene extends Phaser.Scene {
         platform.box.height
       );
 
-      // Draw the rectangle using graphics
       platform.graphic = this.add
-        // .graphics()
+
         .graphics({ fillStyle: { color: 0x693b29 } })
         // .graphics({ fillStyle: { color: 0x335544 } })
         .fillRectShape(rect);
 
-      // Create a static Arcade Physics body for the rectangle
       platform.sprite = this.physics.add
         .staticGroup()
         .add(
@@ -167,36 +156,16 @@ export default class GameScene extends Phaser.Scene {
             .setOrigin(0)
         );
 
-      // Add collider between Kirby and the platform
       phy.add.collider(this.kirby.sprite, platform.sprite);
     });
 
     this.physics.world.setBounds(0, 0, this.scale.width, this.scale.height);
 
-    // this.setPointerPosition = this.setPointerPosition.bind(this);
-
-    // this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
-    //   console.log('pointer', pointer);
-    //   this.mouse.x = pointer.x;
-    //   this.mouse.y = pointer.y;
-    //   // this.mouse.x = pointer.x - this.kirby.sprite.body.width / 2;
-    //   // this.mouse.y = pointer.y - this.kirby.sprite.body.height / 2;
-    // });
-
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-      // if (this.kirby.velX !== this.speedFast) {
-      //   this.kirby.velX = this.speedFast;
-      // }
       setJump(this.kirby, this);
-      // if (this.kirby.sprite.body.velocity.y > -10) {
-      // }
     });
 
-    this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
-      // if (this.kirby.velX !== this.speedSlow) {
-      //   this.kirby.velX = this.speedSlow;
-      // }
-    });
+    this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {});
   }
 
   update(): void {
@@ -233,7 +202,7 @@ const updateMouse = (mouse: Mouse, game: GameScene) => {
 };
 
 function createSpriteSheet(game: GameScene): void {
-  var config_idle = {
+  const config_idle = {
     key: 'idle',
     frames: game.anims.generateFrameNumbers('spritesheet', {
       start: 0,
@@ -244,7 +213,7 @@ function createSpriteSheet(game: GameScene): void {
     repeat: -1,
   };
 
-  var config_walk = {
+  const config_walk = {
     key: 'walk',
     frames: game.anims.generateFrameNumbers('spritesheet', {
       start: 1,
@@ -255,7 +224,7 @@ function createSpriteSheet(game: GameScene): void {
     repeat: -1,
   };
 
-  var config_jumpUp = {
+  const config_jumpUp = {
     key: 'jumpUp',
     frames: game.anims.generateFrameNumbers('spritesheet', {
       start: 4,
@@ -266,7 +235,7 @@ function createSpriteSheet(game: GameScene): void {
     repeat: -1,
   };
 
-  var config_jumpDown = {
+  const config_jumpDown = {
     key: 'jumpDown',
     frames: game.anims.generateFrameNumbers('spritesheet', {
       start: 7,
@@ -277,7 +246,7 @@ function createSpriteSheet(game: GameScene): void {
     repeat: -1,
   };
 
-  var config_climb_fast = {
+  const config_climb_fast = {
     key: 'climbFast',
     frames: game.anims.generateFrameNumbers('spritesheet', {
       start: 5,
@@ -288,7 +257,7 @@ function createSpriteSheet(game: GameScene): void {
     repeat: -1,
   };
 
-  var config_climb_slow = {
+  const config_climb_slow = {
     key: 'climbSlow',
     frames: game.anims.generateFrameNumbers('spritesheet', {
       start: 5,
@@ -299,7 +268,7 @@ function createSpriteSheet(game: GameScene): void {
     repeat: -1,
   };
 
-  var config_hang_move = {
+  const config_hang_move = {
     key: 'hangMove',
     frames: game.anims.generateFrameNumbers('spritesheet', {
       start: 8,
@@ -310,7 +279,7 @@ function createSpriteSheet(game: GameScene): void {
     repeat: -1,
   };
 
-  var config_hang_idle = {
+  const config_hang_idle = {
     key: 'hangIdle',
     frames: game.anims.generateFrameNumbers('spritesheet', {
       start: 8,
@@ -330,13 +299,12 @@ function createSpriteSheet(game: GameScene): void {
   game.anims.create(config_hang_move);
   game.anims.create(config_hang_idle);
 
-  const k = game.kirby;
-  k.sprite = game.physics.add
-    .sprite(k.posInitX, k.posInitY, 'spritesheet')
+  game.kirby.sprite = game.physics.add
+    .sprite(game.kirby.posInitX || 0, game.kirby.posInitY || 0, 'spritesheet')
     // .sprite(k.posInitX, k.posInitY, 'k')
     // .setOrigin(0, 1)
-    .setOrigin(0, 0)
-    // .setOrigin(0.5, 0.5)
+    // .setOrigin(0, 0)
+    .setOrigin(0.5, 0.5)
     .setCollideWorldBounds(true)
     // .setScale(0.3)
     // .setBounceX(1)

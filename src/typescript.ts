@@ -24,8 +24,8 @@ export interface Player {
   frictionGround: number;
   frictionAir: number;
   jumpPower: number;
-  posInitX: number;
-  posInitY: number;
+  posInitX: number | null;
+  posInitY: number | null;
   velX: number;
   velY: number;
   isTouchingPrev: boolean;
