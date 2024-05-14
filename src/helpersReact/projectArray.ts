@@ -1,6 +1,7 @@
 import { Project } from '../typescript';
 export const projects: Project[] = [
   {
+    title: 'Design',
     fileName: 'Design',
     colorScheme: 'light',
     type: 'Front-End',
@@ -8,6 +9,7 @@ export const projects: Project[] = [
     url: 'http://design.niemo.io/',
   },
   {
+    title: 'Game',
     fileName: 'Smashed',
     colorScheme: 'dark',
     type: 'Game',
@@ -22,6 +24,7 @@ export const projects: Project[] = [
     url: 'http://smashed.niemo.io/',
   },
   {
+    title: 'Form',
     fileName: 'Pirates',
     colorScheme: 'light',
     type: 'Full-Stack',
@@ -43,6 +46,7 @@ export const projects: Project[] = [
   //   url: 'http://shows.niemo.io/',
   // },
   {
+    title: 'Music',
     fileName: 'Media',
     colorScheme: 'dark',
     type: 'Art',

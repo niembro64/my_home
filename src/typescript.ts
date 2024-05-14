@@ -42,6 +42,7 @@ export interface Mouse {
 
 export type ColorScheme = 'light' | 'dark';
 export interface Project {
+  title: string;
   fileName: ProjectName;
   colorScheme: ColorScheme;
   url: string;

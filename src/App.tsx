@@ -439,7 +439,7 @@ function App() {
                           : 'project-title color-light'
                       }
                     >
-                      {project.fileName}
+                      {project.title}
                     </div>
                     <div
                       className={
@@ -489,7 +489,7 @@ function App() {
                       score={navCount}
                     />
                     <div className="progress-bar-text">
-                      {navTouch?.fileName.toUpperCase() + ''}
+                      {navTouch?.title.toUpperCase() + ''}
                     </div>
                   </div>
                 )}
@@ -537,7 +537,7 @@ function App() {
           />
           <div className="nav-notif-text-small">Navigating To</div>
           <div className="nav-notif-text-big">
-            {navTouch?.fileName || 'XXX'}
+            {navTouch?.title || 'XXX'}
           </div>
         </div>
       )}
