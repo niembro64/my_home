@@ -49,7 +49,7 @@ function App() {
     __DEV__ && console.log('site', site);
 
     const foundProject: Project = projects.find(
-      (p) => p.fileName === site.fileName
+      (p) => p.title === site.title
     ) as Project;
 
     if (foundProject === undefined) {
@@ -322,14 +322,13 @@ function App() {
 
     const boxUltimate = myBoxes[myBoxes.length - 1];
 
-
     const kirbyXY = {
       x:
         (boxPenultimate.left +
           boxPenultimate.width * 0.5 +
           (boxUltimate.left + boxUltimate.width * 0.5)) *
         0.5,
-      y: boxPenultimate.top + boxPenultimate.height * 0.5
+      y: boxPenultimate.top + boxPenultimate.height * 0.5,
     };
 
     const config: Phaser.Types.Core.GameConfig = {
@@ -416,7 +415,7 @@ function App() {
             return (
               <div
                 className={
-                  project.fileName !== navTouch?.fileName
+                  project.title !== navTouch?.title
                     ? 'project'
                     : 'project project-touch border-light'
                 }
@@ -424,7 +423,7 @@ function App() {
               >
                 <div
                   className={
-                    project.fileName === navTouch?.fileName
+                    project.title === navTouch?.title
                       ? 'project-overlay project-overlay-touch'
                       : 'project-overlay'
                   }
@@ -432,7 +431,7 @@ function App() {
                   <>
                     <div
                       className={
-                        project.fileName === navTouch?.fileName
+                        project.title === navTouch?.title
                           ? 'color-trans'
                           : 'project-title color-light'
                       }
@@ -441,7 +440,7 @@ function App() {
                     </div>
                     <div
                       className={
-                        project.fileName === navTouch?.fileName
+                        project.title === navTouch?.title
                           ? 'color-trans'
                           : 'project-type color-light'
                       }
@@ -456,7 +455,7 @@ function App() {
                     src={
                       process.env.PUBLIC_URL +
                       '/videos2/' +
-                      project.fileName +
+                      project.title +
                       '.mp4'
                     }
                     autoPlay
@@ -469,7 +468,7 @@ function App() {
                     src={
                       process.env.PUBLIC_URL +
                       '/videos2/' +
-                      project.fileName +
+                      project.title +
                       '.gif'
                     }
                     // autoPlay
@@ -479,7 +478,7 @@ function App() {
                     alt={'asdf'}
                   ></img>
                 )}
-                {project.fileName === navTouch?.fileName && (
+                {project.title === navTouch?.title && (
                   <div className="progress-bar">
                     <ProgressBar
                       label={'LOADING'}
@@ -517,12 +516,12 @@ function App() {
       {debugOptions.devMode && (
         <div className="states">
           <div className="nav-touch">
-            NAV-TOUCH {navTouch?.fileName || 'XXX'}
+            NAV-TOUCH {navTouch?.title || 'XXX'}
           </div>
           <div className="nav-waiting">
-            NAV-WAITING {navWaiting?.fileName || 'XXX'}
+            NAV-WAITING {navWaiting?.title || 'XXX'}
           </div>
-          <div className="nav-go">NAV-GO {navGo?.fileName || 'XXX'}</div>
+          <div className="nav-go">NAV-GO {navGo?.title || 'XXX'}</div>
         </div>
       )}
 

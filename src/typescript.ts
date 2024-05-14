@@ -42,22 +42,15 @@ export interface Mouse {
 
 export type ColorScheme = 'light' | 'dark';
 export interface Project {
-  title: string;
-  fileName: ProjectName;
+  title: ProjectName;
+
   colorScheme: ColorScheme;
   url: string;
   type: string;
   stack: string[];
 }
 
-export type ProjectName =
-  | 'Design'
-  | 'Smashed'
-  | 'Pirates'
-  | 'Events'
-  | 'Shows'
-  | 'Media'
-  | 'Resume';
+export type ProjectName = 'Design' | 'Game' | 'Forms' | 'Music';
 
 export interface Location2D {
   x: number;

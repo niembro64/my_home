@@ -1,6 +1,6 @@
 import { __DEV__ } from '../../App';
 import { projects } from '../../helpersReact/projectArray';
-import { Platform, Player, SpriteStateName } from '../../typescript';
+import { Platform, Player, Project, SpriteStateName } from '../../typescript';
 import GameScene from '../GameScene';
 import { getDistance, getNormalizedVector } from './math';
 export const mouseVert = 75;
@@ -188,12 +188,6 @@ export const updateJustTouchedGround = (
 ): void => {
   const k = player;
 
-  // const touchingAny: boolean =
-  //   k.sprite.body.touching.down ||
-  //   k.sprite.body.touching.up ||
-  //   k.sprite.body.touching.left ||
-  //   k.sprite.body.touching.right;
-
   const touchingAny: boolean = k.sprite.body.touching.down;
 
   if (touchingAny && !k.isTouchingPrev) {
@@ -208,17 +202,18 @@ export const updateJustTouchedGround = (
   k.isTouchingPrev = touchingAny;
 };
 
-export const updateNearestPlatform = (
+export const updateNearestProjectUnderPlayer = (
   player: Player,
   game: GameScene
-): Platform | null => {
+): void => {
   const k = player;
-  const p = game.platforms;
+  const platforms = game.platforms;
 
   let platformNearest: Platform | null = null;
   let distanceNearest: number = Infinity;
+  let projectNearest: Project | null = null;
 
-  p.forEach((p: Platform) => {
+  platforms.forEach((p: Platform) => {
     const distanceNew = getDistance(
       k.sprite.body.x,
       k.sprite.body.y,
@@ -232,79 +227,16 @@ export const updateNearestPlatform = (
     }
   });
 
-  if (platformNearest !== null && platformNearest['box'] !== null) {
-    return platformNearest;
-  }
-  return null;
-};
-
-export const updateNearestPlatformUnderPlayer = (
-  player: Player,
-  game: GameScene
-): void => {
-  const k = player;
-  const p = game.platforms;
-
-  let platformNearest: Platform | null = null;
-  let distanceNearest: number = Infinity;
-
-  p.forEach((p: Platform) => {
-    const distanceNew = getDistance(
-      k.sprite.body.x + k.sprite.body.width * 0.5,
-      k.sprite.body.y + k.sprite.body.height * 0.5,
-      p.box.centerX,
-      p.box.centerY
+  if (platformNearest !== null && platformNearest) {
+    const x = projects.find(
+      (p: Project) => p.title === platformNearest?.['box']?.['project'] || null
     );
 
-    if (distanceNew < distanceNearest && k.sprite.body.y < p.box.centerY) {
-      platformNearest = p;
-      distanceNearest = distanceNew;
+    if (x) {
+      projectNearest = x;
     }
-  });
-
-  if (platformNearest !== null && platformNearest['box'] !== null) {
-    k.nearestProject =
-      projects.find(
-        (p) => p.fileName === platformNearest?.['box']['project']
-      ) || null;
-
-    return;
   }
-  k.nearestProject = null;
-};
-export const updateNearestPlatformUnderPlayerNew = (
-  player: Player,
-  game: GameScene
-): void => {
-  const k = player;
-  const p = game.platforms;
-
-  let platformNearest: Platform | null = null;
-  let distanceNearest: number = Infinity;
-
-  p.forEach((p: Platform) => {
-    const distanceNew = getDistance(
-      k.sprite.body.x + k.sprite.body.width * 0.5,
-      k.sprite.body.y + k.sprite.body.height * 0.5,
-      p.box.centerX,
-      p.box.centerY
-    );
-
-    if (distanceNew < distanceNearest) {
-      platformNearest = p;
-      distanceNearest = distanceNew;
-    }
-  });
-
-  if (platformNearest !== null && platformNearest['box'] !== null) {
-    k.nearestProject =
-      projects.find(
-        (p) => p.fileName === platformNearest?.['box']['project']
-      ) || null;
-
-    return;
-  }
-  k.nearestProject = null;
+  k.nearestProject = projectNearest;
 };
 
 export function updateSpriteState(

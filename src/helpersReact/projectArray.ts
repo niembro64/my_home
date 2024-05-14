@@ -2,7 +2,6 @@ import { Project } from '../typescript';
 export const projects: Project[] = [
   {
     title: 'Design',
-    fileName: 'Design',
     colorScheme: 'light',
     type: 'Front-End',
     stack: ['CSS', 'HTML', 'JavaScript'],
@@ -10,7 +9,6 @@ export const projects: Project[] = [
   },
   {
     title: 'Game',
-    fileName: 'Smashed',
     colorScheme: 'dark',
     type: 'Game',
     stack: [
@@ -24,8 +22,7 @@ export const projects: Project[] = [
     url: 'http://smashed.niemo.io/',
   },
   {
-    title: 'Form',
-    fileName: 'Pirates',
+    title: 'Forms',
     colorScheme: 'light',
     type: 'Full-Stack',
     stack: ['React', 'TypeScript', 'MongoDB', 'Node.js', 'Express.js'],
@@ -47,7 +44,6 @@ export const projects: Project[] = [
   // },
   {
     title: 'Music',
-    fileName: 'Media',
     colorScheme: 'dark',
     type: 'Art',
     stack: ['FL Studio', 'Aseprite', 'Adobe Creative Suite', 'WordPress'],
