@@ -547,7 +547,7 @@ function App() {
       {/* ////////////////////////////////// */}
       {/* PHONE */}
       {/* ////////////////////////////////// */}
-      {screen.height > screen.width && (
+      {screen.height >= screen.width && (
         <>
           {numClicks === 0 && (
             <div className="clicks">
