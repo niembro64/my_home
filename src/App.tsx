@@ -163,7 +163,7 @@ function App() {
     if (navGo === null || navTouch === null) {
       return;
     }
-    reactNavigate(navGo);
+    reactNavigate(navGo, isInIframe);
   }, [navGo]);
 
   const handleGameReady = () => {

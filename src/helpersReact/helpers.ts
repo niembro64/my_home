@@ -2,7 +2,7 @@ import { __DEV__ } from '../App';
 import { debugOptions } from '../debugOptions';
 import { Project } from '../typescript';
 
-export const reactNavigate = (project: Project): void => {
+export const reactNavigate = (project: Project, isInIframe: boolean): void => {
   if (!debugOptions.navigateActive) {
     return;
   }
@@ -17,5 +17,9 @@ export const reactNavigate = (project: Project): void => {
 
   fullUrl = project.url;
 
-  window.location.href = fullUrl;
+  if (isInIframe) {
+    window.parent.postMessage({ url: fullUrl }, '*');
+  } else {
+    window.location.href = fullUrl;
+  }
 };
